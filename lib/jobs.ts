@@ -13,12 +13,22 @@ import { askGroundedGemini } from "./gemini";
 import { classifyUrl, extractDomain } from "./classify";
 import { countByClass, dominationScore } from "./score";
 import { AI_CITATION_PROMPTS } from "../data/langkammer";
+import {
+  detectDisplacementForSnapshot,
+  persistAndDispatchAlerts,
+  type CollectedAlert,
+} from "./alerts";
 
 export type FetchSerpsReport = {
   entity: string;
   processed: number;
   failed: { keyword: string; error: string }[];
   avgScore: number;
+  alerts: {
+    persisted: number;
+    emailed: boolean;
+    reason?: string;
+  };
 };
 
 export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsReport> {
@@ -34,6 +44,7 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
 
   const failed: FetchSerpsReport["failed"] = [];
   const scores: number[] = [];
+  const collectedAlerts: CollectedAlert[] = [];
 
   for (const kw of kws) {
     try {
@@ -86,6 +97,11 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
             matchedLabel: r.matchedLabel,
           })),
         );
+
+        const hits = await detectDisplacementForSnapshot(entity, kw, snapshot.id);
+        if (hits.length > 0) {
+          collectedAlerts.push({ keywordId: kw.id, hits });
+        }
       }
     } catch (err) {
       failed.push({
@@ -96,7 +112,14 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
   }
 
   const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-  return { entity: entity.slug, processed: kws.length - failed.length, failed, avgScore: avg };
+  const alertResult = await persistAndDispatchAlerts(entity, collectedAlerts);
+  return {
+    entity: entity.slug,
+    processed: kws.length - failed.length,
+    failed,
+    avgScore: avg,
+    alerts: alertResult,
+  };
 }
 
 export type CitationReport = {
