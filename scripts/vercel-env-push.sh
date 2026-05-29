@@ -2,7 +2,7 @@
 # Pusht alle Env-Vars aus .env.local nach Vercel (production + preview + dev).
 # Vorher ausführen:
 #   vercel login
-#   vercel link --yes
+#   vercel link --yes --project entity-tracker --scope <team>
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -13,7 +13,6 @@ if [[ ! -f "$ENV_FILE" ]]; then
   exit 1
 fi
 
-# Welche Vars wir setzen wollen (Reihenfolge = Doku-Reihenfolge)
 VARS=(
   DATABASE_URL
   SERPER_API_KEY
@@ -29,12 +28,10 @@ for VAR in "${VARS[@]}"; do
     echo "WARN: $VAR not set in .env.local — skipping"
     continue
   fi
-  for ENV in production preview development; do
-    # Vercel CLI fragt sonst nach Eingabe — Wert via stdin
-    echo "==> $VAR ($ENV)"
-    vercel env rm "$VAR" "$ENV" --yes 2>/dev/null || true
-    printf '%s' "$VALUE" | vercel env add "$VAR" "$ENV"
-  done
+  echo "==> $VAR (production)"
+  vercel env rm "$VAR" production --yes 2>/dev/null || true
+  vercel env add "$VAR" production --value "$VALUE" --yes
 done
 
+echo
 echo "Done. Verify with: vercel env ls"
