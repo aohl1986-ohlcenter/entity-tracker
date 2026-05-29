@@ -44,14 +44,35 @@ npm run dev   # http://localhost:3000
 
 ## Deploy auf Vercel
 
-1. `vercel link` (neues Projekt `entity-tracker`, Domain `tracker.pragma-code.de`)
-2. Env-Vars in Vercel setzen: `DATABASE_URL`, `SERPER_API_KEY`, `GEMINI_API_KEY`,
-   `GEMINI_MODEL`, `CRON_SECRET`, `DEFAULT_ENTITY_SLUG=jens-langkammer`.
-3. Vercel Postgres / Neon Integration → injects `DATABASE_URL` automatisch.
-4. `vercel deploy --prod`. Die `vercel.json` registriert zwei Cronjobs:
-   - 06:00 UTC SERP-Fetch
-   - 06:30 UTC AI-Citation-Check
-5. Vercel sendet bei Cron automatisch `Authorization: Bearer $CRON_SECRET`.
+```bash
+cd ~/dev/entity-tracker
+
+# 1) Einmal einloggen (Browser-Flow)
+vercel login
+
+# 2) Projekt anlegen / verbinden
+vercel link --yes --project entity-tracker
+
+# 3) Env-Vars aus .env.local nach Vercel pushen
+bash scripts/vercel-env-push.sh
+
+# 4) Production-Deploy
+vercel deploy --prod
+```
+
+Die `vercel.json` registriert zwei Cronjobs (Vercel Hobby reicht):
+- 06:00 UTC SERP-Fetch
+- 06:30 UTC AI-Citation-Check
+
+Vercel sendet bei Cron automatisch `Authorization: Bearer $CRON_SECRET`,
+unsere Routes validieren das.
+
+### Subdomain `tracker.pragma-code.de` bei Ionos
+
+1. In Vercel: Project → Settings → Domains → `tracker.pragma-code.de` hinzufügen.
+2. Vercel zeigt einen CNAME-Wert (z. B. `cname.vercel-dns.com`).
+3. Bei Ionos: DNS → CNAME-Record `tracker` → Vercel-Wert.
+4. Nach DNS-Propagation (~Minuten bis ~1h) ist HTTPS-Zertifikat automatisch live.
 
 ## Datenmodell
 
