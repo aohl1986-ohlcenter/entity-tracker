@@ -5,10 +5,10 @@ import { desc, eq } from "drizzle-orm";
 export const dynamic = "force-dynamic";
 
 const CLS_TONE: Record<string, string> = {
-  owned: "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200",
-  authority: "bg-blue-100 text-blue-900 dark:bg-blue-900/40 dark:text-blue-200",
-  displacement: "bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-200",
-  neutral: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+  owned: "bg-brand-emerald/15 text-brand-emerald ring-brand-emerald/30",
+  authority: "bg-brand-sky/15 text-brand-sky ring-brand-sky/30",
+  displacement: "bg-displacement/15 text-displacement ring-displacement/30",
+  neutral: "bg-white/5 text-slate-400 ring-white/10",
 };
 
 export default async function CitationsPage() {
@@ -17,7 +17,7 @@ export default async function CitationsPage() {
     await db.select().from(entities).where(eq(entities.slug, slug)).limit(1)
   )[0];
   if (!entity) {
-    return <p className="text-slate-500">Entity {slug} fehlt — bitte seed laufen lassen.</p>;
+    return <p className="text-slate-400">Entity {slug} fehlt — bitte seed laufen lassen.</p>;
   }
 
   const rows = await db
@@ -27,49 +27,70 @@ export default async function CitationsPage() {
     .orderBy(desc(aiCitations.fetchedAt))
     .limit(50);
 
+  const totals = rows.reduce(
+    (a, r) => ({
+      owned: a.owned + r.ownedHits,
+      authority: a.authority + r.authorityHits,
+      citations: a.citations + r.totalCitations,
+    }),
+    { owned: 0, authority: 0, citations: 0 },
+  );
+
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold">AI Search Readiness</h1>
-        <p className="text-slate-500 text-sm">
-          Wie oft zitiert die KI (Gemini, grounded) die Ziel-URLs als Quelle.
+      <section className="card p-6">
+        <div className="text-[11px] uppercase tracking-[0.2em] text-brand-gold">
+          AI Search Readiness
+        </div>
+        <h1 className="mt-1 text-3xl font-bold text-white">Gemini Grounded</h1>
+        <p className="mt-2 text-sm text-slate-400">
+          Wie oft zitiert die KI die Ziel-URLs als Primärquelle für definierte Themen.
         </p>
-      </div>
+        <div className="mt-5 grid grid-cols-3 gap-3 max-w-md">
+          <Stat label="Owned" value={totals.owned} tone="emerald" />
+          <Stat label="Authority" value={totals.authority} tone="sky" />
+          <Stat label="Quellen total" value={totals.citations} tone="neutral" />
+        </div>
+      </section>
 
       {rows.length === 0 && (
-        <p className="text-slate-500">
-          Noch keine Daten. Führe <code>npm run fetch:citations</code> aus.
-        </p>
+        <div className="card p-6 text-slate-400">
+          Noch keine Daten. Führe <code className="text-brand-emerald">npm run fetch:citations</code>{" "}
+          aus.
+        </div>
       )}
 
-      <div className="space-y-6">
+      <div className="space-y-4">
         {rows.map((row) => (
-          <article
-            key={row.id}
-            className="rounded-lg border border-slate-200 dark:border-slate-800 p-4"
-          >
+          <article key={row.id} className="card p-5">
             <header className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="font-semibold">{row.query}</h2>
-              <div className="text-xs text-slate-500">
+              <h2 className="font-semibold text-white">{row.query}</h2>
+              <div className="text-[11px] text-slate-500">
                 {row.engine} · {new Date(row.fetchedAt).toLocaleString("de-DE")}
               </div>
             </header>
-            <div className="mt-2 text-xs text-slate-500">
-              {row.totalCitations} Quellen · {row.ownedHits} owned · {row.authorityHits} authority
+            <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-slate-400">
+              <span>
+                <span className="font-semibold text-white">{row.totalCitations}</span> Quellen
+              </span>
+              <span className="text-owned">
+                {row.ownedHits} owned
+              </span>
+              <span className="text-authority">
+                {row.authorityHits} authority
+              </span>
             </div>
             <ul className="mt-3 space-y-1.5">
               {row.citedUrls.map((c, i) => (
-                <li key={i} className="flex gap-2 items-baseline text-sm">
-                  <span
-                    className={`text-xs font-semibold rounded px-1.5 py-0.5 ${CLS_TONE[c.classification]}`}
-                  >
+                <li key={i} className="flex items-center gap-2 text-sm">
+                  <span className={`pill ring-1 ${CLS_TONE[c.classification]}`}>
                     {c.classification}
                   </span>
                   <a
                     href={c.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="truncate hover:underline"
+                    className="truncate text-slate-200 hover:text-brand-emerald"
                   >
                     {c.title ?? c.url}
                   </a>
@@ -79,6 +100,28 @@ export default async function CitationsPage() {
           </article>
         ))}
       </div>
+    </div>
+  );
+}
+
+function Stat({
+  label,
+  value,
+  tone,
+}: {
+  label: string;
+  value: number;
+  tone: "emerald" | "sky" | "neutral";
+}) {
+  const toneClass = {
+    emerald: "text-brand-emerald",
+    sky: "text-brand-sky",
+    neutral: "text-white",
+  }[tone];
+  return (
+    <div className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3">
+      <div className="text-[11px] uppercase tracking-wider text-slate-400">{label}</div>
+      <div className={`mt-1 text-xl font-semibold ${toneClass}`}>{value}</div>
     </div>
   );
 }

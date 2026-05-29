@@ -70,6 +70,11 @@ export const TARGETS: SeedTarget[] = [
     label: "LinkedIn Post 2025 b",
     category: "owned",
   },
+  {
+    pattern: "linkedin.com/feed/update/urn:li:activity:7260320064153817089",
+    label: "LinkedIn Post (Profil-Highlight 2026)",
+    category: "owned",
+  },
 
   // ─── AUTHORITY (PwC / Strategy& / WiWo / SSRN / Fachpresse) ────────────
   {
