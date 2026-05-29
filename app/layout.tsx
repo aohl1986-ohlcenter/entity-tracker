@@ -53,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           </div>
         </header>
+        <CoProjectBanner />
         <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
         <footer className="mx-auto mt-16 max-w-6xl border-t border-white/5 px-6 py-8 text-[12px] text-slate-400 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -79,6 +80,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
       </body>
     </html>
+  );
+}
+
+function CoProjectBanner() {
+  return (
+    <div className="border-b border-white/5 bg-brand-navy-2/40">
+      <div className="mx-auto max-w-6xl px-6 py-2.5 flex items-center gap-3 text-[12px] text-slate-300">
+        <span
+          aria-hidden
+          className="inline-block h-1.5 w-1.5 rounded-full bg-brand-gold shadow-[0_0_8px_rgba(255,200,41,0.7)]"
+        />
+        <span className="font-semibold uppercase tracking-[0.18em] text-brand-gold text-[10px]">
+          Co-Projekt
+        </span>
+        <span className="text-slate-400">·</span>
+        <span>
+          Pragma-Code <span className="text-slate-500">×</span> Jens Langkammer · Live-Cockpit für
+          die 90-Tage-Authority-Roadmap
+        </span>
+      </div>
+    </div>
   );
 }
 
