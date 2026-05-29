@@ -8,9 +8,11 @@ const config: Config = {
         brand: {
           navy: "#0f1430",
           "navy-2": "#171c3e",
-          emerald: "#10b981",
+          "navy-3": "#1f2550",
           gold: "#ffc829",
           "gold-soft": "#ffd75a",
+          "gold-deep": "#e0a800",
+          emerald: "#10b981",
           sky: "#7aa7ff",
         },
         owned: "#10b981",
@@ -22,7 +24,8 @@ const config: Config = {
         sans: ['"Inter"', "ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"],
       },
       boxShadow: {
-        brand: "0 1px 0 rgba(255,255,255,0.04), 0 8px 24px -12px rgba(16,185,129,0.25)",
+        brand: "0 1px 0 rgba(255,255,255,0.04), 0 10px 30px -16px rgba(255,200,41,0.35)",
+        "brand-glow": "0 0 0 1px rgba(255,200,41,0.25), 0 0 24px -6px rgba(255,200,41,0.35)",
       },
     },
   },

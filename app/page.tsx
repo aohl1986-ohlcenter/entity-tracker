@@ -47,24 +47,31 @@ async function loadOverview(slug: string) {
 
 function ScoreRing({ score }: { score: number }) {
   const stroke = score >= 80 ? "#10b981" : score >= 50 ? "#ffc829" : "#ff6b6b";
+  const glow = score >= 80 ? "rgba(16,185,129,0.35)" : score >= 50 ? "rgba(255,200,41,0.45)" : "rgba(255,107,107,0.35)";
   const dash = Math.max(0, Math.min(100, score));
   return (
-    <div className="relative h-24 w-24">
-      <svg viewBox="0 0 36 36" className="h-24 w-24 -rotate-90">
-        <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="3" />
+    <div className="relative h-28 w-28">
+      <svg viewBox="0 0 36 36" className="h-28 w-28 -rotate-90">
+        <defs>
+          <filter id="ring-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="0.6" />
+          </filter>
+        </defs>
+        <circle cx="18" cy="18" r="15.915" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" />
         <circle
           cx="18"
           cy="18"
           r="15.915"
           fill="none"
           stroke={stroke}
-          strokeWidth="3"
+          strokeWidth="2.5"
           strokeDasharray={`${dash}, 100`}
           strokeLinecap="round"
+          style={{ filter: `drop-shadow(0 0 6px ${glow})` }}
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-2xl font-bold text-white">{score}</div>
+        <div className="text-3xl font-bold text-white">{score}</div>
         <div className="text-[10px] uppercase tracking-widest text-slate-400">/ 100</div>
       </div>
     </div>
@@ -136,10 +143,19 @@ export default async function Page() {
 
   return (
     <div className="space-y-10">
-      <section className="card p-6 flex flex-wrap items-center gap-6 justify-between">
-        <div>
-          <div className="text-[11px] uppercase tracking-[0.2em] text-brand-gold">Entity</div>
-          <h1 className="mt-1 text-3xl font-bold text-white">{entity.name}</h1>
+      <section className="card relative overflow-hidden p-6 flex flex-wrap items-center gap-6 justify-between">
+        <div className="absolute inset-0 -z-0 opacity-30 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(600px 200px at 0% 0%, rgba(255,200,41,0.18), transparent 60%)",
+          }}
+        />
+        <div className="relative">
+          <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-brand-gold">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-gold" />
+            Entity
+          </div>
+          <h1 className="mt-2 text-3xl font-bold text-white tracking-tight">{entity.name}</h1>
           <p className="mt-2 text-sm text-slate-400">
             {latest.length} Keywords getrackt · Ziel: 80–90 % SERP-Domination
           </p>
@@ -149,9 +165,9 @@ export default async function Page() {
             <MiniStat label="Displacement" value={totals.displacement} tone="rose" />
           </div>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="relative flex flex-col items-center">
           <ScoreRing score={avgScore} />
-          <div className="mt-2 text-[10px] uppercase tracking-widest text-slate-400">
+          <div className="mt-3 text-[10px] uppercase tracking-widest text-slate-400">
             Ø Domination Score
           </div>
         </div>
