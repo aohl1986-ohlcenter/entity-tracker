@@ -3,9 +3,29 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light dark;
+  --brand-navy: #0f1430;
+  --brand-navy-2: #171c3e;
+  --brand-emerald: #10b981;
+  --brand-gold: #ffc829;
+  --brand-sky: #7aa7ff;
+  color-scheme: dark;
 }
 
-body {
-  @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
+@layer base {
+  body {
+    @apply min-h-screen bg-brand-navy text-slate-100 font-sans antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, rgba(16, 185, 129, 0.08), transparent 70%),
+      radial-gradient(900px 500px at -10% 110%, rgba(122, 167, 255, 0.08), transparent 70%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-white/10 bg-brand-navy-2/60 backdrop-blur;
+  }
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide;
+  }
 }

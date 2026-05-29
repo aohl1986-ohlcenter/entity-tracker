@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="de"> <head><meta charset="UTF-8"><!-- Prevent dark mode flash: apply saved theme before first paint.
+		     Light-Mode-CSS (home-light.css) wird nur geladen, wenn das Theme
+		     tatsaechlich „light" ist — spart ~7 KiB im kritischen Pfad fuer
+		     die ~95 % Dark-Mode-Nutzer. Helper auf window, damit der
+		     Theme-Toggle ihn beim Umschalten aufrufen kann. --><script>
+			(function() {
+				var t = localStorage.getItem('theme');
+				var theme = t || 'dark';
+				document.documentElement.setAttribute('data-theme', theme);
+				window.__ensureLightCss = function() {
+					if (document.getElementById('home-light-css')) return;
+					var l = document.createElement('link');
+					l.id = 'home-light-css';
+					l.rel = 'stylesheet';
+					l.href = '/styles/home-light.css';
+					document.head.appendChild(l);
+				};
+				if (theme === 'light') window.__ensureLightCss();
+			})();
+		</script><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" href="/assets/favicon.ico" sizes="any"><link rel="icon" href="/assets/favicon-48x48.webp" type="image/png"><link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"><meta name="theme-color" content="#ffffff"><meta name="generator" content="Astro v5.18.0"><meta name="p:domain_verify" content="b1c28d76899cb5521af7f50daff62068"><!-- SEO Meta Tags --><title>📈 Seite nicht gefunden | Pragma-Code</title><meta name="description" content="Die von Ihnen gesuchte Seite existiert nicht oder wurde verschoben."><meta name="keywords" content="IT-Generalist, Frontier Deployment Engineer, Webentwicklung, SEO, Automatisierung, E-Commerce, Pragma-Code, Alexander Ohl"><meta name="author" content="Alexander Ohl"><link rel="canonical" href="https://www.pragma-code.de/404"><meta name="robots" content="index, follow"><!-- Hreflang: DE ↔ EN --><link rel="alternate" hreflang="de" href="https://www.pragma-code.de/404"><link rel="alternate" hreflang="en" href="https://www.pragma-code.de/en/404"><link rel="alternate" hreflang="x-default" href="https://www.pragma-code.de/404"><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://www.pragma-code.de/404"><meta property="og:title" content="📈 Seite nicht gefunden | Pragma-Code"><meta property="og:description" content="Die von Ihnen gesuchte Seite existiert nicht oder wurde verschoben."><meta property="og:image" content="https://www.pragma-code.de/assets/pragma_code_og_banner.jpg"><link rel="preload" as="image" href="/assets/pragma-code-logo-dark.webp" fetchpriority="high"><!-- Twitter / X --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:url" content="https://www.pragma-code.de/404"><meta name="twitter:title" content="📈 Seite nicht gefunden | Pragma-Code"><meta name="twitter:description" content="Die von Ihnen gesuchte Seite existiert nicht oder wurde verschoben."><meta name="twitter:image" content="https://www.pragma-code.de/assets/pragma_code_og_banner.jpg"><!-- Plausible Analytics --><script defer data-domain="pragma-code.de" src="https://plausible.io/js/script.js"></script><!-- Self-hosted fonts: Outfit + Manrope + JetBrains Mono.
+		     @font-face inline (siehe frontmatter `fontFaceCss`) → keine
+		     render-blockierenden Stylesheet-Requests; nur die above-the-fold
+		     Weights werden preloaded. --><link rel="preload" href="/assets/fonts/outfit-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-400.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/fonts/manrope-latin-800.woff2" as="font" type="font/woff2" crossorigin><style>/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/assets/fonts/outfit-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/jetbrains-mono-latin-ext-400.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/jetbrains-mono-latin-400.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/jetbrains-mono-latin-ext-500.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/jetbrains-mono-latin-500.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-ext-400.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-400.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-ext-500.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-500.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-ext-600.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-600.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-ext-700.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-700.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-ext-800.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/assets/fonts/manrope-latin-800.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}</style><!-- Schema.org JSON-LD: LocalBusiness (DACH).
+		     Blog-Seiten ausgenommen — sie tragen eigenes BlogPosting-Schema. --><script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://www.pragma-code.de/#organization","name":"Pragma-Code","url":"https://www.pragma-code.de","logo":"https://www.pragma-code.de/assets/pragma-code-logo.webp","image":"https://www.pragma-code.de/assets/pragma-code-logo.webp","description":"Alexander Ohl – Frontier Deployment Engineer für Webentwicklung, SEO, Automatisierung und E-Commerce im DACH-Raum.","sameAs":["https://www.linkedin.com/in/alexander-ohl/","https://github.com/aohl1986-ohlcenter"],"address":{"@type":"PostalAddress","streetAddress":"Kaiserstraße","postalCode":"60311","addressLocality":"Frankfurt am Main","addressRegion":"Hessen","addressCountry":"DE"},"areaServed":[{"@type":"Country","name":"Germany","identifier":"DE"},{"@type":"Country","name":"Austria","identifier":"AT"},{"@type":"Country","name":"Switzerland","identifier":"CH"}],"contactPoint":{"@type":"ContactPoint","contactType":"customer support","url":"https://www.pragma-code.de/projektanfrage","availableLanguage":["German","English"]}}</script><!-- Phosphor Icons (self-hosted) --><link rel="preload" href="/assets/phosphor/Phosphor.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="/assets/phosphor/phosphor.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="/assets/phosphor/phosphor.css"></noscript><link rel="stylesheet" href="/_astro/blog-abmahnwelle-barrierefreiheit-2026.DIFfdiCl.css">
+<style>.mobile-theme-toggle[data-astro-cid-3ef6ksr2]{display:flex;align-items:center;justify-content:center;width:44px;height:44px;background:#0000000f;border:1px solid rgba(0,0,0,.12);border-radius:50%;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}.mobile-theme-toggle[data-astro-cid-3ef6ksr2]:hover{background:#ffcc002e;border-color:var(--color-primary, #ffcc00);transform:scale(1.1)}.mobile-theme-toggle[data-astro-cid-3ef6ksr2] i[data-astro-cid-3ef6ksr2]{font-size:1.3rem;color:var(--color-primary, #ffcc00)}[data-theme=dark] .mobile-theme-toggle[data-astro-cid-3ef6ksr2]{background:#ffffff14;border-color:#ffffff2e}[data-theme=dark] .mobile-theme-toggle[data-astro-cid-3ef6ksr2]:hover{background:#ffcc001f;border-color:var(--color-primary, #ffcc00)}.site-header[data-astro-cid-3ef6ksr2]{font-family:var(--font-family-base)}[data-theme=dark] .site-header[data-astro-cid-3ef6ksr2]{background-color:var(--pc-navy-800);box-shadow:0 1px 0 var(--pc-line)}[data-theme=dark] .site-header[data-astro-cid-3ef6ksr2].shrink{box-shadow:0 6px 24px #00000073}.nav-item[data-astro-cid-3ef6ksr2]{letter-spacing:.06em}.site-header--wide[data-astro-cid-3ef6ksr2] .container[data-astro-cid-3ef6ksr2]{max-width:var(--pc-maxw);padding-left:var(--pc-gutter);padding-right:var(--pc-gutter)}.top-bar[data-astro-cid-3ef6ksr2] .btn-primary-yellow[data-astro-cid-3ef6ksr2]{border-radius:var(--pc-r-pill);letter-spacing:.08em;box-shadow:0 6px 24px #ffc82938;transition:transform var(--pc-fast),box-shadow var(--pc-fast),background-color .2s ease}.top-bar[data-astro-cid-3ef6ksr2] .btn-primary-yellow[data-astro-cid-3ef6ksr2]:hover{transform:translateY(-1px);box-shadow:0 10px 32px #ffc82952}
+.footer-logo[data-astro-cid-sz7xmlte]{height:60px;width:auto;margin-bottom:1rem}.system-status[data-astro-cid-sz7xmlte]{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;padding:.4rem .8rem;background:#10b9810d;border:1px solid rgba(16,185,129,.1);border-radius:9999px;font-size:.85rem;font-weight:500;color:inherit}.status-dot[data-astro-cid-sz7xmlte]{width:10px;height:10px;background-color:#10b981;border-radius:50%;box-shadow:0 0 8px #10b98199;animation:pulse-status 2s infinite}@keyframes pulse-status{0%{box-shadow:0 0 #10b98180}70%{box-shadow:0 0 0 6px #10b98100}to{box-shadow:0 0 #10b98100}}
+</style></head> <body> <div id="reading-progress-bar"></div>  <header class="site-header site-header--wide" id="main-header" data-astro-cid-3ef6ksr2> <div class="container header-container" data-astro-cid-3ef6ksr2> <a class="logo" href="/" data-astro-cid-3ef6ksr2> <!-- Default Light Mode Logo --> <img alt="Pragma-Code Logo" class="logo-img logo-light" src="/assets/pragma-code-logo.webp" width="300" height="119" fetchpriority="high" data-astro-cid-3ef6ksr2> <!-- Dark Mode Transparent Logo --> <img alt="Pragma-Code Logo" class="logo-img logo-dark" src="/assets/pragma-code-logo-dark.webp" width="526" height="206" fetchpriority="high" data-astro-cid-3ef6ksr2> </a> <div class="header-right" data-astro-cid-3ef6ksr2> <div class="top-bar" data-astro-cid-3ef6ksr2> <span class="contact-info" data-astro-cid-3ef6ksr2><a href="/kontakt" data-astro-cid-3ef6ksr2>KONTAKT</a></span> <a class="btn btn-primary-yellow" href="/projektanfrage" aria-label="ANFRAGE" data-astro-cid-3ef6ksr2>ANFRAGE</a> <!-- Language Switcher --> <div class="lang-switcher" data-astro-cid-3ef6ksr2> <button class="lang-btn active" data-lang="de" data-astro-cid-3ef6ksr2>DE</button> <span class="lang-divider" data-astro-cid-3ef6ksr2>|</span> <button class="lang-btn " data-lang="en" data-astro-cid-3ef6ksr2>EN</button> </div> </div> <nav class="main-nav" id="main-nav" data-astro-cid-3ef6ksr2> <ul class="nav-list" data-astro-cid-3ef6ksr2> <!-- Webentwicklung Dropdown --> <li class="nav-dropdown" data-astro-cid-3ef6ksr2> <a class="nav-item" href="/webentwicklung" data-astro-cid-3ef6ksr2>Webentwicklung <i class="ph ph-caret-down" data-astro-cid-3ef6ksr2></i></a> <ul class="dropdown-menu" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2><a href="/webentwicklung" data-astro-cid-3ef6ksr2>Übersicht</a></li> <li data-astro-cid-3ef6ksr2><a href="/wp-migration" data-astro-cid-3ef6ksr2>WP → Next.js Migration</a></li> <li data-astro-cid-3ef6ksr2><a href="/typo3-migration" data-astro-cid-3ef6ksr2>TYPO3 Migration</a></li> <li data-astro-cid-3ef6ksr2><a href="/gwt-migration" data-astro-cid-3ef6ksr2>GWT Modernisierung</a></li> <li data-astro-cid-3ef6ksr2><a href="/nextjs-entwicklung" data-astro-cid-3ef6ksr2>Custom Next.js</a></li> <li data-astro-cid-3ef6ksr2><a href="/vue-entwicklung" data-astro-cid-3ef6ksr2>Vue.js Entwicklung</a></li> <li data-astro-cid-3ef6ksr2><a href="/headless-cms" data-astro-cid-3ef6ksr2>Headless CMS</a></li> <li data-astro-cid-3ef6ksr2><a href="/website-relaunch" data-astro-cid-3ef6ksr2>Website Relaunch</a></li> <li data-astro-cid-3ef6ksr2><a href="/pwa" data-astro-cid-3ef6ksr2>PWA Entwicklung</a></li> <li data-astro-cid-3ef6ksr2><a href="/app-entwicklung-sdk" data-astro-cid-3ef6ksr2>App SDK Lösungen</a></li> </ul> </li> <!-- SEO & Content Dropdown --> <li class="nav-dropdown" data-astro-cid-3ef6ksr2> <a class="nav-item" href="/seo-content" data-astro-cid-3ef6ksr2>SEO &amp; Content <i class="ph ph-caret-down" data-astro-cid-3ef6ksr2></i></a> <ul class="dropdown-menu" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2><a href="/seo-content" data-astro-cid-3ef6ksr2>Übersicht</a></li> <li data-astro-cid-3ef6ksr2><a href="/keyword-analyse" data-astro-cid-3ef6ksr2>Keyword-Analyse</a></li> <li data-astro-cid-3ef6ksr2><a href="/seo-landing-page" data-astro-cid-3ef6ksr2>Landing Page</a></li> <li data-astro-cid-3ef6ksr2><a href="/local-seo" data-astro-cid-3ef6ksr2>Local SEO</a></li> <li data-astro-cid-3ef6ksr2><a href="/technisches-seo-audit" data-astro-cid-3ef6ksr2>Technisches SEO Audit</a></li> <li data-astro-cid-3ef6ksr2><a href="/seo-blogartikel" data-astro-cid-3ef6ksr2>SEO Blogartikel</a></li> <li data-astro-cid-3ef6ksr2><a href="/geo-optimierung" data-astro-cid-3ef6ksr2>GEO Suchmaschinen</a></li> <li data-astro-cid-3ef6ksr2><a href="/online-reputation-management" data-astro-cid-3ef6ksr2>Online Reputation Management</a></li> <li data-astro-cid-3ef6ksr2><a href="/website-audit" data-astro-cid-3ef6ksr2>Kostenloser Website-Check</a></li> </ul> </li> <!-- Automatisierung Dropdown --> <li class="nav-dropdown" data-astro-cid-3ef6ksr2> <a class="nav-item" href="/automatisierung" data-astro-cid-3ef6ksr2>Automatisierung <i class="ph ph-caret-down" data-astro-cid-3ef6ksr2></i></a> <ul class="dropdown-menu" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2><a href="/automatisierung" data-astro-cid-3ef6ksr2>Übersicht</a></li> <li data-astro-cid-3ef6ksr2><a href="/prozess-automatisierung" data-astro-cid-3ef6ksr2>Prozessautomatisierung</a></li> <li data-astro-cid-3ef6ksr2><a href="/n8n-automatisierung" data-astro-cid-3ef6ksr2>n8n Automatisierung</a></li> <li data-astro-cid-3ef6ksr2><a href="/ki-automatisierung" data-astro-cid-3ef6ksr2>KI-Automatisierung</a></li> <li data-astro-cid-3ef6ksr2><a href="/whatsapp-telegram-assistent" data-astro-cid-3ef6ksr2>WhatsApp / Telegram KI</a></li> <li data-astro-cid-3ef6ksr2><a href="/openclaw" data-astro-cid-3ef6ksr2>OpenClaw AI-Agent</a></li> <li data-astro-cid-3ef6ksr2><a href="/workflow-optimierung" data-astro-cid-3ef6ksr2>Workflow-Optimierung</a></li> <li data-astro-cid-3ef6ksr2><a href="/marketing-automatisierung" data-astro-cid-3ef6ksr2>Marketing Automatisierung</a></li> <li data-astro-cid-3ef6ksr2><a href="/rpa-automatisierung" data-astro-cid-3ef6ksr2>RPA Automatisierung</a></li> </ul> </li> <!-- E-Commerce Dropdown --> <li class="nav-dropdown" data-astro-cid-3ef6ksr2> <a class="nav-item" href="/e-commerce" data-astro-cid-3ef6ksr2>E-Commerce <i class="ph ph-caret-down" data-astro-cid-3ef6ksr2></i></a> <ul class="dropdown-menu" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2><a href="/e-commerce" data-astro-cid-3ef6ksr2>Übersicht</a></li> <li data-astro-cid-3ef6ksr2><a href="/shop-entwicklung" data-astro-cid-3ef6ksr2>Shop-Entwicklung</a></li> <li data-astro-cid-3ef6ksr2><a href="/shop-relaunch" data-astro-cid-3ef6ksr2>Shop Relaunch</a></li> <li data-astro-cid-3ef6ksr2><a href="/headless-woocommerce" data-astro-cid-3ef6ksr2>Headless WooCommerce</a></li> <li data-astro-cid-3ef6ksr2><a href="/bfsg-barrierefreiheit" data-astro-cid-3ef6ksr2>BFSG Barrierefreiheit</a></li> <li data-astro-cid-3ef6ksr2><a href="/e-commerce-integrationen" data-astro-cid-3ef6ksr2>Schnittstellen &amp; Integration</a></li> <li data-astro-cid-3ef6ksr2><a href="/b2b-e-commerce" data-astro-cid-3ef6ksr2>B2B E-Commerce</a></li> <li data-astro-cid-3ef6ksr2><a href="/marktplatz-anbindung" data-astro-cid-3ef6ksr2>Marktplatz Anbindung</a></li> </ul> </li> <!-- Branchen Dropdown --> <li class="nav-dropdown" data-astro-cid-3ef6ksr2> <a class="nav-item" href="/branchen" data-astro-cid-3ef6ksr2>Branchen <i class="ph ph-caret-down" data-astro-cid-3ef6ksr2></i></a> <ul class="dropdown-menu" data-astro-cid-3ef6ksr2> <li data-astro-cid-3ef6ksr2><a href="/branchen" data-astro-cid-3ef6ksr2>Übersicht</a></li> <li data-astro-cid-3ef6ksr2><a href="/branchen/handwerk" data-astro-cid-3ef6ksr2>Handwerk</a></li> <li data-astro-cid-3ef6ksr2><a href="/branchen/dienstleister" data-astro-cid-3ef6ksr2>Dienstleister</a></li> <li data-astro-cid-3ef6ksr2><a href="/branchen/einzelhandel" data-astro-cid-3ef6ksr2>Einzelhandel</a></li> <li data-astro-cid-3ef6ksr2><a href="/branchen/startups" data-astro-cid-3ef6ksr2>Startups</a></li> </ul> </li> <!-- Standard Items --> <li data-astro-cid-3ef6ksr2><a class="nav-item" href="/alexander-ohl" data-astro-cid-3ef6ksr2>ÜBER MICH</a></li> <li data-astro-cid-3ef6ksr2><a class="nav-item" href="/blog" data-astro-cid-3ef6ksr2>BLOG</a></li> <li class="mobile-only" data-astro-cid-3ef6ksr2><a class="nav-item btn-mobile-anfrage" href="/projektanfrage" aria-label="ANFRAGE" data-astro-cid-3ef6ksr2>ANFRAGE</a></li> <li class="nav-separator desktop-only" data-astro-cid-3ef6ksr2>|</li> <li class="desktop-only desktop-icon-group" data-astro-cid-3ef6ksr2> <button class="nav-icon-btn" id="theme-toggle" aria-label="Toggle Dark Mode" data-astro-cid-3ef6ksr2> <i class="ph ph-moon" data-astro-cid-3ef6ksr2></i> </button> <div class="icon-spacer" data-astro-cid-3ef6ksr2></div> <button class="nav-icon-btn" id="search-btn" aria-label="Search" data-astro-cid-3ef6ksr2> <i class="ph ph-magnifying-glass" data-astro-cid-3ef6ksr2></i> </button> </li> <!-- Mobile Dark Mode + Search: combined in a row --> <li class="mobile-only" data-astro-cid-3ef6ksr2> <div class="mobile-icon-row" data-astro-cid-3ef6ksr2> <button class="mobile-theme-toggle" id="theme-toggle-mobile" aria-label="Toggle Dark Mode" data-astro-cid-3ef6ksr2> <i class="ph ph-moon" id="mobile-theme-icon" data-astro-cid-3ef6ksr2></i> </button> <button class="nav-icon-btn" id="search-btn-mobile" aria-label="Search" data-astro-cid-3ef6ksr2> <i class="ph ph-magnifying-glass" data-astro-cid-3ef6ksr2></i> </button> </div> </li> <!-- Mobile Language Switcher --> <li class="mobile-only" style="margin-top: 0.5rem;" data-astro-cid-3ef6ksr2> <div class="lang-switcher-mobile" data-astro-cid-3ef6ksr2> <button class="lang-btn active" data-lang="de" data-astro-cid-3ef6ksr2>DE</button> <span class="lang-divider" data-astro-cid-3ef6ksr2>|</span> <button class="lang-btn " data-lang="en" data-astro-cid-3ef6ksr2>EN</button> </div> </li> </ul> </nav> <button aria-label="Menu" class="mobile-menu-toggle" id="mobile-menu-toggle" data-astro-cid-3ef6ksr2> <span data-astro-cid-3ef6ksr2></span> <span data-astro-cid-3ef6ksr2></span> <span data-astro-cid-3ef6ksr2></span> </button> </div> </div> </header> <script type="module" src="/_astro/Header.astro_astro_type_script_index_0_lang.D42mDgFQ.js"></script>  <main> <section class="section" style="padding: 100px 0; text-align: center;"> <div class="container"> <i class="ph ph-warning-circle text-yellow" style="font-size: 5rem; margin-bottom: 2rem;"></i> <h1 class="hero-title" data-i18n="errorPage.title">404 - Seite nicht gefunden</h1> <p class="hero-subtitle" style="margin: 0 auto 2rem; max-width: 600px;" data-i18n="errorPage.text">
+Die von Ihnen gesuchte Seite existiert nicht oder wurde verschoben.
+</p> <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;"> <a class="btn btn-primary-yellow" href="/" data-i18n="errorPage.backHome">Zur Startseite</a> <a class="btn btn-outline-dark" href="/kontakt" data-i18n="nav.contact">Kontakt</a> </div> </div> </section> </main> <footer class="site-footer" data-astro-cid-sz7xmlte> <div class="container footer-container" data-astro-cid-sz7xmlte> <div class="footer-column" data-astro-cid-sz7xmlte> <a href="/" data-astro-cid-sz7xmlte> <img alt="Pragma-Code Icon" src="/assets/pragma-code-icon-circle.webp" width="1024" height="1024" loading="lazy" class="footer-logo" data-astro-cid-sz7xmlte> </a> <p class="footer-tagline" data-astro-cid-sz7xmlte>Ihr Partner für digitale Lösungen.</p> <div class="footer-socials" data-astro-cid-sz7xmlte> <a href="https://www.linkedin.com/in/alexander-ohl/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-astro-cid-sz7xmlte> <i class="ph ph-linkedin-logo" data-astro-cid-sz7xmlte></i> </a> <a href="https://github.com/aohl1986-ohlcenter" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-sz7xmlte> <i class="ph ph-github-logo" data-astro-cid-sz7xmlte></i> </a> </div> <div class="system-status" data-astro-cid-sz7xmlte> <span class="status-dot" data-astro-cid-sz7xmlte></span> <span class="status-text" data-astro-cid-sz7xmlte>Alle Systeme funktional</span> </div> </div> <div class="footer-column" data-astro-cid-sz7xmlte> <h3 data-astro-cid-sz7xmlte>Dienstleistungen</h3> <ul data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/leistungen" data-astro-cid-sz7xmlte>Leistungen &amp; Strategie</a></li> <li data-astro-cid-sz7xmlte><a href="/it-support" data-astro-cid-sz7xmlte>IT-Support</a></li> <li data-astro-cid-sz7xmlte><a href="/it-sicherheit" data-astro-cid-sz7xmlte>IT-Security</a></li> <li data-astro-cid-sz7xmlte><a href="/cloud-services" data-astro-cid-sz7xmlte>Cloud Services</a></li> <li data-astro-cid-sz7xmlte><a href="/business-katalog" data-astro-cid-sz7xmlte>Business Katalog</a></li> <li data-astro-cid-sz7xmlte><a href="/website-audit" data-astro-cid-sz7xmlte>Kostenloser Website-Check</a></li> <li data-astro-cid-sz7xmlte><a href="/automatisierungs-rechner" data-astro-cid-sz7xmlte>ROI Automatisierungs-Rechner</a></li> </ul> </div> <div class="footer-column" data-astro-cid-sz7xmlte> <h3 data-astro-cid-sz7xmlte>Über Pragma-Code</h3> <ul data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/alexander-ohl" data-astro-cid-sz7xmlte>Über mich</a></li> <li data-astro-cid-sz7xmlte><a href="/referenzen" data-astro-cid-sz7xmlte>Referenzen</a></li> <li data-astro-cid-sz7xmlte><a href="/karriere" data-astro-cid-sz7xmlte>Karriere</a></li> <li data-astro-cid-sz7xmlte><a href="/standorte" data-astro-cid-sz7xmlte>Standorte</a></li> <li data-astro-cid-sz7xmlte><a href="/kontakt" data-astro-cid-sz7xmlte>Kontakt</a></li> <li data-astro-cid-sz7xmlte><a href="/glossar" data-astro-cid-sz7xmlte>IT-Glossar</a></li> <li data-astro-cid-sz7xmlte><a href="/sitemap" data-astro-cid-sz7xmlte>Sitemap</a></li> </ul> </div> <div class="footer-column" data-astro-cid-sz7xmlte> <h3 data-astro-cid-sz7xmlte>Kontakt</h3> <ul class="contact-list" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><i class="ph ph-map-pin" data-astro-cid-sz7xmlte></i> DACH-Raum · Deutschland, Österreich, Schweiz</li> <li data-astro-cid-sz7xmlte><i class="ph ph-envelope" data-astro-cid-sz7xmlte></i> <a href="/cdn-cgi/l/email-protection#dcb5b2bab39cacaebdbbb1bdf1bfb3b8b9f2b8b9" data-astro-cid-sz7xmlte><span class="__cf_email__" data-cfemail="2b42454d446b5b594a4c464a0648444f4e054f4e">[email&#160;protected]</span></a></li> </ul> </div> </div> <div class="footer-bottom container" data-astro-cid-sz7xmlte> <p class="copyright-text" data-astro-cid-sz7xmlte>© 2026 Pragma-Code. Alle Rechte vorbehalten.</p> <ul class="footer-legal" data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/agb" data-astro-cid-sz7xmlte>AGB</a></li> <li data-astro-cid-sz7xmlte><a href="/impressum" data-astro-cid-sz7xmlte>Impressum</a></li> <li data-astro-cid-sz7xmlte><a href="/datenschutz" data-astro-cid-sz7xmlte>Datenschutzerklärung</a></li> <li data-astro-cid-sz7xmlte><a href="#" id="open-cookie-settings" data-astro-cid-sz7xmlte>Cookie-Einstellungen</a></li> </ul> </div> </footer>   <!-- theme restore is handled in <head> above --> <!-- Floating Chat Button --> <a class="floating-chat-btn" href="/projektanfrage" aria-label="Kontakt aufnehmen"> <i class="ph ph-chat-centered-text"></i> </a> <!-- Initialize Global App Logic --> <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="/_astro/Layout.astro_astro_type_script_index_0_lang.Dn7cC1X9.js"></script>  </body> </html>

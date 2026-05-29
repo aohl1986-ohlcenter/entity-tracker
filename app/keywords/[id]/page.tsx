@@ -7,10 +7,10 @@ import { desc, eq } from "drizzle-orm";
 export const dynamic = "force-dynamic";
 
 const CLS_TONE: Record<string, string> = {
-  owned: "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-200",
-  authority: "bg-blue-100 text-blue-900 dark:bg-blue-900/40 dark:text-blue-200",
-  displacement: "bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-200",
-  neutral: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+  owned: "bg-brand-emerald/15 text-brand-emerald ring-brand-emerald/30",
+  authority: "bg-brand-sky/15 text-brand-sky ring-brand-sky/30",
+  displacement: "bg-displacement/15 text-displacement ring-displacement/30",
+  neutral: "bg-white/5 text-slate-400 ring-white/10",
 };
 
 export default async function KeywordDetail({
@@ -44,48 +44,52 @@ export default async function KeywordDetail({
   return (
     <div className="space-y-8">
       <div>
-        <Link href="/" className="text-sm text-slate-500 hover:underline">
+        <Link href="/" className="text-sm text-slate-400 hover:text-brand-emerald">
           ← zurück
         </Link>
-        <h1 className="mt-2 text-2xl font-bold">{kw.query}</h1>
-        <p className="text-slate-500 text-sm">
+        <h1 className="mt-3 text-2xl font-bold text-white">{kw.query}</h1>
+        <p className="mt-1 text-sm text-slate-400">
           Cluster: {kw.cluster} · {kw.locale.toUpperCase()} / {kw.location} · {kw.device}
+          {latest && (
+            <>
+              {" "}
+              · Score{" "}
+              <span className="font-semibold text-white">{latest.dominationScore}</span>
+            </>
+          )}
         </p>
       </div>
 
       <section>
-        <h2 className="text-sm uppercase tracking-wide text-slate-500 mb-3">
+        <h2 className="mb-3 text-[11px] uppercase tracking-[0.2em] text-slate-400">
           Aktuelle SERP (Top 10)
         </h2>
-        {!latest && <p className="text-slate-500">Noch kein Snapshot.</p>}
+        {!latest && <p className="text-slate-400">Noch kein Snapshot.</p>}
         {latest && (
           <ol className="space-y-2">
             {results.map((r) => (
-              <li
-                key={r.id}
-                className="flex gap-3 rounded-md border border-slate-200 dark:border-slate-800 p-3"
-              >
-                <div className="text-slate-500 w-6 text-right">{r.position}.</div>
+              <li key={r.id} className="card flex gap-3 p-3">
+                <div className="w-7 text-right font-mono text-slate-500">{r.position}.</div>
                 <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-baseline gap-2">
-                    <span
-                      className={`text-xs font-semibold rounded px-1.5 py-0.5 ${CLS_TONE[r.classification]}`}
-                    >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className={`pill ring-1 ${CLS_TONE[r.classification]}`}>
                       {r.classification}
-                      {r.matchedLabel ? ` · ${r.matchedLabel}` : ""}
                     </span>
-                    <span className="text-slate-500 text-xs">{r.domain}</span>
+                    {r.matchedLabel && (
+                      <span className="text-[11px] text-slate-400">{r.matchedLabel}</span>
+                    )}
+                    <span className="text-[11px] text-slate-500">{r.domain}</span>
                   </div>
                   <a
                     href={r.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="block mt-1 font-medium hover:underline truncate"
+                    className="mt-1 block truncate font-medium text-white hover:text-brand-emerald"
                   >
                     {r.title ?? r.url}
                   </a>
                   {r.snippet && (
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{r.snippet}</p>
+                    <p className="mt-1 text-sm text-slate-400 line-clamp-2">{r.snippet}</p>
                   )}
                 </div>
               </li>
@@ -95,28 +99,30 @@ export default async function KeywordDetail({
       </section>
 
       <section>
-        <h2 className="text-sm uppercase tracking-wide text-slate-500 mb-3">
+        <h2 className="mb-3 text-[11px] uppercase tracking-[0.2em] text-slate-400">
           Historie (letzte 30 Snapshots)
         </h2>
-        <div className="overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800">
+        <div className="card overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-100 dark:bg-slate-900 text-left">
-              <tr>
-                <th className="px-3 py-2 font-medium">Datum</th>
-                <th className="px-3 py-2 font-medium">Score</th>
-                <th className="px-3 py-2 font-medium text-owned">Owned</th>
-                <th className="px-3 py-2 font-medium text-authority">Authority</th>
-                <th className="px-3 py-2 font-medium text-displacement">Displacement</th>
+            <thead className="text-left">
+              <tr className="border-b border-white/5">
+                <th className="px-4 py-3 font-medium text-slate-400">Datum</th>
+                <th className="px-4 py-3 font-medium text-slate-400">Score</th>
+                <th className="px-4 py-3 font-medium text-owned">Owned</th>
+                <th className="px-4 py-3 font-medium text-authority">Authority</th>
+                <th className="px-4 py-3 font-medium text-displacement">Displacement</th>
               </tr>
             </thead>
             <tbody>
               {snapshots.map((s) => (
-                <tr key={s.id} className="border-t border-slate-200 dark:border-slate-800">
-                  <td className="px-3 py-2">{new Date(s.fetchedAt).toLocaleString("de-DE")}</td>
-                  <td className="px-3 py-2 font-semibold">{s.dominationScore}</td>
-                  <td className="px-3 py-2 text-owned">{s.ownedCount}</td>
-                  <td className="px-3 py-2 text-authority">{s.authorityCount}</td>
-                  <td className="px-3 py-2 text-displacement">{s.displacementCount}</td>
+                <tr key={s.id} className="border-t border-white/5">
+                  <td className="px-4 py-3 text-slate-300">
+                    {new Date(s.fetchedAt).toLocaleString("de-DE")}
+                  </td>
+                  <td className="px-4 py-3 font-semibold text-white">{s.dominationScore}</td>
+                  <td className="px-4 py-3 text-owned">{s.ownedCount}</td>
+                  <td className="px-4 py-3 text-authority">{s.authorityCount}</td>
+                  <td className="px-4 py-3 text-displacement">{s.displacementCount}</td>
                 </tr>
               ))}
             </tbody>
