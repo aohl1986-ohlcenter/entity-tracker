@@ -97,17 +97,27 @@ export const aiCitations = pgTable("ai_citations", {
   totalCitations: integer("total_citations").notNull(),
 });
 
-export const alerts = pgTable("alerts", {
-  id: serial("id").primaryKey(),
-  entityId: integer("entity_id")
-    .references(() => entities.id, { onDelete: "cascade" })
-    .notNull(),
-  type: text("type").notNull(),
-  severity: text("severity").notNull(),
-  payload: jsonb("payload").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  resolvedAt: timestamp("resolved_at"),
-});
+export const alerts = pgTable(
+  "alerts",
+  {
+    id: serial("id").primaryKey(),
+    entityId: integer("entity_id")
+      .references(() => entities.id, { onDelete: "cascade" })
+      .notNull(),
+    type: text("type").notNull(),
+    severity: text("severity").notNull(),
+    dedupKey: text("dedup_key").notNull(),
+    subject: text("subject").notNull(),
+    payload: jsonb("payload").notNull(),
+    emailSent: integer("email_sent").default(0).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    resolvedAt: timestamp("resolved_at"),
+  },
+  (t) => ({
+    byEntity: index("alerts_entity_idx").on(t.entityId, t.createdAt),
+    byDedup: index("alerts_dedup_idx").on(t.entityId, t.dedupKey, t.createdAt),
+  }),
+);
 
 export type Entity = typeof entities.$inferSelect;
 export type Keyword = typeof keywords.$inferSelect;
@@ -115,3 +125,4 @@ export type TargetUrl = typeof targetUrls.$inferSelect;
 export type SerpSnapshot = typeof serpSnapshots.$inferSelect;
 export type SerpResult = typeof serpResults.$inferSelect;
 export type AiCitation = typeof aiCitations.$inferSelect;
+export type Alert = typeof alerts.$inferSelect;

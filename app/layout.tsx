@@ -41,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="flex items-center gap-1 text-sm">
               <NavLink href="/">Overview</NavLink>
               <NavLink href="/citations">AI Citations</NavLink>
+              <NavLink href="/alerts">Alerts</NavLink>
               <a
                 href="https://www.pragma-code.de/"
                 target="_blank"
