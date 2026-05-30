@@ -1,6 +1,5 @@
 {
   "crons": [
-    { "path": "/api/cron/fetch-serps", "schedule": "0 6 * * *" },
-    { "path": "/api/cron/check-citations", "schedule": "30 6 * * *" }
+    { "path": "/api/cron/daily-digest", "schedule": "0 6 * * *" }
   ]
 }
