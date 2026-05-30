@@ -22,6 +22,7 @@ import {
   detectCitationLossForEntity,
   detectAuthorityCandidatesForEntity,
   dispatchAlertBatch,
+  emailCombinedDigest,
   type GenericAlert,
 } from "./alerts";
 
@@ -38,7 +39,10 @@ export type FetchSerpsReport = {
   };
 };
 
-export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsReport> {
+export async function runFetchSerpsForEntity(
+  slug: string,
+  opts: { sendEmail?: boolean } = {},
+): Promise<FetchSerpsReport & { freshAlerts: GenericAlert[] }> {
   const entity = (
     await db.select().from(entities).where(eq(entities.slug, slug)).limit(1)
   )[0];
@@ -124,13 +128,16 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
   const candidates = await detectAuthorityCandidatesForEntity(entity);
   collected.push(...candidates);
 
-  const alertResult = await dispatchAlertBatch(entity, collected);
+  const alertResult = await dispatchAlertBatch(entity, collected, {
+    sendEmail: opts.sendEmail,
+  });
   return {
     entity: entity.slug,
     processed: kws.length - failed.length,
     failed,
     avgScore: avg,
     alerts: alertResult,
+    freshAlerts: alertResult.fresh,
   };
 }
 
@@ -148,7 +155,10 @@ export type CitationReport = {
   };
 };
 
-export async function runCheckCitationsForEntity(slug: string): Promise<CitationReport> {
+export async function runCheckCitationsForEntity(
+  slug: string,
+  opts: { sendEmail?: boolean } = {},
+): Promise<CitationReport & { freshAlerts: GenericAlert[] }> {
   const entity = (
     await db.select().from(entities).where(eq(entities.slug, slug)).limit(1)
   )[0];
@@ -226,7 +236,9 @@ export async function runCheckCitationsForEntity(slug: string): Promise<Citation
   }
 
   const citationLoss = await detectCitationLossForEntity(entity);
-  const alertResult = await dispatchAlertBatch(entity, citationLoss);
+  const alertResult = await dispatchAlertBatch(entity, citationLoss, {
+    sendEmail: opts.sendEmail,
+  });
 
   return {
     entity: entity.slug,
@@ -235,5 +247,49 @@ export async function runCheckCitationsForEntity(slug: string): Promise<Citation
     totalOwned,
     totalAuthority,
     alerts: alertResult,
+    freshAlerts: alertResult.fresh,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Daily Digest: beide Sub-Jobs hintereinander, EINE kombinierte Mail
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type DailyDigestReport = {
+  entity: string;
+  serps: FetchSerpsReport;
+  citations: CitationReport;
+  combinedAlerts: number;
+  digest: {
+    emailed: boolean;
+    reason?: string;
+    byType: Record<string, number>;
+  };
+};
+
+export async function runDailyDigestForEntity(slug: string): Promise<DailyDigestReport> {
+  const serps = await runFetchSerpsForEntity(slug, { sendEmail: false });
+  const citations = await runCheckCitationsForEntity(slug, { sendEmail: false });
+
+  const entity = (
+    await db.select().from(entities).where(eq(entities.slug, slug)).limit(1)
+  )[0];
+  if (!entity) throw new Error(`Entity ${slug} not found`);
+
+  const combined: GenericAlert[] = [...serps.freshAlerts, ...citations.freshAlerts];
+  const digest = await emailCombinedDigest(entity, combined);
+
+  // Reports ohne freshAlerts zurückgeben (kürzer im JSON-Output)
+  const { freshAlerts: _s, ...serpReport } = serps;
+  const { freshAlerts: _c, ...citationReport } = citations;
+  void _s;
+  void _c;
+
+  return {
+    entity: entity.slug,
+    serps: serpReport,
+    citations: citationReport,
+    combinedAlerts: combined.length,
+    digest,
   };
 }

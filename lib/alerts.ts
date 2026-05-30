@@ -415,13 +415,24 @@ const DEDUP_DAYS_BY_TYPE: Record<AlertType, number> = {
   authority_candidate: CANDIDATE_DEDUP_DAYS,
 };
 
+export type DispatchResult = {
+  persisted: number;
+  emailed: boolean;
+  reason?: string;
+  byType: Record<string, number>;
+  /** Frisch persistierte Alerts (für nachgelagertes Mailen) */
+  fresh: GenericAlert[];
+};
+
 export async function dispatchAlertBatch(
   entity: Entity,
   candidates: GenericAlert[],
-): Promise<{ persisted: number; emailed: boolean; reason?: string; byType: Record<string, number> }> {
+  opts: { sendEmail?: boolean } = {},
+): Promise<DispatchResult> {
+  const sendEmail = opts.sendEmail !== false; // default true
   const byType: Record<string, number> = {};
   if (candidates.length === 0) {
-    return { persisted: 0, emailed: false, reason: "no-candidates", byType };
+    return { persisted: 0, emailed: false, reason: "no-candidates", byType, fresh: [] };
   }
 
   // Dedup pro Typ gegen vorhandene Alerts im jeweiligen Window.
@@ -454,7 +465,7 @@ export async function dispatchAlertBatch(
   }
 
   if (fresh.length === 0) {
-    return { persisted: 0, emailed: false, reason: "all-deduped", byType };
+    return { persisted: 0, emailed: false, reason: "all-deduped", byType, fresh: [] };
   }
 
   const persistRows = fresh.map((a) => ({
@@ -467,26 +478,29 @@ export async function dispatchAlertBatch(
     emailSent: 0,
   }));
   const inserted = await db.insert(alerts).values(persistRows).returning({ id: alerts.id });
+  const insertedIds = inserted.map((i) => i.id);
 
   for (const a of fresh) byType[a.type] = (byType[a.type] ?? 0) + 1;
 
-  const to = process.env.ALERT_EMAIL_TO;
-  if (!to) {
-    return { persisted: inserted.length, emailed: false, reason: "no-recipient", byType };
+  if (!sendEmail) {
+    return { persisted: inserted.length, emailed: false, reason: "skip-email", byType, fresh };
   }
 
-  const subject = renderDigestSubject(entity, byType);
-  const html = renderDigestHtml(entity, fresh, byType);
+  const to = process.env.ALERT_EMAIL_TO;
+  if (!to) {
+    return { persisted: inserted.length, emailed: false, reason: "no-recipient", byType, fresh };
+  }
+
   try {
-    const sent = await sendEmail({ to, subject, html });
+    const sent = await mailDigest(entity, fresh, to);
     if (sent) {
       await db
         .update(alerts)
         .set({ emailSent: 1 })
-        .where(inArray(alerts.id, inserted.map((i) => i.id)));
-      return { persisted: inserted.length, emailed: true, byType };
+        .where(inArray(alerts.id, insertedIds));
+      return { persisted: inserted.length, emailed: true, byType, fresh };
     }
-    return { persisted: inserted.length, emailed: false, reason: "resend-key-missing", byType };
+    return { persisted: inserted.length, emailed: false, reason: "resend-key-missing", byType, fresh };
   } catch (err) {
     console.error("[alerts] email dispatch failed:", err);
     return {
@@ -494,8 +508,60 @@ export async function dispatchAlertBatch(
       emailed: false,
       reason: err instanceof Error ? err.message : String(err),
       byType,
+      fresh,
     };
   }
+}
+
+/**
+ * Sendet eine kombinierte Digest-Mail über bereits persistierte fresh-Alerts
+ * mehrerer Jobs (z. B. SERPs + Citations) und markiert sie als gemailt.
+ */
+export async function emailCombinedDigest(
+  entity: Entity,
+  alertsList: GenericAlert[],
+): Promise<{ emailed: boolean; reason?: string; byType: Record<string, number> }> {
+  const byType: Record<string, number> = {};
+  for (const a of alertsList) byType[a.type] = (byType[a.type] ?? 0) + 1;
+  if (alertsList.length === 0) return { emailed: false, reason: "no-alerts", byType };
+
+  const to = process.env.ALERT_EMAIL_TO;
+  if (!to) return { emailed: false, reason: "no-recipient", byType };
+
+  try {
+    const sent = await mailDigest(entity, alertsList, to);
+    if (!sent) return { emailed: false, reason: "resend-key-missing", byType };
+
+    const dedupKeys = alertsList.map((a) => a.dedupKey);
+    if (dedupKeys.length > 0) {
+      await db
+        .update(alerts)
+        .set({ emailSent: 1 })
+        .where(
+          and(
+            eq(alerts.entityId, entity.id),
+            inArray(alerts.dedupKey, dedupKeys),
+          ),
+        );
+    }
+    return { emailed: true, byType };
+  } catch (err) {
+    console.error("[alerts] combined digest dispatch failed:", err);
+    return {
+      emailed: false,
+      reason: err instanceof Error ? err.message : String(err),
+      byType,
+    };
+  }
+}
+
+async function mailDigest(entity: Entity, alertsList: GenericAlert[], to: string): Promise<boolean> {
+  const byType: Record<string, number> = {};
+  for (const a of alertsList) byType[a.type] = (byType[a.type] ?? 0) + 1;
+  const subject = renderDigestSubject(entity, byType);
+  const html = renderDigestHtml(entity, alertsList, byType);
+  const sent = await sendEmail({ to, subject, html });
+  return !!sent;
 }
 
 const TYPE_LABEL: Record<AlertType, string> = {
