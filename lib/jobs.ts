@@ -17,8 +17,12 @@ import { countByClass, dominationScore } from "./score";
 import { AI_CITATION_PROMPTS } from "../data/langkammer";
 import {
   detectDisplacementForSnapshot,
-  persistAndDispatchAlerts,
-  type CollectedAlert,
+  detectRankChangesForKeyword,
+  detectScoreDropForKeyword,
+  detectCitationLossForEntity,
+  detectAuthorityCandidatesForEntity,
+  dispatchAlertBatch,
+  type GenericAlert,
 } from "./alerts";
 
 export type FetchSerpsReport = {
@@ -30,6 +34,7 @@ export type FetchSerpsReport = {
     persisted: number;
     emailed: boolean;
     reason?: string;
+    byType: Record<string, number>;
   };
 };
 
@@ -46,7 +51,7 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
 
   const failed: FetchSerpsReport["failed"] = [];
   const scores: number[] = [];
-  const collectedAlerts: CollectedAlert[] = [];
+  const collected: GenericAlert[] = [];
 
   for (const kw of kws) {
     try {
@@ -100,10 +105,10 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
           })),
         );
 
-        const hits = await detectDisplacementForSnapshot(entity, kw, snapshot.id);
-        if (hits.length > 0) {
-          collectedAlerts.push({ keywordId: kw.id, hits });
-        }
+        const displacements = await detectDisplacementForSnapshot(entity, kw, snapshot.id);
+        const rankChanges = await detectRankChangesForKeyword(kw, snapshot.id);
+        const scoreDrop = await detectScoreDropForKeyword(kw);
+        collected.push(...displacements, ...rankChanges, ...scoreDrop);
       }
     } catch (err) {
       failed.push({
@@ -114,7 +119,12 @@ export async function runFetchSerpsForEntity(slug: string): Promise<FetchSerpsRe
   }
 
   const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
-  const alertResult = await persistAndDispatchAlerts(entity, collectedAlerts);
+
+  // Entity-weite Detektoren (laufen einmal nach allen Keywords).
+  const candidates = await detectAuthorityCandidatesForEntity(entity);
+  collected.push(...candidates);
+
+  const alertResult = await dispatchAlertBatch(entity, collected);
   return {
     entity: entity.slug,
     processed: kws.length - failed.length,
@@ -130,6 +140,12 @@ export type CitationReport = {
   failed: { query: string; error: string }[];
   totalOwned: number;
   totalAuthority: number;
+  alerts: {
+    persisted: number;
+    emailed: boolean;
+    reason?: string;
+    byType: Record<string, number>;
+  };
 };
 
 export async function runCheckCitationsForEntity(slug: string): Promise<CitationReport> {
@@ -209,11 +225,15 @@ export async function runCheckCitationsForEntity(slug: string): Promise<Citation
     }
   }
 
+  const citationLoss = await detectCitationLossForEntity(entity);
+  const alertResult = await dispatchAlertBatch(entity, citationLoss);
+
   return {
     entity: entity.slug,
     prompts: runs,
     failed,
     totalOwned,
     totalAuthority,
+    alerts: alertResult,
   };
 }
