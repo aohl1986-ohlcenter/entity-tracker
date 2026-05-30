@@ -573,6 +573,106 @@ const TYPE_LABEL: Record<AlertType, string> = {
   authority_candidate: "Authority-Kandidat",
 };
 
+type TypeExplanation = { meaning: string; action: string };
+
+const TYPE_EXPLANATION: Record<AlertType, TypeExplanation> = {
+  displacement_top3: {
+    meaning:
+      "Eine unerwünschte Verzeichnis-Domain (Telefonbuch, Yasni, Northdata o. ä.) belegt einen der drei Spitzenplätze für ein getracktes Keyword — sie verdrängt damit eigene oder Authority-Inhalte aus dem sichtbarsten SERP-Bereich.",
+    action:
+      "Mit besser passenden Owned- oder Authority-Inhalten gegensteuern (neuer LinkedIn-Post zum Thema, Gastbeitrag platzieren, vorhandene Authority-Seite gezielt verlinken).",
+  },
+  rank_drop: {
+    meaning:
+      "Eine eigene oder als Authority gepflegte URL ist im Ranking spürbar gefallen oder ganz aus den Top 10 verschwunden. Klassischer Frühwarn-Indikator für Sichtbarkeits-Verlust.",
+    action:
+      "Erst 1–2 Tage beobachten (oft Tages-Volatilität). Hält der Verlust an: Content prüfen, neue Backlinks setzen, ggf. mit einem aktuellen Post auf der eigenen Domain refreshen.",
+  },
+  rank_gain: {
+    meaning:
+      "Eine eigene URL hat Position gewonnen — neue Top-10-Platzierung, Sprung in die Top 3 oder ≥3 Plätze besser. Das ist die Bestätigung, dass eine SEO-Maßnahme greift.",
+    action:
+      "Den Treiber identifizieren (welcher Post / welche Verlinkung war es) und das Muster wiederholen. Bei Position 1 die URL aktiv halten und mit weiteren Signalen absichern.",
+  },
+  score_drop: {
+    meaning:
+      "Der Domination-Score eines Keywords liegt deutlich unter dem 7-Tage-Durchschnitt — d. h. der Anteil von Owned + Authority in den Top 10 ist gesunken bzw. Displacement ist gestiegen.",
+    action:
+      "Das Keyword im Detail anschauen (Dashboard → /keywords): welche Domains haben deine Slots übernommen? Daraus eine Verdrängungs-Taktik ableiten.",
+  },
+  citation_loss: {
+    meaning:
+      "Eine zuvor von einer KI-Engine (Gemini/Tavily/Brave) verlässlich zitierte Owned/Authority-Quelle wird im aktuellen Run nicht mehr genannt. Hat direkten Einfluss auf KI-Sichtbarkeit (AI-Search).",
+    action:
+      "Erst prüfen, ob die Quelle noch live & gut auffindbar ist. Bei Bedarf den Content aktualisieren, Schema.org-Markup ergänzen oder neue, frische Variante des Themas veröffentlichen.",
+  },
+  authority_candidate: {
+    meaning:
+      "Eine bisher nicht klassifizierte Domain taucht regelmäßig in den Top 5 für deine Themen-Keywords auf — sie verdient eine Einordnung (Authority, kooperationsfähig, oder ignorieren).",
+    action:
+      "Domain kurz prüfen. Wenn relevant: in data/langkammer.ts als `authority` aufnehmen oder einen Pitch / Gastbeitrag dort platzieren.",
+  },
+};
+
+function renderNarrative(byType: Record<string, number>): {
+  headline: string;
+  tone: "positive" | "negative" | "neutral" | "mixed";
+} {
+  const gains = byType.rank_gain ?? 0;
+  const losses =
+    (byType.rank_drop ?? 0) +
+    (byType.displacement_top3 ?? 0) +
+    (byType.score_drop ?? 0) +
+    (byType.citation_loss ?? 0);
+  const candidates = byType.authority_candidate ?? 0;
+
+  if (gains === 0 && losses === 0 && candidates > 0) {
+    return {
+      headline: `Ruhiger Tag — keine Rank-Bewegungen, aber ${candidates} neue Domain${candidates === 1 ? "" : "s"} zum Einordnen.`,
+      tone: "neutral",
+    };
+  }
+  if (gains > 0 && losses === 0) {
+    return {
+      headline: `Guter Tag — ${gains} Verbesserung${gains === 1 ? "" : "en"} ohne neue Verluste.`,
+      tone: "positive",
+    };
+  }
+  if (losses > 0 && gains === 0) {
+    return {
+      headline: `Achtung — ${losses} Verlust-Signal${losses === 1 ? "" : "e"} und keine Gegenbewegung.`,
+      tone: "negative",
+    };
+  }
+  if (gains > 0 && losses > 0) {
+    const delta = gains - losses;
+    if (delta > 0) {
+      return {
+        headline: `Netto positiv — ${gains} Gewinne vs. ${losses} Verluste.`,
+        tone: "positive",
+      };
+    }
+    if (delta < 0) {
+      return {
+        headline: `Netto negativ — ${losses} Verluste vs. ${gains} Gewinne.`,
+        tone: "negative",
+      };
+    }
+    return {
+      headline: `Gemischter Tag — ${gains} Gewinne stehen ${losses} Verlusten gegenüber.`,
+      tone: "mixed",
+    };
+  }
+  return { headline: "Tagesübersicht", tone: "neutral" };
+}
+
+const TONE_COLOR: Record<"positive" | "negative" | "neutral" | "mixed", string> = {
+  positive: "#27c08a",
+  negative: "#ff6b6b",
+  neutral: "#94a3b8",
+  mixed: "#ffc829",
+};
+
 function renderDigestSubject(entity: Entity, byType: Record<string, number>): string {
   const parts: string[] = [];
   for (const t of Object.keys(byType) as AlertType[]) {
@@ -589,6 +689,9 @@ function renderDigestHtml(
   const dashboardUrl =
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://tracker.pragma-code.de";
 
+  const narrative = renderNarrative(byType);
+  const narrativeColor = TONE_COLOR[narrative.tone];
+
   const sections = (Object.keys(byType) as AlertType[])
     .map((type) => renderSection(type, alertsList.filter((a) => a.type === type)))
     .join("");
@@ -597,11 +700,19 @@ function renderDigestHtml(
   <div style="max-width:680px;margin:0 auto;padding:32px 24px;">
     <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#ffc829;font-weight:600;">Pragma-Code · Entity Tracker</div>
     <h1 style="margin:8px 0 4px;color:#fff;font-size:22px;">${escape(entity.name)} · Daily Digest</h1>
-    <p style="margin:0 0 24px;color:#94a3b8;font-size:14px;">${alertsList.length} neue Ereignisse seit dem letzten Lauf.</p>
+    <p style="margin:0 0 16px;color:#94a3b8;font-size:14px;">${alertsList.length} neue Ereignisse seit dem letzten Lauf.</p>
+
+    <div style="background:#171c3e;border:1px solid #1f2550;border-left:4px solid ${narrativeColor};border-radius:8px;padding:14px 18px;margin:0 0 12px;">
+      <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#94a3b8;margin-bottom:4px;">TL;DR</div>
+      <div style="color:#fff;font-size:15px;font-weight:600;">${escape(narrative.headline)}</div>
+    </div>
+
     ${sections}
+
     <div style="margin-top:24px;">
       <a href="${dashboardUrl}/alerts" style="display:inline-block;background:#ffc829;color:#0f1430;padding:10px 16px;border-radius:6px;font-weight:600;text-decoration:none;font-size:13px;">Im Dashboard ansehen</a>
     </div>
+    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Du erhältst diese Mail, weil der Tracker-Cron heute neue Signale erfasst hat. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat. Pro Typ unterschiedliches Dedup-Fenster (3–14 Tage).</p>
   </div>
   </body></html>`;
 }
@@ -609,10 +720,18 @@ function renderDigestHtml(
 function renderSection(type: AlertType, items: GenericAlert[]): string {
   if (items.length === 0) return "";
   const label = TYPE_LABEL[type] ?? type;
+  const explanation = TYPE_EXPLANATION[type];
   const rowsHtml = items
     .map((a) => `<tr><td style="padding:8px 14px;border-bottom:1px solid #1f2550;color:#e2e8f0;font-size:13px;">${escape(a.subject)}</td></tr>`)
     .join("");
+  const explainBlock = explanation
+    ? `<div style="background:#0f1430;border:1px solid #1f2550;border-radius:6px;padding:10px 14px;margin:0 0 8px;color:#94a3b8;font-size:12px;line-height:1.55;">
+        <div><strong style="color:#cbd5e1;">Was bedeutet das:</strong> ${escape(explanation.meaning)}</div>
+        <div style="margin-top:4px;"><strong style="color:#cbd5e1;">Was tun:</strong> ${escape(explanation.action)}</div>
+      </div>`
+    : "";
   return `<h2 style="margin:24px 0 8px;color:#fff;font-size:15px;letter-spacing:.04em;">${escape(label)} · ${items.length}</h2>
+  ${explainBlock}
   <table style="width:100%;border-collapse:collapse;background:#171c3e;border:1px solid #1f2550;border-radius:8px;overflow:hidden;">
     <tbody>${rowsHtml}</tbody>
   </table>`;
