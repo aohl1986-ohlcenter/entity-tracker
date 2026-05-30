@@ -10,6 +10,8 @@ import {
 import { eq } from "drizzle-orm";
 import { fetchSerp } from "./serper";
 import { askGroundedGemini } from "./gemini";
+import { askGroundedTavily } from "./tavily";
+import { askGroundedBrave } from "./brave";
 import { classifyUrl, extractDomain } from "./classify";
 import { countByClass, dominationScore } from "./score";
 import { AI_CITATION_PROMPTS } from "../data/langkammer";
@@ -140,47 +142,76 @@ export async function runCheckCitationsForEntity(slug: string): Promise<Citation
     .from(targetUrls)
     .where(eq(targetUrls.entityId, entity.id));
 
+  const engines: {
+    name: string;
+    enabled: boolean;
+    ask: (q: string) => Promise<{
+      text: string;
+      citations: { uri: string; resolvedUrl: string; title?: string }[];
+    }>;
+  }[] = [
+    {
+      name: "gemini",
+      enabled: !!process.env.GEMINI_API_KEY,
+      ask: (q) => askGroundedGemini(q, {}),
+    },
+    {
+      name: "tavily",
+      enabled: !!process.env.TAVILY_API_KEY,
+      ask: (q) => askGroundedTavily(q, {}),
+    },
+    {
+      name: "brave",
+      enabled: !!process.env.BRAVE_API_KEY,
+      ask: (q) => askGroundedBrave(q, {}),
+    },
+  ].filter((e) => e.enabled);
+
   const failed: CitationReport["failed"] = [];
   let totalOwned = 0;
   let totalAuthority = 0;
+  let runs = 0;
 
   for (const prompt of AI_CITATION_PROMPTS) {
-    try {
-      const result = await askGroundedGemini(prompt.query, {});
-      const cited = result.citations.map((c) => {
-        const cls = classifyUrl(c.resolvedUrl, targets);
-        return {
-          url: c.resolvedUrl,
-          title: c.title,
-          classification: cls.classification,
-        };
-      });
-      const ownedHits = cited.filter((c) => c.classification === "owned").length;
-      const authorityHits = cited.filter((c) => c.classification === "authority").length;
-      totalOwned += ownedHits;
-      totalAuthority += authorityHits;
+    for (const engine of engines) {
+      try {
+        const result = await engine.ask(prompt.query);
+        const cited = result.citations.map((c) => {
+          const cls = classifyUrl(c.resolvedUrl, targets);
+          return {
+            url: c.resolvedUrl,
+            title: c.title,
+            classification: cls.classification,
+          };
+        });
+        const ownedHits = cited.filter((c) => c.classification === "owned").length;
+        const authorityHits = cited.filter((c) => c.classification === "authority").length;
+        totalOwned += ownedHits;
+        totalAuthority += authorityHits;
 
-      await db.insert(aiCitations).values({
-        entityId: entity.id,
-        engine: prompt.engine,
-        query: prompt.query,
-        responseText: result.text,
-        citedUrls: cited,
-        ownedHits,
-        authorityHits,
-        totalCitations: cited.length,
-      });
-    } catch (err) {
-      failed.push({
-        query: prompt.query,
-        error: err instanceof Error ? err.message : String(err),
-      });
+        await db.insert(aiCitations).values({
+          entityId: entity.id,
+          engine: engine.name,
+          query: prompt.query,
+          responseText: result.text,
+          citedUrls: cited,
+          ownedHits,
+          authorityHits,
+          totalCitations: cited.length,
+        });
+        runs++;
+      } catch (err) {
+        failed.push({
+          query: `[${engine.name}] ${prompt.query}`,
+          error: err instanceof Error ? err.message : String(err),
+        });
+      }
     }
   }
 
   return {
     entity: entity.slug,
-    prompts: AI_CITATION_PROMPTS.length - failed.length,
+    prompts: runs,
     failed,
     totalOwned,
     totalAuthority,

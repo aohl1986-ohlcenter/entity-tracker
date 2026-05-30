@@ -8,6 +8,8 @@ Erste Entity: **Jens Langkammer**.
 - Postgres via Vercel Postgres / Neon (Drizzle ORM)
 - Serper.dev für Google-SERPs (echtes Google DE)
 - Gemini 2.5 Flash mit `google_search`-Grounding für AI-Citations
+- Tavily Search API als zweite Citation-Engine (optional, 1000 Calls/Monat free)
+- Brave Search API als dritte Citation-Engine (optional, $5 Free-Credits/Monat ≈ 1k Calls)
 - Vercel Cron (täglich)
 
 ## Lokal starten
@@ -106,9 +108,24 @@ Jede SERP-URL wird gegen die `target_urls`-Patterns geprüft (Glob `*`):
 - v3: IndexJump-Integration für schnellere Reindexierung nach Schema-Updates
 - v4: Multi-Tenant (Pragma-Code-Service-Produkt)
 
+## Citation-Engines
+
+Jeder Prompt aus `data/langkammer.ts` (`AI_CITATION_PROMPTS`) wird gegen alle
+Engines ausgeführt, deren API-Key gesetzt ist:
+
+- `gemini` — `GEMINI_API_KEY` (Grounded Search via `google_search`-Tool)
+- `tavily` — `TAVILY_API_KEY` (LLM-optimierte Search-API, free 1k/Monat)
+- `brave` — `BRAVE_API_KEY` (Brave Web Search, $5 Free-Credits/Monat)
+
+Eine fehlende Engine wird stillschweigend übersprungen. Pro Prompt entsteht
+eine DB-Zeile pro Engine — damit lassen sich Gemini vs. Tavily direkt
+vergleichen (`/citations` zeigt das `engine`-Feld im Kopf jeder Karte).
+
 ## Key-Rotation
 
-Beide API-Keys (Serper, Gemini) wurden initial im Chat geteilt — bitte
+Alle API-Keys (Serper, Gemini, Tavily) wurden initial im Chat geteilt — bitte
 nach erfolgreichem Smoke-Test rotieren:
 - Serper: https://serper.dev → Settings → Regenerate
 - Gemini: https://aistudio.google.com/apikey → Delete & Create
+- Tavily: https://app.tavily.com → API Keys → Rotate
+- Brave: https://api.search.brave.com → API Keys → Regenerate
