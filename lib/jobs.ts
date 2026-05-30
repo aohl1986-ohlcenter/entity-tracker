@@ -153,17 +153,17 @@ export async function runCheckCitationsForEntity(slug: string): Promise<Citation
     {
       name: "gemini",
       enabled: !!process.env.GEMINI_API_KEY,
-      ask: (q) => askGroundedGemini(q, {}),
+      ask: (q: string) => askGroundedGemini(q, {}),
     },
     {
       name: "tavily",
       enabled: !!process.env.TAVILY_API_KEY,
-      ask: (q) => askGroundedTavily(q, {}),
+      ask: (q: string) => askGroundedTavily(q, {}),
     },
     {
       name: "brave",
       enabled: !!process.env.BRAVE_API_KEY,
-      ask: (q) => askGroundedBrave(q, {}),
+      ask: (q: string) => askGroundedBrave(q, {}),
     },
   ].filter((e) => e.enabled);
 
