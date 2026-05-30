@@ -11,6 +11,12 @@ const CLS_TONE: Record<string, string> = {
   neutral: "bg-white/5 text-slate-400 ring-white/10",
 };
 
+const ENGINE_TONE: Record<string, string> = {
+  gemini: "bg-brand-gold/15 text-brand-gold ring-brand-gold/30",
+  tavily: "bg-brand-sky/15 text-brand-sky ring-brand-sky/30",
+  brave: "bg-displacement/15 text-displacement ring-displacement/30",
+};
+
 export default async function CitationsPage() {
   const slug = process.env.DEFAULT_ENTITY_SLUG ?? "jens-langkammer";
   const entity = (
@@ -42,9 +48,10 @@ export default async function CitationsPage() {
         <div className="text-[11px] uppercase tracking-[0.2em] text-brand-gold">
           AI Search Readiness
         </div>
-        <h1 className="mt-1 text-3xl font-bold text-white">Gemini Grounded</h1>
+        <h1 className="mt-1 text-3xl font-bold text-white">AI Citations</h1>
         <p className="mt-2 text-sm text-slate-400">
-          Wie oft zitiert die KI die Ziel-URLs als Primärquelle für definierte Themen.
+          Wie oft zitieren KI-Suchen (Gemini Grounded, Tavily, Brave) die
+          Ziel-URLs als Primärquelle für definierte Themen.
         </p>
         <div className="mt-5 grid grid-cols-3 gap-3 max-w-md">
           <Stat label="Owned" value={totals.owned} tone="emerald" />
@@ -65,8 +72,15 @@ export default async function CitationsPage() {
           <article key={row.id} className="card p-5">
             <header className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="font-semibold text-white">{row.query}</h2>
-              <div className="text-[11px] text-slate-500">
-                {row.engine} · {new Date(row.fetchedAt).toLocaleString("de-DE")}
+              <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                <span
+                  className={`pill ring-1 ${
+                    ENGINE_TONE[row.engine] ?? "bg-white/5 text-slate-400 ring-white/10"
+                  }`}
+                >
+                  {row.engine}
+                </span>
+                <span>{new Date(row.fetchedAt).toLocaleString("de-DE")}</span>
               </div>
             </header>
             <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-slate-400">
