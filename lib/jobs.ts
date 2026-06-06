@@ -23,6 +23,7 @@ import {
   detectAuthorityCandidatesForEntity,
   dispatchAlertBatch,
   emailCombinedDigest,
+  sendPeriodicDigest,
   type GenericAlert,
 } from "./alerts";
 
@@ -292,4 +293,63 @@ export async function runDailyDigestForEntity(slug: string): Promise<DailyDigest
     combinedAlerts: combined.length,
     digest,
   };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Täglich sammeln (KEINE Mail) — Alerts werden mit emailSent=0 persistiert
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type CollectionReport = {
+  entity: string;
+  serps: FetchSerpsReport;
+  citations: CitationReport;
+  persistedAlerts: number;
+};
+
+export async function runDailyCollectionForEntity(slug: string): Promise<CollectionReport> {
+  const serps = await runFetchSerpsForEntity(slug, { sendEmail: false });
+  const citations = await runCheckCitationsForEntity(slug, { sendEmail: false });
+
+  const persisted =
+    (serps.alerts?.persisted ?? 0) + (citations.alerts?.persisted ?? 0);
+
+  const { freshAlerts: _s, ...serpReport } = serps;
+  const { freshAlerts: _c, ...citationReport } = citations;
+  void _s;
+  void _c;
+
+  return {
+    entity: slug,
+    serps: serpReport,
+    citations: citationReport,
+    persistedAlerts: persisted,
+  };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Periodischer Report (z. B. alle 5 Tage) — bündelt alle noch nicht
+// gemailten Alerts in EINE Mail
+// ─────────────────────────────────────────────────────────────────────────────
+
+export type SendDigestReport = {
+  entity: string;
+  emailed: boolean;
+  count: number;
+  reason?: string;
+  byType: Record<string, number>;
+};
+
+export async function runSendDigestForEntity(
+  slug: string,
+  opts: { periodLabel?: string } = {},
+): Promise<SendDigestReport> {
+  const entity = (
+    await db.select().from(entities).where(eq(entities.slug, slug)).limit(1)
+  )[0];
+  if (!entity) throw new Error(`Entity ${slug} not found`);
+
+  const result = await sendPeriodicDigest(entity, {
+    periodLabel: opts.periodLabel ?? "in den letzten 5 Tagen",
+  });
+  return { entity: entity.slug, ...result };
 }
