@@ -555,13 +555,83 @@ export async function emailCombinedDigest(
   }
 }
 
-async function mailDigest(entity: Entity, alertsList: GenericAlert[], to: string): Promise<boolean> {
+async function mailDigest(
+  entity: Entity,
+  alertsList: GenericAlert[],
+  to: string,
+  opts: { periodLabel?: string } = {},
+): Promise<boolean> {
   const byType: Record<string, number> = {};
   for (const a of alertsList) byType[a.type] = (byType[a.type] ?? 0) + 1;
   const subject = renderDigestSubject(entity, byType);
-  const html = renderDigestHtml(entity, alertsList, byType);
+  const html = renderDigestHtml(entity, alertsList, byType, opts.periodLabel);
   const sent = await sendEmail({ to, subject, html });
   return !!sent;
+}
+
+/**
+ * Periodischer Report: bündelt ALLE noch nicht gemailten Alerts (emailSent=0)
+ * eines Entities in eine Mail — unabhängig davon, an welchem Tag sie erfasst
+ * wurden. So sammelt der Cron täglich, mailt aber nur im gewünschten Rhythmus.
+ */
+export async function sendPeriodicDigest(
+  entity: Entity,
+  opts: { periodLabel?: string; safetyDays?: number } = {},
+): Promise<{ emailed: boolean; count: number; reason?: string; byType: Record<string, number> }> {
+  const safetyDays = opts.safetyDays ?? 30;
+  const cutoff = new Date(Date.now() - safetyDays * 24 * 60 * 60 * 1000);
+  const pending = await db
+    .select()
+    .from(alerts)
+    .where(
+      and(
+        eq(alerts.entityId, entity.id),
+        eq(alerts.emailSent, 0),
+        gte(alerts.createdAt, cutoff),
+      ),
+    )
+    .orderBy(desc(alerts.createdAt));
+
+  const byType: Record<string, number> = {};
+  for (const r of pending) byType[r.type] = (byType[r.type] ?? 0) + 1;
+
+  if (pending.length === 0) {
+    return { emailed: false, count: 0, reason: "no-pending", byType };
+  }
+
+  const to = process.env.ALERT_EMAIL_TO;
+  if (!to) {
+    return { emailed: false, count: pending.length, reason: "no-recipient", byType };
+  }
+
+  const list: GenericAlert[] = pending.map((r) => ({
+    type: r.type as AlertType,
+    severity: r.severity as Severity,
+    dedupKey: r.dedupKey,
+    subject: r.subject,
+    payload: r.payload as Record<string, unknown>,
+  }));
+
+  const periodLabel = opts.periodLabel ?? "seit dem letzten Report";
+  try {
+    const sent = await mailDigest(entity, list, to, { periodLabel });
+    if (!sent) {
+      return { emailed: false, count: pending.length, reason: "resend-key-missing", byType };
+    }
+    await db
+      .update(alerts)
+      .set({ emailSent: 1 })
+      .where(inArray(alerts.id, pending.map((p) => p.id)));
+    return { emailed: true, count: pending.length, byType };
+  } catch (err) {
+    console.error("[alerts] periodic digest dispatch failed:", err);
+    return {
+      emailed: false,
+      count: pending.length,
+      reason: err instanceof Error ? err.message : String(err),
+      byType,
+    };
+  }
 }
 
 const TYPE_LABEL: Record<AlertType, string> = {
@@ -685,6 +755,7 @@ function renderDigestHtml(
   entity: Entity,
   alertsList: GenericAlert[],
   byType: Record<string, number>,
+  periodLabel = "seit dem letzten Lauf",
 ): string {
   const dashboardUrl =
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://tracker.pragma-code.de";
@@ -699,8 +770,8 @@ function renderDigestHtml(
   return `<!doctype html><html><body style="margin:0;padding:0;background:#0f1430;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#e2e8f0;">
   <div style="max-width:680px;margin:0 auto;padding:32px 24px;">
     <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#ffc829;font-weight:600;">Pragma-Code · Entity Tracker</div>
-    <h1 style="margin:8px 0 4px;color:#fff;font-size:22px;">${escape(entity.name)} · Daily Digest</h1>
-    <p style="margin:0 0 16px;color:#94a3b8;font-size:14px;">${alertsList.length} neue Ereignisse seit dem letzten Lauf.</p>
+    <h1 style="margin:8px 0 4px;color:#fff;font-size:22px;">${escape(entity.name)} · 5-Tage-Report</h1>
+    <p style="margin:0 0 16px;color:#94a3b8;font-size:14px;">${alertsList.length} Ereignisse ${escape(periodLabel)}.</p>
 
     <div style="background:#171c3e;border:1px solid #1f2550;border-left:4px solid ${narrativeColor};border-radius:8px;padding:14px 18px;margin:0 0 12px;">
       <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#94a3b8;margin-bottom:4px;">TL;DR</div>
@@ -712,7 +783,7 @@ function renderDigestHtml(
     <div style="margin-top:24px;">
       <a href="${dashboardUrl}/alerts" style="display:inline-block;background:#ffc829;color:#0f1430;padding:10px 16px;border-radius:6px;font-weight:600;text-decoration:none;font-size:13px;">Im Dashboard ansehen</a>
     </div>
-    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Du erhältst diese Mail, weil der Tracker-Cron heute neue Signale erfasst hat. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat. Pro Typ unterschiedliches Dedup-Fenster (3–14 Tage).</p>
+    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Der Tracker sammelt täglich, dieser Report fasst alle Signale der letzten ~5 Tage zusammen. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat. Pro Typ unterschiedliches Dedup-Fenster (3–14 Tage).</p>
   </div>
   </body></html>`;
 }
