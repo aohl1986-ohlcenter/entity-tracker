@@ -63,8 +63,19 @@ vercel deploy --prod
 ```
 
 Die `vercel.json` registriert zwei Cronjobs (Vercel Hobby reicht):
-- 06:00 UTC SERP-Fetch
-- 06:30 UTC AI-Citation-Check
+- **täglich 06:00 UTC** `/api/cron/collect` — SERP-Fetch + AI-Citation-Check
+  (alle 3 Engines) + Alert-Erkennung. Persistiert Alerts mit `emailSent=0`,
+  **versendet KEINE Mail**.
+- **alle 5 Tage 07:00 UTC** `/api/cron/send-digest` — bündelt alle noch nicht
+  gemailten Alerts (`emailSent=0`) in **einen** Report und mailt ihn.
+
+So wird täglich gesammelt (saubere Zeitreihe für Rank-Vergleiche & Score-Avg),
+aber nur alle 5 Tage eine Mail verschickt. `*/5` im Day-of-Month-Feld trifft
+Tag 1,6,11,16,21,26,31 — am Monatsende einmal ein kürzerer Abstand.
+
+Manueller Sofort-Report (sammeln **und** sofort mailen): `/api/cron/daily-digest`
+bzw. `npx tsx scripts/run-daily-digest.ts`. Einzeln: `scripts/run-collect.ts`
+(sammeln, keine Mail) und `scripts/run-send-digest.ts` (offene Alerts mailen).
 
 Vercel sendet bei Cron automatisch `Authorization: Bearer $CRON_SECRET`,
 unsere Routes validieren das.
