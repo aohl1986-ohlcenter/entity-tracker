@@ -41,12 +41,14 @@ export const KEYWORDS: SeedKeyword[] = [
 export const TARGETS: SeedTarget[] = [
   // ─── OWNED (eigene Profile / Posts) ────────────────────────────────────
   {
-    pattern: "linkedin.com/in/jens-langkammer",
+    // Führendes * deckt de.linkedin.com / www.linkedin.com ab — Google.de
+    // liefert das Profil meist als de.linkedin.com, sonst greift owned nicht.
+    pattern: "*linkedin.com/in/jens-langkammer",
     label: "LinkedIn Profil",
     category: "owned",
   },
   {
-    pattern: "linkedin.com/in/jens-langkammer/details/featured",
+    pattern: "*linkedin.com/in/jens-langkammer/details/featured",
     label: "LinkedIn Featured",
     category: "owned",
   },
@@ -171,6 +173,15 @@ export const TARGETS: SeedTarget[] = [
   },
 
   // ─── DISPLACEMENT (zu verdrängen) ──────────────────────────────────────
+  // Namensvetter: anderes LinkedIn-Profil, das für "Jens Langkammer" rankt
+  // (Jens Langhammer, CTO Authentik Security — Vanity-URL /in/beryju).
+  {
+    // Führendes * deckt Subdomains ab (de.linkedin.com, www.linkedin.com …);
+    // das Matching ist mit ^ verankert, sonst greift die de.-Subdomain nicht.
+    pattern: "*linkedin.com/in/beryju",
+    label: "Jens Langhammer (Namensvetter, CTO Authentik)",
+    category: "displacement",
+  },
   { pattern: "yasni.de/*", label: "Yasni", category: "displacement" },
   { pattern: "yasni.com/*", label: "Yasni .com", category: "displacement" },
   { pattern: "11880.com/*", label: "11880", category: "displacement" },
