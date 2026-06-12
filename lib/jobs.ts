@@ -26,6 +26,7 @@ import {
   sendPeriodicDigest,
   type GenericAlert,
 } from "./alerts";
+import { pruneOldSnapshotRaw } from "./prune";
 
 export type FetchSerpsReport = {
   entity: string;
@@ -304,6 +305,7 @@ export type CollectionReport = {
   serps: FetchSerpsReport;
   citations: CitationReport;
   persistedAlerts: number;
+  prunedRawRows: number;
 };
 
 export async function runDailyCollectionForEntity(slug: string): Promise<CollectionReport> {
@@ -312,6 +314,10 @@ export async function runDailyCollectionForEntity(slug: string): Promise<Collect
 
   const persisted =
     (serps.alerts?.persisted ?? 0) + (citations.alerts?.persisted ?? 0);
+
+  // Housekeeping: alte Roh-SERP-JSONs leeren (Storage-Schutz). Läuft im
+  // täglichen Collect mit, daher kein zusätzlicher Cron nötig.
+  const prune = await pruneOldSnapshotRaw();
 
   const { freshAlerts: _s, ...serpReport } = serps;
   const { freshAlerts: _c, ...citationReport } = citations;
@@ -323,6 +329,7 @@ export async function runDailyCollectionForEntity(slug: string): Promise<Collect
     serps: serpReport,
     citations: citationReport,
     persistedAlerts: persisted,
+    prunedRawRows: prune.pruned,
   };
 }
 
