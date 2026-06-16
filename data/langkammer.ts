@@ -41,6 +41,14 @@ export const KEYWORDS: SeedKeyword[] = [
 export const TARGETS: SeedTarget[] = [
   // ─── OWNED (eigene Profile / Posts) ────────────────────────────────────
   {
+    // Eigene Landingpage (Exact-Match-Domain) — stärkstes Owned-Asset für die
+    // Namenssuche. Kein Glob: matcht Root + alle Unterseiten; www wird in
+    // normalize() gestrippt, deckt also www. und Apex ab.
+    pattern: "jens-langkammer.de",
+    label: "Eigene Landingpage (jens-langkammer.de)",
+    category: "owned",
+  },
+  {
     // Führendes * deckt de.linkedin.com / www.linkedin.com ab — Google.de
     // liefert das Profil meist als de.linkedin.com, sonst greift owned nicht.
     pattern: "*linkedin.com/in/jens-langkammer",
