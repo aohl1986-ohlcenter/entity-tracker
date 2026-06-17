@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { runDailyCollectionForEntity } from "@/lib/jobs";
+import { runDailyCollectionForAllEntities } from "@/lib/jobs";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,9 +16,8 @@ export async function GET(req: Request) {
   if (!authorized(req)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
-  const slug = process.env.DEFAULT_ENTITY_SLUG ?? "jens-langkammer";
   try {
-    const report = await runDailyCollectionForEntity(slug);
+    const report = await runDailyCollectionForAllEntities();
     return NextResponse.json({ ok: true, report });
   } catch (err) {
     return NextResponse.json(

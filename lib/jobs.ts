@@ -14,7 +14,7 @@ import { askGroundedTavily } from "./tavily";
 import { askGroundedBrave } from "./brave";
 import { classifyUrl, extractDomain } from "./classify";
 import { countByClass, dominationScore } from "./score";
-import { AI_CITATION_PROMPTS } from "../data/langkammer";
+import { citationPromptsForSlug } from "../data/entities";
 import {
   detectDisplacementForSnapshot,
   detectRankChangesForKeyword,
@@ -195,12 +195,14 @@ export async function runCheckCitationsForEntity(
     },
   ].filter((e) => e.enabled);
 
+  const prompts = citationPromptsForSlug(slug);
+
   const failed: CitationReport["failed"] = [];
   let totalOwned = 0;
   let totalAuthority = 0;
   let runs = 0;
 
-  for (const prompt of AI_CITATION_PROMPTS) {
+  for (const prompt of prompts) {
     for (const engine of engines) {
       try {
         const result = await engine.ask(prompt.query);
@@ -359,4 +361,31 @@ export async function runSendDigestForEntity(
     periodLabel: opts.periodLabel ?? "in den letzten 5 Tagen",
   });
   return { entity: entity.slug, ...result };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Multi-Entity-Wrapper für die Crons — laufen über ALLE Entities in der DB
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function allEntitySlugs(): Promise<string[]> {
+  const rows = await db.select({ slug: entities.slug }).from(entities);
+  return rows.map((r) => r.slug);
+}
+
+export async function runDailyCollectionForAllEntities(): Promise<CollectionReport[]> {
+  const slugs = await allEntitySlugs();
+  const reports: CollectionReport[] = [];
+  for (const slug of slugs) {
+    reports.push(await runDailyCollectionForEntity(slug));
+  }
+  return reports;
+}
+
+export async function runSendDigestForAllEntities(): Promise<SendDigestReport[]> {
+  const slugs = await allEntitySlugs();
+  const reports: SendDigestReport[] = [];
+  for (const slug of slugs) {
+    reports.push(await runSendDigestForEntity(slug));
+  }
+  return reports;
 }
