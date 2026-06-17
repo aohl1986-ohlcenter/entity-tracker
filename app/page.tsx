@@ -2,6 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { entities, keywords, serpSnapshots } from "@/lib/schema";
 import { desc, eq } from "drizzle-orm";
+import { getSessionSlug } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 
@@ -121,7 +122,7 @@ const CLUSTER_LABELS: Record<string, string> = {
 };
 
 export default async function Page() {
-  const slug = process.env.DEFAULT_ENTITY_SLUG ?? "jens-langkammer";
+  const slug = await getSessionSlug();
   const data = await loadOverview(slug);
 
   if (!data) {

@@ -2,6 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { db } from "@/lib/db";
+import { entities } from "@/lib/schema";
+import { getSessionSlugSafe } from "@/lib/session";
 
 export const metadata: Metadata = {
   title: "Entity Authority Tracker · Pragma-Code",
@@ -13,7 +16,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const slug = await getSessionSlugSafe();
+  let entityName: string | null = null;
+  if (slug) {
+    const all = await db.select({ slug: entities.slug, name: entities.name }).from(entities);
+    entityName = all.find((e) => e.slug === slug)?.name ?? slug;
+  }
+
   return (
     <html lang="de">
       <body>
@@ -38,22 +48,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
               </div>
             </Link>
-            <nav className="flex items-center gap-1 text-sm">
-              <NavLink href="/">Overview</NavLink>
-              <NavLink href="/citations">AI Citations</NavLink>
-              <NavLink href="/alerts">Alerts</NavLink>
-              <a
-                href="https://www.pragma-code.de/"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-ghost ml-3 hidden sm:inline-flex"
-              >
-                pragma-code.de ↗
-              </a>
-            </nav>
+            {slug && (
+              <nav className="flex items-center gap-1 text-sm">
+                <NavLink href="/">Overview</NavLink>
+                <NavLink href="/citations">AI Citations</NavLink>
+                <NavLink href="/alerts">Alerts</NavLink>
+                <EntitySwitcher name={entityName ?? slug} />
+              </nav>
+            )}
           </div>
         </header>
-        <CoProjectBanner />
+        {slug && <CoProjectBanner entityName={entityName ?? slug} />}
         <main className="mx-auto max-w-6xl px-6 py-10">{children}</main>
         <footer className="mx-auto mt-16 max-w-6xl border-t border-white/5 px-6 py-8 text-[12px] text-slate-400 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -83,7 +88,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }
 
-function CoProjectBanner() {
+function EntitySwitcher({ name }: { name: string }) {
+  return (
+    <div className="ml-3 flex items-center gap-2">
+      <span className="pill bg-brand-gold/15 text-brand-gold ring-1 ring-brand-gold/30">
+        {name}
+      </span>
+      <Link
+        href="/login?switch=1"
+        className="rounded-md px-2.5 py-1.5 text-[12px] text-slate-300 hover:bg-white/5 hover:text-brand-gold transition"
+      >
+        Wechseln
+      </Link>
+      <a
+        href="/logout"
+        className="rounded-md px-2.5 py-1.5 text-[12px] text-slate-400 hover:bg-white/5 hover:text-white transition"
+      >
+        Abmelden
+      </a>
+    </div>
+  );
+}
+
+function CoProjectBanner({ entityName }: { entityName: string }) {
   return (
     <div className="border-b border-white/5 bg-brand-navy-2/40">
       <div className="mx-auto max-w-6xl px-6 py-2.5 flex items-center gap-3 text-[12px] text-slate-300">
@@ -96,8 +123,8 @@ function CoProjectBanner() {
         </span>
         <span className="text-slate-400">·</span>
         <span>
-          Pragma-Code <span className="text-slate-500">×</span> Jens Langkammer · Live-Cockpit für
-          die 90-Tage-Authority-Roadmap
+          Pragma-Code <span className="text-slate-500">×</span> {entityName} · Live-Cockpit für die
+          90-Tage-Authority-Roadmap
         </span>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { entities, aiCitations } from "@/lib/schema";
 import { desc, eq } from "drizzle-orm";
+import { getSessionSlug } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +19,7 @@ const ENGINE_TONE: Record<string, string> = {
 };
 
 export default async function CitationsPage() {
-  const slug = process.env.DEFAULT_ENTITY_SLUG ?? "jens-langkammer";
+  const slug = await getSessionSlug();
   const entity = (
     await db.select().from(entities).where(eq(entities.slug, slug)).limit(1)
   )[0];
