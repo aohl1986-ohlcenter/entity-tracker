@@ -53,6 +53,11 @@ export const TARGETS: SeedTarget[] = [
     label: "Instagram Profil",
     category: "owned",
   },
+  {
+    pattern: "*pinterest.com/alexanderohl198",
+    label: "Pinterest Profil",
+    category: "owned",
+  },
 
   // ─── DISPLACEMENT (Namensvetter / fremde Profile) ──────────────────────
   {
