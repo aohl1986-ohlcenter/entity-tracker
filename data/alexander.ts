@@ -54,7 +54,9 @@ export const TARGETS: SeedTarget[] = [
     category: "owned",
   },
   {
-    pattern: "*pinterest.com/alexanderohl198",
+    // Aktueller Handle nach Account-Recovery + Umbenennung (vorher: alexanderohl198).
+    // Führendes * deckt id./de./www.-Subdomains ab.
+    pattern: "*pinterest.com/alexander_ohl_",
     label: "Pinterest Profil",
     category: "owned",
   },
