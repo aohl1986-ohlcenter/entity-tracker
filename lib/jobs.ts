@@ -342,7 +342,7 @@ export async function runDailyCollectionForEntity(slug: string): Promise<Collect
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Periodischer Report (z. B. alle 5 Tage) — bündelt alle noch nicht
+// Periodischer Report (z. B. wöchentlich) — bündelt alle noch nicht
 // gemailten Alerts in EINE Mail
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -364,7 +364,7 @@ export async function runSendDigestForEntity(
   if (!entity) throw new Error(`Entity ${slug} not found`);
 
   const result = await sendPeriodicDigest(entity, {
-    periodLabel: opts.periodLabel ?? "in den letzten 5 Tagen",
+    periodLabel: opts.periodLabel ?? "in der letzten Woche",
   });
   return { entity: entity.slug, ...result };
 }
