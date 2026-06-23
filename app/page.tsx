@@ -74,6 +74,37 @@ async function loadOverview(slug: string) {
       .sort((a, b) => a.date.localeCompare(b.date));
   }
 
+  // Fetch Name + Topic history
+  const nameTopicKwIds = kws.filter((k) => k.cluster === "name_topic").map((k) => k.id);
+  let nameTopicHistory: { date: string; score: number }[] = [];
+  if (nameTopicKwIds.length > 0) {
+    const snaps = await db
+      .select({
+        dominationScore: serpSnapshots.dominationScore,
+        fetchedAt: serpSnapshots.fetchedAt,
+      })
+      .from(serpSnapshots)
+      .where(inArray(serpSnapshots.keywordId, nameTopicKwIds))
+      .orderBy(serpSnapshots.fetchedAt);
+
+    const historyMap: Record<string, { sum: number; count: number }> = {};
+    for (const s of snaps) {
+      const dateStr = s.fetchedAt.toISOString().slice(0, 10);
+      if (!historyMap[dateStr]) {
+        historyMap[dateStr] = { sum: 0, count: 0 };
+      }
+      historyMap[dateStr].sum += s.dominationScore;
+      historyMap[dateStr].count += 1;
+    }
+
+    nameTopicHistory = Object.entries(historyMap)
+      .map(([date, info]) => ({
+        date,
+        score: Math.round(info.sum / info.count),
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }
+
   // Fetch AI citations history
   const allCitations = await db
     .select({
@@ -105,7 +136,7 @@ async function loadOverview(slug: string) {
 
   const latestAiScore = aiHistory.length > 0 ? aiHistory[aiHistory.length - 1].score : 0;
 
-  return { entity, latest, avgScore, totals, history, aiHistory, latestAiScore };
+  return { entity, latest, avgScore, totals, history, aiHistory, latestAiScore, nameTopicHistory };
 }
 
 function ScoreRing({ score, variant = "gold" }: { score: number; variant?: "gold" | "sky" | "purple" }) {
@@ -189,14 +220,17 @@ function ScorePill({ score }: { score: number }) {
 function DominationScoreChart({
   serpData,
   aiData,
+  nameTopicData,
 }: {
   serpData: { date: string; score: number }[];
   aiData: { date: string; score: number }[];
+  nameTopicData: { date: string; score: number }[];
 }) {
   // 1. Get union of all dates, sorted chronologically
   const allDatesSet = new Set<string>();
   for (const d of serpData) allDatesSet.add(d.date);
   for (const d of aiData) allDatesSet.add(d.date);
+  for (const d of nameTopicData) allDatesSet.add(d.date);
   const allDates = Array.from(allDatesSet).sort((a, b) => a.localeCompare(b));
 
   if (allDates.length === 0) return null;
@@ -213,9 +247,10 @@ function DominationScoreChart({
 
   const N = allDates.length;
 
-  // 2. Map dates to points for both series
+  // 2. Map dates to points for all three series
   const serpPoints: { x: number; y: number; score: number; date: string }[] = [];
   const aiPoints: { x: number; y: number; score: number; date: string }[] = [];
+  const nameTopicPoints: { x: number; y: number; score: number; date: string }[] = [];
 
   allDates.forEach((date, i) => {
     const x = paddingLeft + (N > 1 ? (i / (N - 1)) * chartWidth : chartWidth / 2);
@@ -230,6 +265,12 @@ function DominationScoreChart({
     if (aiItem) {
       const y = height - paddingBottom - (aiItem.score / 100) * chartHeight;
       aiPoints.push({ x, y, score: aiItem.score, date });
+    }
+
+    const nameTopicItem = nameTopicData.find((d) => d.date === date);
+    if (nameTopicItem) {
+      const y = height - paddingBottom - (nameTopicItem.score / 100) * chartHeight;
+      nameTopicPoints.push({ x, y, score: nameTopicItem.score, date });
     }
   });
 
@@ -255,6 +296,17 @@ function DominationScoreChart({
     aiAreaD = `${aiPathD} L ${aiPoints[aiPoints.length - 1].x} ${height - paddingBottom} L ${aiPoints[0].x} ${height - paddingBottom} Z`;
   }
 
+  // 5. Generate SVG Paths for Name + Topic Score
+  let nameTopicPathD = "";
+  let nameTopicAreaD = "";
+  if (nameTopicPoints.length > 0) {
+    nameTopicPathD = `M ${nameTopicPoints[0].x} ${nameTopicPoints[0].y}`;
+    for (let i = 1; i < nameTopicPoints.length; i++) {
+      nameTopicPathD += ` L ${nameTopicPoints[i].x} ${nameTopicPoints[i].y}`;
+    }
+    nameTopicAreaD = `${nameTopicPathD} L ${nameTopicPoints[nameTopicPoints.length - 1].x} ${height - paddingBottom} L ${nameTopicPoints[0].x} ${height - paddingBottom} Z`;
+  }
+
   const labelInterval = Math.max(1, Math.ceil(N / 7));
   const gridLines = [0, 25, 50, 75, 100];
 
@@ -264,18 +316,22 @@ function DominationScoreChart({
         className="absolute inset-0 -z-0 opacity-10 pointer-events-none"
         style={{
           backgroundImage:
-            "radial-gradient(400px 150px at 25% 0%, rgba(255,200,41,0.15), transparent 70%), radial-gradient(400px 150px at 75% 0%, rgba(122,167,255,0.15), transparent 70%)",
+            "radial-gradient(300px 150px at 20% 0%, rgba(255,200,41,0.15), transparent 70%), radial-gradient(300px 150px at 50% 0%, rgba(192,132,252,0.15), transparent 70%), radial-gradient(300px 150px at 80% 0%, rgba(122,167,255,0.15), transparent 70%)",
         }}
       />
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 mb-6">
         <h3 className="text-[11px] uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-gold animate-pulse" />
-          Verlauf der Veränderungen des Domination & AI Visibility Scores
+          Verlauf der Veränderungen des Domination, Name + Thema & AI Visibility Scores
         </h3>
         <div className="flex items-center gap-4 text-[10px] uppercase tracking-wider text-slate-400">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-brand-gold" />
-            Domination Score
+            Domination
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#c084fc" }} />
+            Name + Thema
           </div>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-brand-sky" />
@@ -289,6 +345,10 @@ function DominationScoreChart({
             <linearGradient id="chartGradSerp" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#ffc829" stopOpacity="0.18" />
               <stop offset="100%" stopColor="#ffc829" stopOpacity="0.0" />
+            </linearGradient>
+            <linearGradient id="chartGradNameTopic" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#c084fc" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#c084fc" stopOpacity="0.0" />
             </linearGradient>
             <linearGradient id="chartGradAi" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#7aa7ff" stopOpacity="0.18" />
@@ -325,6 +385,7 @@ function DominationScoreChart({
 
           {/* Areas under the paths */}
           {serpAreaD && <path d={serpAreaD} fill="url(#chartGradSerp)" />}
+          {nameTopicAreaD && <path d={nameTopicAreaD} fill="url(#chartGradNameTopic)" />}
           {aiAreaD && <path d={aiAreaD} fill="url(#chartGradAi)" />}
 
           {/* Domination Score line */}
@@ -333,6 +394,18 @@ function DominationScoreChart({
               d={serpPathD}
               fill="none"
               stroke="#ffc829"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          )}
+
+          {/* Name + Topic line */}
+          {nameTopicPathD && (
+            <path
+              d={nameTopicPathD}
+              fill="none"
+              stroke="#c084fc"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -367,6 +440,37 @@ function DominationScoreChart({
                 height="14"
                 rx="3.5"
                 className="fill-slate-950/95 stroke-brand-gold/40 stroke-[0.75] opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none"
+              />
+              <text
+                x={pt.x}
+                y={pt.y - 12}
+                textAnchor="middle"
+                fontSize="10"
+                className="fill-white font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none"
+              >
+                {pt.score}%
+              </text>
+            </g>
+          ))}
+
+          {/* Name + Topic Points & hover circles */}
+          {nameTopicPoints.map((pt, i) => (
+            <g key={`nameTopic-${i}`} className="group cursor-pointer">
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r="4.5"
+                className="fill-brand-purple stroke-slate-950 stroke-2 transition-all duration-200 group-hover:r-6"
+                style={{ fill: "#c084fc" }}
+              />
+              <rect
+                x={pt.x - 18}
+                y={pt.y - 23}
+                width="36"
+                height="14"
+                rx="3.5"
+                className="fill-slate-950/95 stroke-[0.75] opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none"
+                style={{ stroke: "rgba(192, 132, 252, 0.4)" }}
               />
               <text
                 x={pt.x}
@@ -463,7 +567,7 @@ export default async function Page() {
     );
   }
 
-  const { entity, latest, avgScore, totals, history, aiHistory, latestAiScore } = data;
+  const { entity, latest, avgScore, totals, history, aiHistory, latestAiScore, nameTopicHistory } = data;
   const byCluster: Record<string, typeof latest> = {};
   for (const l of latest) (byCluster[l.keyword.cluster] ??= []).push(l);
 
@@ -521,7 +625,7 @@ export default async function Page() {
         </div>
       </section>
 
-      <DominationScoreChart serpData={history} aiData={aiHistory} />
+      <DominationScoreChart serpData={history} aiData={aiHistory} nameTopicData={nameTopicHistory} />
 
       {Object.entries(byCluster).map(([cluster, rows]) => {
         const clusterAvg = rows.length
