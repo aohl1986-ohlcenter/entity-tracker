@@ -22,6 +22,7 @@ async function resolveRedirect(url: string): Promise<string> {
 /* ---------- Service Account JWT → Access Token ---------- */
 
 interface ServiceAccountKey {
+  project_id?: string;
   client_email: string;
   private_key: string;
   token_uri?: string;
@@ -98,11 +99,26 @@ async function getAccessToken(): Promise<string> {
 const DEFAULT_PROJECT = "gen-lang-client-0257507719";
 const DEFAULT_REGION = "us-central1";
 
+function getGCPProject(): string {
+  if (process.env.VERTEX_PROJECT) return process.env.VERTEX_PROJECT;
+  if (process.env.GOOGLE_SA_KEY) {
+    try {
+      const key = JSON.parse(process.env.GOOGLE_SA_KEY) as ServiceAccountKey;
+      if (key.project_id) return key.project_id;
+    } catch {}
+  }
+  try {
+    const proj = execSync("gcloud config get-value project 2>/dev/null", { encoding: "utf8" }).trim();
+    if (proj && proj !== "(unset)") return proj;
+  } catch {}
+  return DEFAULT_PROJECT;
+}
+
 export async function askGroundedGemini(
   query: string,
   opts: { model?: string; systemPrompt?: string } = {},
 ): Promise<GeminiGroundedResponse> {
-  const project = process.env.VERTEX_PROJECT ?? DEFAULT_PROJECT;
+  const project = getGCPProject();
   const region = process.env.VERTEX_REGION ?? DEFAULT_REGION;
   const model = opts.model ?? process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
   const accessToken = await getAccessToken();
