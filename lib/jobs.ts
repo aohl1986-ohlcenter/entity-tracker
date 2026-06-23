@@ -12,6 +12,7 @@ import { fetchSerp } from "./serper";
 import { askGroundedGemini } from "./gemini";
 import { askGroundedTavily } from "./tavily";
 import { askGroundedBrave } from "./brave";
+import { askGroundedBedrock } from "./bedrock";
 import { classifyUrl, extractDomain } from "./classify";
 import { countByClass, dominationScore } from "./score";
 import { citationPromptsForSlug } from "../data/entities";
@@ -192,6 +193,16 @@ export async function runCheckCitationsForEntity(
       name: "brave",
       enabled: !!process.env.BRAVE_API_KEY,
       ask: (q: string) => askGroundedBrave(q, {}),
+    },
+    {
+      name: "bedrock",
+      enabled: !!process.env.BEDROCK_API_KEY,
+      ask: (q: string) => askGroundedBedrock(q),
+    },
+    {
+      name: "gemma",
+      enabled: !!process.env.BEDROCK_API_KEY,
+      ask: (q: string) => askGroundedBedrock(q, { model: "google.gemma-3-27b-it" }),
     },
   ].filter((e) => e.enabled);
 

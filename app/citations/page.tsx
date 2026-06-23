@@ -16,6 +16,8 @@ const ENGINE_TONE: Record<string, string> = {
   gemini: "bg-brand-gold/15 text-brand-gold ring-brand-gold/30",
   tavily: "bg-brand-sky/15 text-brand-sky ring-brand-sky/30",
   brave: "bg-displacement/15 text-displacement ring-displacement/30",
+  bedrock: "bg-brand-emerald/15 text-brand-emerald ring-brand-emerald/30",
+  gemma: "bg-purple-500/15 text-purple-400 ring-purple-500/30",
 };
 
 export default async function CitationsPage() {
@@ -51,7 +53,7 @@ export default async function CitationsPage() {
         </div>
         <h1 className="mt-1 text-3xl font-bold text-white">AI Citations</h1>
         <p className="mt-2 text-sm text-slate-400">
-          Wie oft zitieren KI-Suchen (Gemini Grounded, Tavily, Brave) die
+          Wie oft zitieren KI-Suchen (Gemini Grounded, Tavily, Brave, Bedrock, Gemma) die
           Ziel-URLs als Primärquelle für definierte Themen.
         </p>
         <div className="mt-5 grid grid-cols-3 gap-3 max-w-md">
