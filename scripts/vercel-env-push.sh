@@ -28,6 +28,9 @@ VARS=(
   NEXT_PUBLIC_BASE_URL
   SITE_USERNAME
   SITE_PASSWORD
+  BEDROCK_API_KEY
+  BEDROCK_MODEL
+  BEDROCK_REGION
 )
 
 for VAR in "${VARS[@]}"; do
@@ -37,9 +40,9 @@ for VAR in "${VARS[@]}"; do
     continue
   fi
   echo "==> $VAR (production)"
-  vercel env rm "$VAR" production --yes 2>/dev/null || true
-  vercel env add "$VAR" production --value "$VALUE" --yes
+  npx vercel env rm "$VAR" production --yes 2>/dev/null || true
+  npx vercel env add "$VAR" production --value "$VALUE" --yes
 done
 
 echo
-echo "Done. Verify with: vercel env ls"
+echo "Done. Verify with: npx vercel env ls"

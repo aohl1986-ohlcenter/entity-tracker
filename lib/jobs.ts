@@ -199,11 +199,6 @@ export async function runCheckCitationsForEntity(
       enabled: !!process.env.BEDROCK_API_KEY,
       ask: (q: string) => askGroundedBedrock(q),
     },
-    {
-      name: "gemma",
-      enabled: !!process.env.BEDROCK_API_KEY,
-      ask: (q: string) => askGroundedBedrock(q, { model: "google.gemma-3-27b-it" }),
-    },
   ].filter((e) => e.enabled);
 
   const prompts = citationPromptsForSlug(slug);
