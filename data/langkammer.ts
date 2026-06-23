@@ -88,6 +88,16 @@ export const TARGETS: SeedTarget[] = [
 
   // ─── AUTHORITY (PwC / Strategy& / WiWo / SSRN / Fachpresse) ────────────
   {
+    pattern: "business-echo.de/*",
+    label: "Business-Echo: Actify Startup",
+    category: "authority",
+  },
+  {
+    pattern: "station-frankfurt.de/*",
+    label: "Station Frankfurt: Actify Startup",
+    category: "authority",
+  },
+  {
     pattern: "strategyand.pwc.com/de/en/industries/consumer-markets/the-state-of-the-egrocery-market.html",
     label: "Strategy&: State of e-Grocery",
     category: "authority",
