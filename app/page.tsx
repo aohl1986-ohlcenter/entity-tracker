@@ -108,13 +108,16 @@ async function loadOverview(slug: string) {
   return { entity, latest, avgScore, totals, history, aiHistory, latestAiScore };
 }
 
-function ScoreRing({ score, variant = "gold" }: { score: number; variant?: "gold" | "sky" }) {
+function ScoreRing({ score, variant = "gold" }: { score: number; variant?: "gold" | "sky" | "purple" }) {
   let stroke = score >= 80 ? "#10b981" : "#ffc829";
   let glow = score >= 80 ? "rgba(16,185,129,0.35)" : "rgba(255,200,41,0.45)";
 
   if (variant === "sky") {
     stroke = score >= 80 ? "#10b981" : "#7aa7ff";
     glow = score >= 80 ? "rgba(16,185,129,0.35)" : "rgba(122,167,255,0.45)";
+  } else if (variant === "purple") {
+    stroke = score >= 80 ? "#10b981" : "#c084fc";
+    glow = score >= 80 ? "rgba(16,185,129,0.35)" : "rgba(192,132,252,0.45)";
   }
 
   const dash = Math.max(0, Math.min(100, score));
@@ -464,6 +467,14 @@ export default async function Page() {
   const byCluster: Record<string, typeof latest> = {};
   for (const l of latest) (byCluster[l.keyword.cluster] ??= []).push(l);
 
+  // Compute Name + Topic average score
+  const nameTopicRows = byCluster["name_topic"] ?? [];
+  const avgNameTopicScore = nameTopicRows.length
+    ? Math.round(
+        nameTopicRows.reduce((a, r) => a + (r.snapshot?.dominationScore ?? 0), 0) / nameTopicRows.length,
+      )
+    : 0;
+
   return (
     <div className="space-y-10">
       <section className="card relative overflow-hidden p-6 flex flex-wrap items-center gap-6 justify-between">
@@ -493,6 +504,12 @@ export default async function Page() {
             <ScoreRing score={avgScore} variant="gold" />
             <div className="mt-3 text-[10px] uppercase tracking-widest text-slate-400">
               Ø Domination
+            </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <ScoreRing score={avgNameTopicScore} variant="purple" />
+            <div className="mt-3 text-[10px] uppercase tracking-widest text-slate-400">
+              Ø Name + Thema
             </div>
           </div>
           <div className="flex flex-col items-center">
