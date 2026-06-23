@@ -5,6 +5,7 @@ import {
   serpResults,
   serpSnapshots,
   targetUrls,
+  keywords,
   type Entity,
   type Keyword,
 } from "./schema";
@@ -559,12 +560,24 @@ async function mailDigest(
   entity: Entity,
   alertsList: GenericAlert[],
   to: string,
-  opts: { periodLabel?: string } = {},
+  opts: {
+    periodLabel?: string;
+    avgScore?: number;
+    nameTopicScore?: number;
+    latestAiScore?: number;
+    last7Days?: {
+      dateStr: string;
+      label: string;
+      domination: number | null;
+      nameTopic: number | null;
+      ai: number | null;
+    }[];
+  } = {},
 ): Promise<boolean> {
   const byType: Record<string, number> = {};
   for (const a of alertsList) byType[a.type] = (byType[a.type] ?? 0) + 1;
   const subject = renderDigestSubject(entity, byType);
-  const html = renderDigestHtml(entity, alertsList, byType, opts.periodLabel);
+  const html = renderDigestHtml(entity, alertsList, byType, opts);
   const sent = await sendEmail({ to, subject, html });
   return !!sent;
 }
@@ -613,8 +626,163 @@ export async function sendPeriodicDigest(
   }));
 
   const periodLabel = opts.periodLabel ?? "seit dem letzten Report";
+
+  // Fetch scores and history for the email
+  let avgScore = 0;
+  let nameTopicScore = 0;
+  let latestAiScore = 0;
+  let last7Days: { dateStr: string; label: string; domination: number | null; nameTopic: number | null; ai: number | null }[] = [];
+
   try {
-    const sent = await mailDigest(entity, list, to, { periodLabel });
+    const kws = await db.select().from(keywords).where(eq(keywords.entityId, entity.id));
+    if (kws.length > 0) {
+      const kwIds = kws.map((k) => k.id);
+      
+      // 1. Current averages (Domination and Name + Topic)
+      const latestSnaps = await Promise.all(
+        kws.map(async (kw) => {
+          const snap = (
+            await db
+              .select({
+                dominationScore: serpSnapshots.dominationScore,
+              })
+              .from(serpSnapshots)
+              .where(eq(serpSnapshots.keywordId, kw.id))
+              .orderBy(desc(serpSnapshots.fetchedAt))
+              .limit(1)
+          )[0];
+          return { keyword: kw, snapshot: snap };
+        }),
+      );
+      const tracked = latestSnaps.filter((l) => l.snapshot);
+      avgScore = tracked.length
+        ? Math.round(
+            tracked.reduce((a, l) => a + (l.snapshot?.dominationScore ?? 0), 0) / tracked.length,
+          )
+        : 0;
+
+      const nameTopicTracked = tracked.filter((l) => l.keyword.cluster === "name_topic");
+      nameTopicScore = nameTopicTracked.length
+        ? Math.round(
+            nameTopicTracked.reduce((a, l) => a + (l.snapshot?.dominationScore ?? 0), 0) / nameTopicTracked.length,
+          )
+        : 0;
+
+      // 2. AI Citations history and latest
+      const allCitations = await db
+        .select({
+          fetchedAt: aiCitations.fetchedAt,
+          ownedHits: aiCitations.ownedHits,
+          authorityHits: aiCitations.authorityHits,
+        })
+        .from(aiCitations)
+        .where(eq(aiCitations.entityId, entity.id))
+        .orderBy(aiCitations.fetchedAt);
+
+      const aiHistoryMap: Record<string, { hits: number; total: number }> = {};
+      for (const c of allCitations) {
+        const dateStr = c.fetchedAt.toISOString().slice(0, 10);
+        if (!aiHistoryMap[dateStr]) {
+          aiHistoryMap[dateStr] = { hits: 0, total: 0 };
+        }
+        const isHit = c.ownedHits > 0 || c.authorityHits > 0;
+        if (isHit) aiHistoryMap[dateStr].hits += 1;
+        aiHistoryMap[dateStr].total += 1;
+      }
+
+      const aiHistory = Object.entries(aiHistoryMap)
+        .map(([date, info]) => ({
+          date,
+          score: Math.round((info.hits / info.total) * 100),
+        }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      latestAiScore = aiHistory.length > 0 ? aiHistory[aiHistory.length - 1].score : 0;
+
+      // 3. Historical snapshots for Domination and Name + Topic (last 7 days)
+      const cutoffDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+      const historySnaps = await db
+        .select({
+          dominationScore: serpSnapshots.dominationScore,
+          fetchedAt: serpSnapshots.fetchedAt,
+          keywordId: serpSnapshots.keywordId,
+        })
+        .from(serpSnapshots)
+        .where(
+          and(
+            inArray(serpSnapshots.keywordId, kwIds),
+            gte(serpSnapshots.fetchedAt, cutoffDate),
+          ),
+        )
+        .orderBy(serpSnapshots.fetchedAt);
+
+      const dominationHistoryMap: Record<string, { sum: number; count: number }> = {};
+      const nameTopicHistoryMap: Record<string, { sum: number; count: number }> = {};
+
+      const nameTopicKwIdsSet = new Set(kws.filter((k) => k.cluster === "name_topic").map((k) => k.id));
+
+      for (const s of historySnaps) {
+        const dateStr = s.fetchedAt.toISOString().slice(0, 10);
+        
+        // Domination
+        if (!dominationHistoryMap[dateStr]) {
+          dominationHistoryMap[dateStr] = { sum: 0, count: 0 };
+        }
+        dominationHistoryMap[dateStr].sum += s.dominationScore;
+        dominationHistoryMap[dateStr].count += 1;
+
+        // Name + Topic
+        if (nameTopicKwIdsSet.has(s.keywordId)) {
+          if (!nameTopicHistoryMap[dateStr]) {
+            nameTopicHistoryMap[dateStr] = { sum: 0, count: 0 };
+          }
+          nameTopicHistoryMap[dateStr].sum += s.dominationScore;
+          nameTopicHistoryMap[dateStr].count += 1;
+        }
+      }
+
+      const dominationHistory = Object.entries(dominationHistoryMap).map(([date, info]) => ({
+        date,
+        score: Math.round(info.sum / info.count),
+      }));
+
+      const nameTopicHistory = Object.entries(nameTopicHistoryMap).map(([date, info]) => ({
+        date,
+        score: Math.round(info.sum / info.count),
+      }));
+
+      // Generate the last 7 calendar days
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const yyyymmdd = d.toISOString().slice(0, 10);
+        const label = d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" });
+
+        const domVal = dominationHistory.find((h) => h.date === yyyymmdd)?.score ?? null;
+        const ntVal = nameTopicHistory.find((h) => h.date === yyyymmdd)?.score ?? null;
+        const aiVal = aiHistory.find((h) => h.date === yyyymmdd)?.score ?? null;
+
+        last7Days.push({
+          dateStr: yyyymmdd,
+          label,
+          domination: domVal,
+          nameTopic: ntVal,
+          ai: aiVal,
+        });
+      }
+    }
+  } catch (err) {
+    console.error("[alerts] error fetching scores for email digest:", err);
+  }
+
+  try {
+    const sent = await mailDigest(entity, list, to, {
+      periodLabel,
+      avgScore,
+      nameTopicScore,
+      latestAiScore,
+      last7Days,
+    });
     if (!sent) {
       return { emailed: false, count: pending.length, reason: "resend-key-missing", byType };
     }
@@ -751,12 +919,25 @@ function renderDigestSubject(entity: Entity, byType: Record<string, number>): st
   return `[Tracker] ${parts.join(" · ")} (${entity.name})`;
 }
 
-function renderDigestHtml(
+export function renderDigestHtml(
   entity: Entity,
   alertsList: GenericAlert[],
   byType: Record<string, number>,
-  periodLabel = "seit dem letzten Lauf",
+  opts: {
+    periodLabel?: string;
+    avgScore?: number;
+    nameTopicScore?: number;
+    latestAiScore?: number;
+    last7Days?: {
+      dateStr: string;
+      label: string;
+      domination: number | null;
+      nameTopic: number | null;
+      ai: number | null;
+    }[];
+  } = {},
 ): string {
+  const periodLabel = opts.periodLabel ?? "seit dem letzten Lauf";
   const dashboardUrl =
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://tracker.pragma-code.de";
 
@@ -767,10 +948,94 @@ function renderDigestHtml(
     .map((type) => renderSection(type, alertsList.filter((a) => a.type === type)))
     .join("");
 
+  const scoresSection = opts.avgScore !== undefined ? `
+    <div style="margin-bottom:20px;margin-top:20px;">
+      <table style="width:100%;border-collapse:collapse;margin:0;padding:0;">
+        <tr>
+          <!-- Column 1: Domination Score -->
+          <td style="width:33.3%;padding:0 6px 0 0;vertical-align:top;">
+            <div style="background:#171c3e;border:1px solid #1f2550;border-radius:8px;padding:14px 10px;text-align:center;">
+              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:8px;font-weight:600;white-space:nowrap;">Ø Domination</div>
+              <div style="font-size:24px;font-weight:bold;color:#ffc829;margin-bottom:10px;">${opts.avgScore} <span style="font-size:11px;color:#64748b;font-weight:normal;">/ 100</span></div>
+              <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;width:80%;margin:0 auto;">
+                <div style="height:100%;background:#ffc829;width:${opts.avgScore}%;"></div>
+              </div>
+            </div>
+          </td>
+          <!-- Column 2: Name + Topic -->
+          <td style="width:33.3%;padding:0 6px;vertical-align:top;">
+            <div style="background:#171c3e;border:1px solid #1f2550;border-radius:8px;padding:14px 10px;text-align:center;">
+              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:8px;font-weight:600;white-space:nowrap;">Ø Name + Thema</div>
+              <div style="font-size:24px;font-weight:bold;color:#c084fc;margin-bottom:10px;">${opts.nameTopicScore ?? 0} <span style="font-size:11px;color:#64748b;font-weight:normal;">/ 100</span></div>
+              <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;width:80%;margin:0 auto;">
+                <div style="height:100%;background:#c084fc;width:${opts.nameTopicScore ?? 0}%;"></div>
+              </div>
+            </div>
+          </td>
+          <!-- Column 3: AI Visibility -->
+          <td style="width:33.3%;padding:0 0 0 6px;vertical-align:top;">
+            <div style="background:#171c3e;border:1px solid #1f2550;border-radius:8px;padding:14px 10px;text-align:center;">
+              <div style="font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:#94a3b8;margin-bottom:8px;font-weight:600;white-space:nowrap;">Ø AI Visibility</div>
+              <div style="font-size:24px;font-weight:bold;color:#7aa7ff;margin-bottom:10px;">${opts.latestAiScore ?? 0} <span style="font-size:11px;color:#64748b;font-weight:normal;">/ 100</span></div>
+              <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;width:80%;margin:0 auto;">
+                <div style="height:100%;background:#7aa7ff;width:${opts.latestAiScore ?? 0}%;"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  ` : "";
+
+  const historySection = opts.last7Days && opts.last7Days.length > 0 ? `
+    <h2 style="margin:24px 0 8px;color:#fff;font-size:15px;letter-spacing:.04em;font-weight:600;">Entwicklung der letzten 7 Tage</h2>
+    <table style="width:100%;border-collapse:collapse;background:#171c3e;border:1px solid #1f2550;border-radius:8px;overflow:hidden;margin-bottom:24px;">
+      <thead>
+        <tr style="border-bottom:1px solid #1f2550;background:#131835;">
+          <th style="padding:10px 14px;text-align:left;color:#cbd5e1;font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Datum</th>
+          <th style="padding:10px 14px;text-align:left;color:#ffc829;font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Domination</th>
+          <th style="padding:10px 14px;text-align:left;color:#c084fc;font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;">Name + Thema</th>
+          <th style="padding:10px 14px;text-align:left;color:#7aa7ff;font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;">AI Visibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${opts.last7Days.map((day) => `
+        <tr style="border-bottom:1px solid #1f2550;">
+          <td style="padding:10px 14px;color:#94a3b8;font-size:12px;font-weight:600;">${escape(day.label)}</td>
+          <td style="padding:10px 14px;font-size:13px;white-space:nowrap;">
+            ${day.domination !== null ? `
+              <span style="font-weight:600;display:inline-block;width:30px;margin-right:6px;font-family:monospace;color:#fff;">${day.domination}%</span>
+              <div style="display:inline-block;width:60px;height:5px;background:rgba(255,255,255,0.06);border-radius:3px;vertical-align:middle;overflow:hidden;">
+                <div style="background:#ffc829;height:100%;width:${day.domination}%;border-radius:3px;"></div>
+              </div>
+            ` : `<span style="color:#64748b;">-</span>`}
+          </td>
+          <td style="padding:10px 14px;font-size:13px;white-space:nowrap;">
+            ${day.nameTopic !== null ? `
+              <span style="font-weight:600;display:inline-block;width:30px;margin-right:6px;font-family:monospace;color:#fff;">${day.nameTopic}%</span>
+              <div style="display:inline-block;width:60px;height:5px;background:rgba(255,255,255,0.06);border-radius:3px;vertical-align:middle;overflow:hidden;">
+                <div style="background:#c084fc;height:100%;width:${day.nameTopic}%;border-radius:3px;"></div>
+              </div>
+            ` : `<span style="color:#64748b;">-</span>`}
+          </td>
+          <td style="padding:10px 14px;font-size:13px;white-space:nowrap;">
+            ${day.ai !== null ? `
+              <span style="font-weight:600;display:inline-block;width:30px;margin-right:6px;font-family:monospace;color:#fff;">${day.ai}%</span>
+              <div style="display:inline-block;width:60px;height:5px;background:rgba(255,255,255,0.06);border-radius:3px;vertical-align:middle;overflow:hidden;">
+                <div style="background:#7aa7ff;height:100%;width:${day.ai}%;border-radius:3px;"></div>
+              </div>
+            ` : `<span style="color:#64748b;">-</span>`}
+          </td>
+        </tr>
+        `).join("")}
+      </tbody>
+    </table>
+  ` : "";
+
   return `<!doctype html><html><body style="margin:0;padding:0;background:#0f1430;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#e2e8f0;">
   <div style="max-width:680px;margin:0 auto;padding:32px 24px;">
     <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#ffc829;font-weight:600;">Pragma-Code · Entity Tracker</div>
-    <h1 style="margin:8px 0 4px;color:#fff;font-size:22px;">${escape(entity.name)} · 5-Tage-Report</h1>
+    <h1 style="margin:8px 0 4px;color:#fff;font-size:22px;">${escape(entity.name)} · Wochen-Report</h1>
     <p style="margin:0 0 16px;color:#94a3b8;font-size:14px;">${alertsList.length} Ereignisse ${escape(periodLabel)}.</p>
 
     <div style="background:#171c3e;border:1px solid #1f2550;border-left:4px solid ${narrativeColor};border-radius:8px;padding:14px 18px;margin:0 0 12px;">
@@ -778,12 +1043,16 @@ function renderDigestHtml(
       <div style="color:#fff;font-size:15px;font-weight:600;">${escape(narrative.headline)}</div>
     </div>
 
+    ${scoresSection}
+
+    ${historySection}
+
     ${sections}
 
     <div style="margin-top:24px;">
       <a href="${dashboardUrl}/alerts" style="display:inline-block;background:#ffc829;color:#0f1430;padding:10px 16px;border-radius:6px;font-weight:600;text-decoration:none;font-size:13px;">Im Dashboard ansehen</a>
     </div>
-    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Der Tracker sammelt täglich, dieser Report fasst alle Signale der letzten ~5 Tage zusammen. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat. Pro Typ unterschiedliches Dedup-Fenster (3–14 Tage).</p>
+    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Der Tracker sammelt täglich, dieser Wochen-Report fasst alle Signale der letzten Woche zusammen. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat. Pro Typ unterschiedliches Dedup-Fenster (3–14 Tage).</p>
   </div>
   </body></html>`;
 }
