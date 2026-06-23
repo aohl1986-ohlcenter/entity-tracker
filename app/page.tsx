@@ -109,12 +109,12 @@ async function loadOverview(slug: string) {
 }
 
 function ScoreRing({ score, variant = "gold" }: { score: number; variant?: "gold" | "sky" }) {
-  let stroke = score >= 80 ? "#10b981" : score >= 50 ? "#ffc829" : "#ff6b6b";
-  let glow = score >= 80 ? "rgba(16,185,129,0.35)" : score >= 50 ? "rgba(255,200,41,0.45)" : "rgba(255,107,107,0.35)";
+  let stroke = score >= 80 ? "#10b981" : "#ffc829";
+  let glow = score >= 80 ? "rgba(16,185,129,0.35)" : "rgba(255,200,41,0.45)";
 
   if (variant === "sky") {
-    stroke = score >= 80 ? "#10b981" : score >= 50 ? "#7aa7ff" : "#ff6b6b";
-    glow = score >= 80 ? "rgba(16,185,129,0.35)" : score >= 50 ? "rgba(122,167,255,0.45)" : "rgba(255,107,107,0.35)";
+    stroke = score >= 80 ? "#10b981" : "#7aa7ff";
+    glow = score >= 80 ? "rgba(16,185,129,0.35)" : "rgba(122,167,255,0.45)";
   }
 
   const dash = Math.max(0, Math.min(100, score));
