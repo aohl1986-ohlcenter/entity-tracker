@@ -179,6 +179,42 @@ export const TARGETS: SeedTarget[] = [
     label: "LinkedIn-Repost Spaene (Future of Grocery)",
     category: "authority",
   },
+  {
+    pattern: "table.media/*",
+    label: "Table.Media",
+    category: "authority",
+    topics: ["Quick Commerce", "Consumer Markets"],
+  },
+  {
+    pattern: "lsretail.com/*",
+    label: "LS Retail",
+    category: "authority",
+    topics: ["e-Grocery", "Consumer Markets"],
+  },
+  {
+    pattern: "criteo.com/*",
+    label: "Criteo",
+    category: "authority",
+    topics: ["Retail Media"],
+  },
+  {
+    pattern: "lytics.com/*",
+    label: "Lytics",
+    category: "authority",
+    topics: ["Customer Data"],
+  },
+  {
+    pattern: "gtai.de/*",
+    label: "GTAI",
+    category: "authority",
+    topics: ["e-Grocery", "Consumer Markets"],
+  },
+  {
+    pattern: "eclear.com/*",
+    label: "eClear",
+    category: "authority",
+    topics: ["e-Commerce"],
+  },
 
   // ─── DISPLACEMENT (zu verdrängen) ──────────────────────────────────────
   // Namensvetter: anderes LinkedIn-Profil, das für "Jens Langkammer" rankt
@@ -199,6 +235,8 @@ export const TARGETS: SeedTarget[] = [
   { pattern: "verwandt.de/*", label: "Verwandt.de", category: "displacement" },
   { pattern: "moneyhouse.de/*", label: "Moneyhouse (Privat)", category: "displacement" },
   { pattern: "northdata.de/*", label: "Northdata", category: "displacement" },
+  { pattern: "rocketreach.co/*", label: "RocketReach", category: "displacement" },
+  { pattern: "xing.com/*", label: "Xing Directory", category: "displacement" },
 ];
 
 export const AI_CITATION_PROMPTS: { engine: "gemini"; query: string; topic: string }[] = [
