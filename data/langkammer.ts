@@ -98,6 +98,11 @@ export const TARGETS: SeedTarget[] = [
     category: "authority",
   },
   {
+    pattern: "amgrade.com/portfolio/actify",
+    label: "AMgrade: Actify Case Study",
+    category: "authority",
+  },
+  {
     pattern: "strategyand.pwc.com/de/en/industries/consumer-markets/the-state-of-the-egrocery-market.html",
     label: "Strategy&: State of e-Grocery",
     category: "authority",
