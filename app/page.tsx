@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { entities, keywords, serpSnapshots } from "@/lib/schema";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, inArray } from "drizzle-orm";
 import { getSessionSlug } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -13,6 +13,7 @@ async function loadOverview(slug: string) {
   if (!entity) return null;
 
   const kws = await db.select().from(keywords).where(eq(keywords.entityId, entity.id));
+  const kwIds = kws.map((k) => k.id);
 
   const latest = await Promise.all(
     kws.map(async (kw) => {
@@ -43,7 +44,37 @@ async function loadOverview(slug: string) {
     { owned: 0, authority: 0, displacement: 0 },
   );
 
-  return { entity, latest, avgScore, totals };
+  // Fetch history of domination score
+  let history: { date: string; score: number }[] = [];
+  if (kwIds.length > 0) {
+    const allSnaps = await db
+      .select({
+        dominationScore: serpSnapshots.dominationScore,
+        fetchedAt: serpSnapshots.fetchedAt,
+      })
+      .from(serpSnapshots)
+      .where(inArray(serpSnapshots.keywordId, kwIds))
+      .orderBy(serpSnapshots.fetchedAt);
+
+    const historyMap: Record<string, { sum: number; count: number }> = {};
+    for (const s of allSnaps) {
+      const dateStr = s.fetchedAt.toISOString().slice(0, 10);
+      if (!historyMap[dateStr]) {
+        historyMap[dateStr] = { sum: 0, count: 0 };
+      }
+      historyMap[dateStr].sum += s.dominationScore;
+      historyMap[dateStr].count += 1;
+    }
+
+    history = Object.entries(historyMap)
+      .map(([date, info]) => ({
+        date,
+        score: Math.round(info.sum / info.count),
+      }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  return { entity, latest, avgScore, totals, history };
 }
 
 function ScoreRing({ score }: { score: number }) {
@@ -115,6 +146,162 @@ function ScorePill({ score }: { score: number }) {
   );
 }
 
+function DominationScoreChart({ data }: { data: { date: string; score: number }[] }) {
+  if (data.length === 0) return null;
+
+  const width = 800;
+  const height = 240;
+  const paddingLeft = 40;
+  const paddingRight = 20;
+  const paddingTop = 25;
+  const paddingBottom = 35;
+
+  const chartWidth = width - paddingLeft - paddingRight;
+  const chartHeight = height - paddingTop - paddingBottom;
+
+  const N = data.length;
+
+  const points = data.map((d, i) => {
+    const x = paddingLeft + (N > 1 ? (i / (N - 1)) * chartWidth : chartWidth / 2);
+    const y = height - paddingBottom - (d.score / 100) * chartHeight;
+    return { x, y, score: d.score, date: d.date };
+  });
+
+  let pathD = "";
+  let areaD = "";
+  if (points.length > 0) {
+    pathD = `M ${points[0].x} ${points[0].y}`;
+    for (let i = 1; i < points.length; i++) {
+      pathD += ` L ${points[i].x} ${points[i].y}`;
+    }
+    areaD = `${pathD} L ${points[points.length - 1].x} ${height - paddingBottom} L ${points[0].x} ${height - paddingBottom} Z`;
+  }
+
+  const labelInterval = Math.max(1, Math.ceil(N / 7));
+  const gridLines = [0, 25, 50, 75, 100];
+
+  return (
+    <div className="card p-6 relative overflow-hidden">
+      <div className="absolute inset-0 -z-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(400px 150px at 50% 0%, rgba(255,200,41,0.15), transparent 70%)",
+        }}
+      />
+      <h3 className="relative z-10 text-[11px] uppercase tracking-[0.2em] text-slate-400 mb-6 flex items-center gap-2">
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-gold animate-pulse" />
+        Verlauf der Veränderungen des Domination Scores
+      </h3>
+      <div className="relative z-10 w-full overflow-hidden">
+        <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto overflow-visible select-none">
+          <defs>
+            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#ffc829" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#ffc829" stopOpacity="0.0" />
+            </linearGradient>
+          </defs>
+
+          {/* Grid lines & Y labels */}
+          {gridLines.map((gl) => {
+            const y = height - paddingBottom - (gl / 100) * chartHeight;
+            return (
+              <g key={gl}>
+                <line
+                  x1={paddingLeft}
+                  y1={y}
+                  x2={width - paddingRight}
+                  y2={y}
+                  stroke="rgba(255,255,255,0.06)"
+                  strokeWidth="1"
+                  strokeDasharray={gl === 0 || gl === 100 ? "0" : "4 4"}
+                />
+                <text
+                  x={paddingLeft - 12}
+                  y={y + 3.5}
+                  textAnchor="end"
+                  fontSize="10"
+                  className="fill-slate-500 font-mono font-medium"
+                >
+                  {gl}%
+                </text>
+              </g>
+            );
+          })}
+
+          {/* Area under the path */}
+          {areaD && <path d={areaD} fill="url(#chartGrad)" />}
+
+          {/* Main line */}
+          {pathD && (
+            <path
+              d={pathD}
+              fill="none"
+              stroke="#ffc829"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          )}
+
+          {/* Points & hover circles */}
+          {points.map((pt, i) => (
+            <g key={i} className="group cursor-pointer">
+              <circle
+                cx={pt.x}
+                cy={pt.y}
+                r="4.5"
+                className="fill-brand-gold stroke-slate-950 stroke-2 transition-all duration-200 group-hover:r-6"
+              />
+              <rect
+                x={pt.x - 18}
+                y={pt.y - 23}
+                width="36"
+                height="14"
+                rx="3.5"
+                className="fill-slate-950/95 stroke-brand-gold/40 stroke-[0.75] opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none"
+              />
+              <text
+                x={pt.x}
+                y={pt.y - 12}
+                textAnchor="middle"
+                fontSize="10"
+                className="fill-white font-mono font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none"
+              >
+                {pt.score}%
+              </text>
+            </g>
+          ))}
+
+          {/* X axis labels */}
+          {points.map((pt, i) => {
+            const showLabel = i % labelInterval === 0 || i === N - 1;
+            if (!showLabel) return null;
+
+            let formattedDate = pt.date;
+            try {
+              const d = new Date(pt.date);
+              formattedDate = d.toLocaleDateString("de-DE", { day: "numeric", month: "short" });
+            } catch {}
+
+            return (
+              <text
+                key={i}
+                x={pt.x}
+                y={height - 10}
+                textAnchor="middle"
+                fontSize="9.5"
+                className="fill-slate-400 font-medium"
+              >
+                {formattedDate}
+              </text>
+            );
+          })}
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 const CLUSTER_LABELS: Record<string, string> = {
   name: "Name",
   name_topic: "Name + Thema",
@@ -138,7 +325,7 @@ export default async function Page() {
     );
   }
 
-  const { entity, latest, avgScore, totals } = data;
+  const { entity, latest, avgScore, totals, history } = data;
   const byCluster: Record<string, typeof latest> = {};
   for (const l of latest) (byCluster[l.keyword.cluster] ??= []).push(l);
 
@@ -173,6 +360,8 @@ export default async function Page() {
           </div>
         </div>
       </section>
+
+      <DominationScoreChart data={history} />
 
       {Object.entries(byCluster).map(([cluster, rows]) => {
         const clusterAvg = rows.length
