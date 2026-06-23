@@ -235,6 +235,26 @@ export const TARGETS: SeedTarget[] = [
     category: "authority",
     topics: ["e-Commerce"],
   },
+  {
+    pattern: "stetic.com/web-analytics*",
+    label: "Stetic: Actify Testimonial",
+    category: "authority",
+  },
+  {
+    pattern: "crunchbase.com/person/jens-langkammer",
+    label: "Crunchbase Profil",
+    category: "authority",
+  },
+  {
+    pattern: "rocketreach.co/jens-langkammer-email*",
+    label: "RocketReach Profil (Jens Langkammer)",
+    category: "authority",
+  },
+  {
+    pattern: "openinsuranceobs.com/how-non-financial-services-companies*",
+    label: "Open Insurance Obs: Embedded Insurance",
+    category: "authority",
+  },
 
   // ─── DISPLACEMENT (zu verdrängen) ──────────────────────────────────────
   // Namensvetter: anderes LinkedIn-Profil, das für "Jens Langkammer" rankt
@@ -257,6 +277,7 @@ export const TARGETS: SeedTarget[] = [
   { pattern: "northdata.de/*", label: "Northdata", category: "displacement" },
   { pattern: "rocketreach.co/*", label: "RocketReach", category: "displacement" },
   { pattern: "xing.com/*", label: "Xing Directory", category: "displacement" },
+  { pattern: "langkammer.de/*", label: "Langkammer Fliesen (Namensvetter)", category: "displacement" },
 ];
 
 export const AI_CITATION_PROMPTS: { engine: "gemini"; query: string; topic: string }[] = [
