@@ -1008,6 +1008,12 @@ export function renderDigestHtml(
           `<tr><td style="padding:5px 14px;border-bottom:1px solid #1f2550;font-size:13px;color:${it.covered ? "#e2e8f0" : "#64748b"};"><span style="color:${it.covered ? "#27c08a" : "#475569"};">${it.covered ? "&#10003;" : "&#9675;"}</span>&nbsp;&nbsp;${escape(it.label)}</td></tr>`,
       )
       .join("");
+    const perKw = cov.perKeyword
+      .map(
+        (k) =>
+          `<span style="display:inline-block;border:1px solid #1f2550;border-radius:5px;padding:3px 8px;margin:2px 4px 2px 0;font-size:12px;color:#94a3b8;">${escape(k.query)} <span style="color:${k.covered > 0 ? "#27c08a" : "#64748b"};font-weight:600;">${k.covered}/${cov.total}</span></span>`,
+      )
+      .join("");
     return `
     <h2 style="margin:24px 0 8px;color:#fff;font-size:15px;letter-spacing:.04em;font-weight:600;">Wunschlink-Abdeckung</h2>
     <div style="background:#171c3e;border:1px solid #1f2550;border-radius:8px;padding:14px 18px;margin-bottom:8px;">
@@ -1015,9 +1021,11 @@ export function renderDigestHtml(
         <div style="color:#fff;font-size:16px;font-weight:600;">${cov.covered} / ${cov.total} Ziel-Publikationen auf Seite 1</div>
         <div style="color:#fff;font-size:18px;font-weight:bold;">${pct}% &nbsp; ${deltaHtml}</div>
       </div>
+      <div style="color:#64748b;font-size:11px;margin-top:4px;">über ${cov.nameKeywordCount} Namens-Suchen (Vereinigung der Top 10, nicht von 10 Plätzen)</div>
       <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:10px;">
         <div style="height:100%;background:#ffc829;width:${pct}%;"></div>
       </div>
+      <div style="margin-top:10px;">${perKw}</div>
     </div>
     <table style="width:100%;border-collapse:collapse;background:#171c3e;border:1px solid #1f2550;border-radius:8px;overflow:hidden;margin-bottom:24px;"><tbody>${rows}</tbody></table>
     ` ;
