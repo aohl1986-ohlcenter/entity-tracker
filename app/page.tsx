@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { entities, keywords, serpSnapshots, aiCitations } from "@/lib/schema";
 import { desc, eq, inArray } from "drizzle-orm";
 import { getSessionSlug } from "@/lib/session";
+import { computeWantedCoverage, type WantedCoverage } from "@/lib/coverage";
 
 export const dynamic = "force-dynamic";
 
@@ -137,6 +138,60 @@ async function loadOverview(slug: string) {
   const latestAiScore = aiHistory.length > 0 ? aiHistory[aiHistory.length - 1].score : 0;
 
   return { entity, latest, avgScore, totals, history, aiHistory, latestAiScore, nameTopicHistory };
+}
+
+function WantedCoverageCard({ coverage }: { coverage: WantedCoverage }) {
+  const { total, covered, prevCovered, items } = coverage;
+  const pct = total > 0 ? Math.round((covered / total) * 100) : 0;
+  const delta = prevCovered === null ? null : covered - prevCovered;
+
+  return (
+    <section className="card p-6">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <div className="text-[11px] uppercase tracking-[0.2em] text-brand-gold">
+            Wunschlink-Abdeckung
+          </div>
+          <h3 className="mt-1 text-xl font-bold text-white">
+            {covered} <span className="text-slate-500">/ {total}</span> Ziel-Publikationen auf Seite 1
+          </h3>
+          <p className="mt-1 text-sm text-slate-400">
+            Von den vom Kunden gewünschten Links ranken aktuell so viele in den Top 10 für seinen Namen.
+          </p>
+        </div>
+        <div className="text-right">
+          <div className="text-3xl font-bold text-white">{pct}%</div>
+          {delta === null ? (
+            <div className="text-[11px] text-slate-500">Basiswert</div>
+          ) : (
+            <div
+              className={`text-[11px] ${delta > 0 ? "text-brand-emerald" : delta < 0 ? "text-displacement" : "text-slate-500"}`}
+            >
+              {delta > 0 ? `+${delta}` : delta} ggü. Vorwoche
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/5">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-brand-gold to-brand-emerald"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+
+      <ul className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
+        {[...items].sort((a, b) => Number(b.covered) - Number(a.covered)).map((it, i) => (
+          <li key={i} className="flex items-center gap-2 text-sm">
+            <span className={it.covered ? "text-brand-emerald" : "text-slate-600"}>
+              {it.covered ? "✓" : "○"}
+            </span>
+            <span className={it.covered ? "text-slate-200" : "text-slate-500"}>{it.label}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 function ScoreRing({ score, variant = "gold" }: { score: number; variant?: "gold" | "sky" | "purple" }) {
@@ -579,6 +634,8 @@ export default async function Page() {
       )
     : 0;
 
+  const coverage = await computeWantedCoverage(entity.id, slug);
+
   return (
     <div className="space-y-10">
       <section className="card relative overflow-hidden p-6 flex flex-wrap items-center gap-6 justify-between">
@@ -624,6 +681,8 @@ export default async function Page() {
           </div>
         </div>
       </section>
+
+      {coverage && <WantedCoverageCard coverage={coverage} />}
 
       <DominationScoreChart serpData={history} aiData={aiHistory} nameTopicData={nameTopicHistory} />
 
