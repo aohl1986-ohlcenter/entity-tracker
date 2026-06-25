@@ -331,10 +331,13 @@ export const WANTED_LINKS: { label: string; pattern: string }[] = [
   { label: "WiWo: Gorillas/Flink Frankreich", pattern: "wiwo.de/unternehmen/dienstleister/lieferdienst-warenlager-in-frankreich-vor-dem-aus-dieses-neue-gesetz-stellt-gorillas-und-flink-vor-probleme-in-frankreich/28677718.html" },
   { label: "neuhandeln: Lebensmittel online", pattern: "neuhandeln.de/beitraege/db/371079sur.html" },
   { label: "Die Presse: Streetwear", pattern: "diepresse.com/18706002" },
-  { label: "LinkedIn Post 2023", pattern: "*linkedin.com/feed/update/urn:li:activity:7061766765919236097" },
-  { label: "LinkedIn Post 2024", pattern: "*linkedin.com/feed/update/urn:li:activity:7186995974907527168" },
-  { label: "LinkedIn Post 2025 a", pattern: "*linkedin.com/feed/update/urn:li:activity:7315259711858049026" },
-  { label: "LinkedIn Post 2025 b", pattern: "*linkedin.com/feed/update/urn:li:activity:7312369440891850752" },
+  // Posts per Activity-ID matchen — trifft beide Google-Formen:
+  // /feed/update/urn:li:activity:<id>  UND  /posts/<autor>_…-activity-<id>-<hash>
+  // (Google indexiert öffentliche Posts meist als /posts/-Variante).
+  { label: "LinkedIn Post 2023", pattern: "*linkedin.com/*7061766765919236097*" },
+  { label: "LinkedIn Post 2024", pattern: "*linkedin.com/*7186995974907527168*" },
+  { label: "LinkedIn Post 2025 a", pattern: "*linkedin.com/*7315259711858049026*" },
+  { label: "LinkedIn Post 2025 b", pattern: "*linkedin.com/*7312369440891850752*" },
   { label: "LinkedIn Featured", pattern: "*linkedin.com/in/jens-langkammer/details/featured" },
-  { label: "LinkedIn-Repost Spaene", pattern: "*linkedin.com/posts/andreas-spaene_strategy-the-future-of-grocery-shopping-activity-6976193400203059200-ulg3" },
+  { label: "LinkedIn-Repost Spaene", pattern: "*linkedin.com/*6976193400203059200*" },
 ];
