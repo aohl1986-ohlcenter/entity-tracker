@@ -1027,7 +1027,8 @@ export function renderDigestHtml(
       </div>
       <div style="margin-top:10px;">${perKw}</div>
     </div>
-    <table style="width:100%;border-collapse:collapse;background:#171c3e;border:1px solid #1f2550;border-radius:8px;overflow:hidden;margin-bottom:24px;"><tbody>${rows}</tbody></table>
+    <table style="width:100%;border-collapse:collapse;background:#171c3e;border:1px solid #1f2550;border-radius:8px;overflow:hidden;margin-bottom:6px;"><tbody>${rows}</tbody></table>
+    <p style="margin:0 0 24px;color:#64748b;font-size:11px;line-height:1.5;">Zählt nur die ${cov.total} Wunsch-Publikationen aus dem Briefing — 0 heißt nicht „nichts rankt". Eigene Profile (Landingpage, LinkedIn etc.) ranken separat und zählen als Owned. Gemessen auf deutschem Google (gl=de).</p>
     ` ;
   })() : "";
 

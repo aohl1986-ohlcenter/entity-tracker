@@ -207,6 +207,13 @@ function WantedCoverageCard({ coverage }: { coverage: WantedCoverage }) {
           </li>
         ))}
       </ul>
+
+      <p className="mt-4 border-t border-white/5 pt-3 text-[11px] leading-relaxed text-slate-500">
+        Zählt nur die {total} Wunsch-Publikationen aus dem Briefing.{" "}
+        <span className="text-slate-400">0 heißt nicht „nichts rankt"</span> — eigene Profile
+        (Landingpage, LinkedIn etc.) ranken separat und zählen oben als <span className="text-brand-emerald">Owned</span>.
+        Gemessen auf deutschem Google (gl=de).
+      </p>
     </section>
   );
 }
