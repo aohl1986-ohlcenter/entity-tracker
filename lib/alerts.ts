@@ -12,6 +12,7 @@ import {
 import { and, desc, eq, gte, inArray, lt, sql } from "drizzle-orm";
 import { sendEmail } from "./resend";
 import { extractDomain } from "./classify";
+import { computeWantedCoverage, type WantedCoverage } from "./coverage";
 
 const DEDUP_WINDOW_DAYS = 7;
 const RANK_DEDUP_DAYS = 3;
@@ -572,6 +573,7 @@ async function mailDigest(
       nameTopic: number | null;
       ai: number | null;
     }[];
+    coverage?: WantedCoverage | null;
   } = {},
 ): Promise<boolean> {
   const byType: Record<string, number> = {};
@@ -775,6 +777,8 @@ export async function sendPeriodicDigest(
     console.error("[alerts] error fetching scores for email digest:", err);
   }
 
+  const coverage = await computeWantedCoverage(entity.id, entity.slug).catch(() => null);
+
   try {
     const sent = await mailDigest(entity, list, to, {
       periodLabel,
@@ -782,6 +786,7 @@ export async function sendPeriodicDigest(
       nameTopicScore,
       latestAiScore,
       last7Days,
+      coverage,
     });
     if (!sent) {
       return { emailed: false, count: pending.length, reason: "resend-key-missing", byType };
@@ -935,6 +940,7 @@ export function renderDigestHtml(
       nameTopic: number | null;
       ai: number | null;
     }[];
+    coverage?: WantedCoverage | null;
   } = {},
 ): string {
   const periodLabel = opts.periodLabel ?? "seit dem letzten Lauf";
@@ -986,6 +992,36 @@ export function renderDigestHtml(
       </table>
     </div>
   ` : "";
+
+  const cov = opts.coverage;
+  const coverageSection = cov && cov.total > 0 ? (() => {
+    const pct = Math.round((cov.covered / cov.total) * 100);
+    const delta = cov.prevCovered === null ? null : cov.covered - cov.prevCovered;
+    const deltaHtml =
+      delta === null
+        ? `<span style="color:#64748b;font-size:12px;">Basiswert</span>`
+        : `<span style="color:${delta > 0 ? "#27c08a" : delta < 0 ? "#ff6b6b" : "#64748b"};font-size:12px;">${delta > 0 ? "+" + delta : delta} ggü. Vorwoche</span>`;
+    const rows = [...cov.items]
+      .sort((a, b) => Number(b.covered) - Number(a.covered))
+      .map(
+        (it) =>
+          `<tr><td style="padding:5px 14px;border-bottom:1px solid #1f2550;font-size:13px;color:${it.covered ? "#e2e8f0" : "#64748b"};"><span style="color:${it.covered ? "#27c08a" : "#475569"};">${it.covered ? "&#10003;" : "&#9675;"}</span>&nbsp;&nbsp;${escape(it.label)}</td></tr>`,
+      )
+      .join("");
+    return `
+    <h2 style="margin:24px 0 8px;color:#fff;font-size:15px;letter-spacing:.04em;font-weight:600;">Wunschlink-Abdeckung</h2>
+    <div style="background:#171c3e;border:1px solid #1f2550;border-radius:8px;padding:14px 18px;margin-bottom:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;">
+        <div style="color:#fff;font-size:16px;font-weight:600;">${cov.covered} / ${cov.total} Ziel-Publikationen auf Seite 1</div>
+        <div style="color:#fff;font-size:18px;font-weight:bold;">${pct}% &nbsp; ${deltaHtml}</div>
+      </div>
+      <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;margin-top:10px;">
+        <div style="height:100%;background:#ffc829;width:${pct}%;"></div>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;background:#171c3e;border:1px solid #1f2550;border-radius:8px;overflow:hidden;margin-bottom:24px;"><tbody>${rows}</tbody></table>
+    ` ;
+  })() : "";
 
   const historySection = opts.last7Days && opts.last7Days.length > 0 ? `
     <h2 style="margin:24px 0 8px;color:#fff;font-size:15px;letter-spacing:.04em;font-weight:600;">Entwicklung der letzten 7 Tage</h2>
@@ -1044,6 +1080,8 @@ export function renderDigestHtml(
     </div>
 
     ${scoresSection}
+
+    ${coverageSection}
 
     ${historySection}
 

@@ -36,6 +36,11 @@ function patternToRegex(pattern: string): RegExp {
   return new RegExp("^" + escaped + "(/|$)");
 }
 
+/** Prüft, ob eine URL ein Glob-Pattern (gleiche Logik wie Targets) trifft. */
+export function matchesPattern(url: string, pattern: string): boolean {
+  return patternToRegex(pattern).test(normalize(url));
+}
+
 export function classifyUrl(url: string, targets: TargetUrl[]): Classified {
   const norm = normalize(url);
   const order: Classification[] = ["owned", "authority", "displacement"];
