@@ -141,7 +141,7 @@ async function loadOverview(slug: string) {
 }
 
 function WantedCoverageCard({ coverage }: { coverage: WantedCoverage }) {
-  const { total, covered, prevCovered, items } = coverage;
+  const { total, covered, prevCovered, items, nameKeywordCount, perKeyword } = coverage;
   const pct = total > 0 ? Math.round((covered / total) * 100) : 0;
   const delta = prevCovered === null ? null : covered - prevCovered;
 
@@ -156,7 +156,8 @@ function WantedCoverageCard({ coverage }: { coverage: WantedCoverage }) {
             {covered} <span className="text-slate-500">/ {total}</span> Ziel-Publikationen auf Seite 1
           </h3>
           <p className="mt-1 text-sm text-slate-400">
-            Von den vom Kunden gewünschten Links ranken aktuell so viele in den Top 10 für seinen Namen.
+            Von den gewünschten Links ranken aktuell so viele in den Top 10 deiner{" "}
+            {nameKeywordCount} Namens-Suchen (Vereinigung, nicht von 10 Plätzen).
           </p>
         </div>
         <div className="text-right">
@@ -179,6 +180,22 @@ function WantedCoverageCard({ coverage }: { coverage: WantedCoverage }) {
           style={{ width: `${pct}%` }}
         />
       </div>
+
+      {perKeyword.length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {perKeyword.map((k, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.02] px-2.5 py-1 text-[12px]"
+            >
+              <span className="text-slate-400">{k.query}</span>
+              <span className={k.covered > 0 ? "font-semibold text-brand-emerald" : "text-slate-500"}>
+                {k.covered}/{total}
+              </span>
+            </span>
+          ))}
+        </div>
+      )}
 
       <ul className="mt-5 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
         {[...items].sort((a, b) => Number(b.covered) - Number(a.covered)).map((it, i) => (

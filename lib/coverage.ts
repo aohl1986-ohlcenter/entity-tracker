@@ -6,9 +6,11 @@ import { matchesPattern } from "./classify";
 
 export type WantedCoverage = {
   total: number;
-  covered: number;
+  covered: number; // distinkt über alle Namens-Suchen (Union der Top-10)
   prevCovered: number | null; // Abdeckung vor ~7 Tagen (null = keine History)
+  nameKeywordCount: number; // Anzahl Namens-Suchen (für "deiner N Namens-Suchen")
   items: { label: string; covered: boolean }[];
+  perKeyword: { query: string; covered: number }[];
 };
 
 /** Sammelt alle Top-10-URLs der Namens-Keywords (optional bis zu einem Stichtag). */
@@ -54,10 +56,42 @@ export async function computeWantedCoverage(
   const wanted = wantedLinksForSlug(slug);
   if (wanted.length === 0) return null;
 
-  const currentUrls = await rankingUrlsForNameKeywords(entityId);
+  const nameKws = await db
+    .select({ id: keywords.id, query: keywords.query })
+    .from(keywords)
+    .where(and(eq(keywords.entityId, entityId), eq(keywords.cluster, "name")));
+
+  // Pro Namens-Suche die Top-10-URLs holen; gleichzeitig die Union bilden.
+  const unionUrls = new Set<string>();
+  const perKeyword: { query: string; covered: number }[] = [];
+  for (const kw of nameKws) {
+    const snap = (
+      await db
+        .select({ id: serpSnapshots.id })
+        .from(serpSnapshots)
+        .where(eq(serpSnapshots.keywordId, kw.id))
+        .orderBy(desc(serpSnapshots.fetchedAt))
+        .limit(1)
+    )[0];
+    const kwUrls = new Set<string>();
+    if (snap) {
+      const rows = await db
+        .select({ url: serpResults.url, position: serpResults.position })
+        .from(serpResults)
+        .where(eq(serpResults.snapshotId, snap.id));
+      for (const r of rows)
+        if (r.position <= 10) {
+          kwUrls.add(r.url);
+          unionUrls.add(r.url);
+        }
+    }
+    const cov = wanted.filter((w) => [...kwUrls].some((u) => matchesPattern(u, w.pattern))).length;
+    perKeyword.push({ query: kw.query, covered: cov });
+  }
+
   const items = wanted.map((w) => ({
     label: w.label,
-    covered: [...currentUrls].some((u) => matchesPattern(u, w.pattern)),
+    covered: [...unionUrls].some((u) => matchesPattern(u, w.pattern)),
   }));
   const covered = items.filter((i) => i.covered).length;
 
@@ -68,5 +102,12 @@ export async function computeWantedCoverage(
       ? wanted.filter((w) => [...prevUrls].some((u) => matchesPattern(u, w.pattern))).length
       : null;
 
-  return { total: wanted.length, covered, prevCovered, items };
+  return {
+    total: wanted.length,
+    covered,
+    prevCovered,
+    nameKeywordCount: nameKws.length,
+    items,
+    perKeyword,
+  };
 }
