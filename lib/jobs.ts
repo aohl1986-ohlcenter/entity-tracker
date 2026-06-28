@@ -28,6 +28,7 @@ import {
   type GenericAlert,
 } from "./alerts";
 import { pruneOldSnapshotRaw } from "./prune";
+import { detectOpsIssues, sendOpsAlert } from "./ops";
 
 export type FetchSerpsReport = {
   entity: string;
@@ -384,6 +385,15 @@ export async function runDailyCollectionForAllEntities(): Promise<CollectionRepo
   for (const slug of slugs) {
     reports.push(await runDailyCollectionForEntity(slug));
   }
+
+  // Betriebs-Überwachung: gehäufte Fehler / ausgeschöpfte Limits → Ops-Mail.
+  try {
+    const issues = detectOpsIssues(reports);
+    if (issues.length > 0) await sendOpsAlert(issues, "Daily Collect");
+  } catch (err) {
+    console.error("[ops] detection failed:", err);
+  }
+
   return reports;
 }
 
