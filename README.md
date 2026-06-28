@@ -80,6 +80,26 @@ bzw. `npx tsx scripts/run-daily-digest.ts`. Einzeln: `scripts/run-collect.ts`
 Vercel sendet bei Cron automatisch `Authorization: Bearer $CRON_SECRET`,
 unsere Routes validieren das.
 
+## Monitoring & Ops-Alerts
+
+Drei Ebenen, damit Ausfälle/erschöpfte Limits nicht unbemerkt bleiben:
+
+1. **In-Job-Ops-Mail** — der tägliche Collect (`lib/ops.ts → detectOpsIssues`)
+   erkennt gehäufte Fehler (≥50 % SERP-Abrufe fehlgeschlagen, eine Citation-Engine
+   bei allen Prompts fehlgeschlagen) und ausgeschöpfte Kontingente (Fehlertext
+   enthält `credit/quota/limit/429/402/…`) und schickt eine separate **Ops-Mail**
+   an `OPS_EMAIL_TO` (Fallback `ALERT_EMAIL_TO`).
+2. **Job-Crash** — bricht der Collect komplett ab, sendet die Route eine
+   Crash-Mail **und** gibt HTTP 500 zurück, sodass auch Vercels eigene
+   Cron-Fehlerbenachrichtigung greift.
+3. **Total-Ausfall / Heartbeat** — `GET /api/health` (öffentlich, ohne Auth)
+   liefert das Alter des jüngsten Snapshots: **200** wenn frisch, **503** wenn
+   älter als 30 h (Cron läuft nicht / DB-Problem). Einen externen Uptime-Monitor
+   (UptimeRobot, cron-job.org, Better Stack — alle mit Free-Tier) auf diese URL
+   zeigen lassen; er alarmiert bei 503/Timeout. Das ist die Absicherung für den
+   Fall, dass die App gar nicht mehr läuft (dann kann sie sich auch nicht selbst
+   per Mail melden).
+
 ### Subdomain `tracker.pragma-code.de` bei Ionos
 
 1. In Vercel: Project → Settings → Domains → `tracker.pragma-code.de` hinzufügen.
