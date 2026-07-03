@@ -14,7 +14,7 @@
     "fetch:citations": "tsx scripts/run-check-citations.ts"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
+    "@neondatabase/serverless": "^1.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.45.2",
     "next": "^15.5.18",
