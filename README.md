@@ -1,7 +1,14 @@
 # Entity Authority Tracker
 
-SERP-Domination & AI-Citation-Tracking für Personal-Branding-SEO.
-Erste Entity: **Jens Langkammer**.
+SERP-Domination & AI-Citation-Tracking für Personal-Branding- und Entity-SEO:
+Das Tool beobachtet täglich, wie eine Person in den Google-Top-10 rankt **und**
+ob KI-Suchsysteme (Gemini mit Search-Grounding, Tavily, Brave) sie zitieren —
+inklusive Domination-Score, Zeitreihen-Dashboard und E-Mail-Alerts.
+
+**Live:** [tracker.pragma-code.de](https://tracker.pragma-code.de) *(Kundenprojekt mit Login — Demo auf Anfrage)*
+Erste Entity: **Jens Langkammer** ([Case Study](https://jens-langkammer.de))
+
+Ein Tool von [Pragma Code](https://www.pragma-code.de).
 
 ## Stack
 - Next.js 15 (App Router) auf Vercel
@@ -23,7 +30,7 @@ npm install
 
 # 3) .env.local befüllen
 #    - DATABASE_URL (Neon free tier, mit ?sslmode=require)
-#    - SERPER_API_KEY, GEMINI_API_KEY, CRON_SECRET sind schon gesetzt
+#    - SERPER_API_KEY, GEMINI_API_KEY, CRON_SECRET setzen
 cp .env.example .env.local   # falls noch nicht vorhanden
 $EDITOR .env.local
 
@@ -151,12 +158,3 @@ Engines ausgeführt, deren API-Key gesetzt ist:
 Eine fehlende Engine wird stillschweigend übersprungen. Pro Prompt entsteht
 eine DB-Zeile pro Engine — damit lassen sich Gemini vs. Tavily direkt
 vergleichen (`/citations` zeigt das `engine`-Feld im Kopf jeder Karte).
-
-## Key-Rotation
-
-Alle API-Keys (Serper, Gemini, Tavily) wurden initial im Chat geteilt — bitte
-nach erfolgreichem Smoke-Test rotieren:
-- Serper: https://serper.dev → Settings → Regenerate
-- Gemini: https://aistudio.google.com/apikey → Delete & Create
-- Tavily: https://app.tavily.com → API Keys → Rotate
-- Brave: https://api.search.brave.com → API Keys → Regenerate
