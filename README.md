@@ -1,5 +1,8 @@
 # Entity Authority Tracker
 
+[![CI](https://github.com/aohl1986-ohlcenter/entity-tracker/actions/workflows/ci.yml/badge.svg)](https://github.com/aohl1986-ohlcenter/entity-tracker/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/aohl1986-ohlcenter/entity-tracker/actions/workflows/codeql.yml/badge.svg)](https://github.com/aohl1986-ohlcenter/entity-tracker/actions/workflows/codeql.yml)
+
 SERP-Domination & AI-Citation-Tracking für Personal-Branding- und Entity-SEO:
 Das Tool beobachtet täglich, wie eine Person in den Google-Top-10 rankt **und**
 ob KI-Suchsysteme (Gemini mit Search-Grounding, Tavily, Brave) sie zitieren —
