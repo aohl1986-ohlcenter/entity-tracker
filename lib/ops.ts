@@ -2,7 +2,6 @@ import { sendEmail } from "./resend";
 import { db } from "./db";
 import { serpSnapshots } from "./schema";
 import { desc } from "drizzle-orm";
-import { citationPromptsForSlug } from "../data/entities";
 
 export type OpsIssue = {
   severity: "critical" | "warning";
@@ -17,7 +16,7 @@ const LIMIT_HINTS =
 type CollectionLike = {
   entity: string;
   serps: { processed: number; failed: { keyword: string; error: string }[] };
-  citations: { prompts: number; failed: { query: string; error: string }[] };
+  citations: { prompts: number; promptCount: number; failed: { query: string; error: string }[] };
 };
 
 /** Leitet aus den Collect-Reports betriebliche Probleme ab (Fehlerquote, Limit-Ausschöpfung). */
@@ -50,7 +49,7 @@ export function detectOpsIssues(reports: CollectionLike[]): OpsIssue[] {
       if (!byEngine[eng]) byEngine[eng] = { count: 0, sample: f.error };
       byEngine[eng].count++;
     }
-    const promptCount = citationPromptsForSlug(r.entity).length || 1;
+    const promptCount = r.citations.promptCount || 1;
     for (const [eng, info] of Object.entries(byEngine)) {
       // Eine Engine ist "aus", wenn sie bei ALLEN Prompts gescheitert ist.
       if (info.count >= promptCount) {

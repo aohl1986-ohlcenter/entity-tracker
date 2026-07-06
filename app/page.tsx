@@ -658,7 +658,7 @@ export default async function Page() {
       )
     : 0;
 
-  const coverage = await computeWantedCoverage(entity.id, slug);
+  const coverage = await computeWantedCoverage(entity.id);
 
   return (
     <div className="space-y-10">
