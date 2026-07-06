@@ -8,6 +8,32 @@ Das Tool beobachtet täglich, wie eine Person in den Google-Top-10 rankt **und**
 ob KI-Suchsysteme (Gemini mit Search-Grounding, Tavily, Brave) sie zitieren —
 inklusive Domination-Score, Zeitreihen-Dashboard und E-Mail-Alerts.
 
+Läuft als Multi-Tenant-SaaS für die Pakete auf
+[pragma-code.de/ki-sichtbarkeits-monitoring](https://www.pragma-code.de/ki-sichtbarkeits-monitoring).
+
+## SaaS-Betrieb (Kurzfassung)
+
+| Paket | Preis | Keywords | Features |
+|---|---|---|---|
+| Radar | 149€/M | 10 | SERP-Tracking, AI-Citations, Dashboard, Alerts/Reports |
+| Radar + Insights | 299€/M | 25 | + Verdrängungs-Analyse, Wunschlink-KPI, GEO-Empfehlungen |
+| Visibility Suite | 590€/M | 25 | + Hands-on-Services (manuell erbracht) |
+
+- **Kunden anlegen/pflegen:** `/admin` (Login via `ADMIN_PASSWORD`-Env).
+  Dort: Paket + Status, Keywords (Plan-Limit wird erzwungen), Ziel-URLs,
+  Citation-Prompts, Wunschlinks, GEO-Empfehlungen, Report-E-Mails,
+  Zugangs-Passwort (nur scrypt-Hash gespeichert, Einmal-Anzeige).
+- **Abrechnung:** manuell per Rechnung — `plan`/`status` sind reine
+  Steuerfelder. `paused`/`cancelled` stoppt Tracking + Reports sofort.
+- **Feature-Gates & Limits:** zentral in `lib/plans.ts`.
+- **API-Auslastung:** `/admin/usage` (gemessen via `api_usage`-Tabelle) —
+  vor Kunde Nr. 3 auf bezahlte API-Tarife wechseln (Serper ~0,30$/1k).
+- **Kapazität:** täglicher Collect läuft sequentiell über alle aktiven
+  Tenants in einem Cron (maxDuration 300 s). Ab ~5+ Kunden mit vollen
+  Keyword-Kontingenten den Collect chunken.
+- **Deprecated:** `AUTH_ENTITIES`-Env (Passwörter liegen in der DB);
+  der Login-Fallback darauf fliegt im nächsten Release.
+
 **Live:** [tracker.pragma-code.de](https://tracker.pragma-code.de) *(Kundenprojekt mit Login — Demo auf Anfrage)*
 Erste Entity: **Jens Langkammer** ([Case Study](https://jens-langkammer.de))
 
