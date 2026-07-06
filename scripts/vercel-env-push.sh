@@ -31,7 +31,13 @@ VARS=(
   BEDROCK_API_KEY
   BEDROCK_MODEL
   BEDROCK_REGION
+  AUTH_SECRET
+  ADMIN_PASSWORD
+  OPS_EMAIL_TO
 )
+# Hinweis: AUTH_ENTITIES ist deprecated (Passwoerter liegen als scrypt-Hash in
+# der DB) und wird bewusst nicht mehr gepusht. GOOGLE_SA_KEY wird separat
+# gepflegt (einzeiliges JSON).
 
 for VAR in "${VARS[@]}"; do
   VALUE=$(grep -E "^${VAR}=" "$ENV_FILE" | head -1 | cut -d= -f2-)

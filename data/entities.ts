@@ -13,7 +13,11 @@ export type SeedEntityBundle = {
   wantedLinks: WantedLink[];
 };
 
-/** Alle getrackten Entities. Neue Entity = hier einen Eintrag ergänzen. */
+/**
+ * Bootstrap-Fixtures für eine frische DB (scripts/seed.ts + migrate-to-saas.ts).
+ * Seit der SaaS-Migration werden Kunden im Admin (/admin) angelegt und
+ * gepflegt — NICHT mehr hier. Laufzeit-Code liest ausschließlich aus der DB.
+ */
 export const SEED_ENTITIES: SeedEntityBundle[] = [
   {
     entity: langkammer.ENTITY,
@@ -31,10 +35,3 @@ export const SEED_ENTITIES: SeedEntityBundle[] = [
   },
 ];
 
-export function citationPromptsForSlug(slug: string): CitationPrompt[] {
-  return SEED_ENTITIES.find((e) => e.entity.slug === slug)?.citationPrompts ?? [];
-}
-
-export function wantedLinksForSlug(slug: string): WantedLink[] {
-  return SEED_ENTITIES.find((e) => e.entity.slug === slug)?.wantedLinks ?? [];
-}

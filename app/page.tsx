@@ -4,6 +4,7 @@ import { entities, keywords, serpSnapshots, aiCitations } from "@/lib/schema";
 import { desc, eq, inArray } from "drizzle-orm";
 import { getSessionSlug } from "@/lib/session";
 import { computeWantedCoverage, type WantedCoverage } from "@/lib/coverage";
+import { planFor } from "@/lib/plans";
 
 export const dynamic = "force-dynamic";
 
@@ -138,6 +139,36 @@ async function loadOverview(slug: string) {
   const latestAiScore = aiHistory.length > 0 ? aiHistory[aiHistory.length - 1].score : 0;
 
   return { entity, latest, avgScore, totals, history, aiHistory, latestAiScore, nameTopicHistory };
+}
+
+/**
+ * Operator-gepflegte GEO-Empfehlungen (Admin → Tenant → GEO-Empfehlungen).
+ * Plaintext; Zeilen mit "- " werden als Liste gerendert. Insights+/Suite.
+ */
+function GeoRecommendationsCard({ notes }: { notes: string }) {
+  const lines = notes.split("\n").filter((l) => l.trim().length > 0);
+  return (
+    <section className="card p-6">
+      <div className="text-[11px] uppercase tracking-[0.2em] text-brand-gold">
+        GEO-Empfehlungen
+      </div>
+      <h3 className="mt-1 text-xl font-bold text-white">Priorisierte Maßnahmen</h3>
+      <div className="mt-3 space-y-1.5 text-sm text-slate-300">
+        {lines.map((line, i) =>
+          line.trim().startsWith("- ") ? (
+            <div key={i} className="flex gap-2">
+              <span className="text-brand-gold">•</span>
+              <span>{line.trim().slice(2)}</span>
+            </div>
+          ) : (
+            <p key={i} className="text-slate-400">
+              {line}
+            </p>
+          ),
+        )}
+      </div>
+    </section>
+  );
 }
 
 function WantedCoverageCard({ coverage }: { coverage: WantedCoverage }) {
@@ -658,7 +689,9 @@ export default async function Page() {
       )
     : 0;
 
-  const coverage = await computeWantedCoverage(entity.id);
+  // Feature-Gates nach Paket (lib/plans.ts)
+  const plan = planFor(entity.plan);
+  const coverage = plan.wantedLinkCoverage ? await computeWantedCoverage(entity.id) : null;
 
   return (
     <div className="space-y-10">
@@ -678,10 +711,14 @@ export default async function Page() {
           <p className="mt-2 text-sm text-slate-400">
             {latest.length} Keywords getrackt · Ziel: 80–90 % SERP-Domination
           </p>
-          <div className="mt-5 grid grid-cols-3 gap-3 max-w-md">
+          <div
+            className={`mt-5 grid gap-3 max-w-md ${plan.displacementAnalysis ? "grid-cols-3" : "grid-cols-2"}`}
+          >
             <MiniStat label="Owned" value={totals.owned} tone="emerald" />
             <MiniStat label="Authority" value={totals.authority} tone="sky" />
-            <MiniStat label="Displacement" value={totals.displacement} tone="rose" />
+            {plan.displacementAnalysis && (
+              <MiniStat label="Displacement" value={totals.displacement} tone="rose" />
+            )}
           </div>
         </div>
         <div className="relative flex flex-wrap items-center gap-8">
@@ -707,6 +744,15 @@ export default async function Page() {
       </section>
 
       {coverage && <WantedCoverageCard coverage={coverage} />}
+
+      {plan.geoRecommendations ? (
+        entity.geoNotes && <GeoRecommendationsCard notes={entity.geoNotes} />
+      ) : (
+        <p className="text-[12px] text-slate-500">
+          Verdrängungs-Analyse, Wunschlink-Abdeckung &amp; monatliche GEO-Empfehlungen sind Teil von{" "}
+          <span className="text-brand-gold">Radar&nbsp;+&nbsp;Insights</span>.
+        </p>
+      )}
 
       <DominationScoreChart serpData={history} aiData={aiHistory} nameTopicData={nameTopicHistory} />
 
@@ -734,7 +780,9 @@ export default async function Page() {
                     <th className="px-4 py-3 font-medium text-slate-400">Score</th>
                     <th className="px-4 py-3 font-medium text-owned">Owned</th>
                     <th className="px-4 py-3 font-medium text-authority">Authority</th>
-                    <th className="px-4 py-3 font-medium text-displacement">Displacement</th>
+                    {plan.displacementAnalysis && (
+                      <th className="px-4 py-3 font-medium text-displacement">Displacement</th>
+                    )}
                     <th className="px-4 py-3 font-medium text-slate-400">Last seen</th>
                   </tr>
                 </thead>
@@ -754,9 +802,11 @@ export default async function Page() {
                       </td>
                       <td className="px-4 py-3 text-owned">{l.snapshot?.ownedCount ?? "—"}</td>
                       <td className="px-4 py-3 text-authority">{l.snapshot?.authorityCount ?? "—"}</td>
-                      <td className="px-4 py-3 text-displacement">
-                        {l.snapshot?.displacementCount ?? "—"}
-                      </td>
+                      {plan.displacementAnalysis && (
+                        <td className="px-4 py-3 text-displacement">
+                          {l.snapshot?.displacementCount ?? "—"}
+                        </td>
+                      )}
                       <td className="px-4 py-3 text-slate-500">
                         {l.snapshot
                           ? new Date(l.snapshot.fetchedAt).toLocaleString("de-DE")
