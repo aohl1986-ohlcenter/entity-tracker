@@ -1,7 +1,6 @@
 import { db } from "./db";
-import { keywords, serpSnapshots, serpResults } from "./schema";
+import { keywords, serpSnapshots, serpResults, wantedLinks } from "./schema";
 import { and, desc, eq, lte } from "drizzle-orm";
-import { wantedLinksForSlug } from "../data/entities";
 import { matchesPattern } from "./classify";
 
 export type WantedCoverage = {
@@ -45,15 +44,15 @@ async function rankingUrlsForNameKeywords(entityId: number, before?: Date): Prom
 }
 
 /**
- * Wunschlink-Abdeckung: Wie viele von Jens' Ziel-Publikationen ranken aktuell
- * in den Top 10 der Namens-Keywords — plus der Vergleichswert von vor ~7 Tagen.
- * Gibt null zurück, wenn die Entity keine Wunschliste hat (z. B. Alexander).
+ * Wunschlink-Abdeckung: Wie viele der Ziel-Publikationen des Tenants ranken
+ * aktuell in den Top 10 der Namens-Keywords — plus Vergleichswert vor ~7 Tagen.
+ * Gibt null zurück, wenn die Entity keine Wunschliste hat.
  */
-export async function computeWantedCoverage(
-  entityId: number,
-  slug: string,
-): Promise<WantedCoverage | null> {
-  const wanted = wantedLinksForSlug(slug);
+export async function computeWantedCoverage(entityId: number): Promise<WantedCoverage | null> {
+  const wanted = await db
+    .select({ label: wantedLinks.label, pattern: wantedLinks.pattern })
+    .from(wantedLinks)
+    .where(eq(wantedLinks.entityId, entityId));
   if (wanted.length === 0) return null;
 
   const nameKws = await db

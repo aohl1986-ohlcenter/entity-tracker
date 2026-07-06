@@ -777,7 +777,7 @@ export async function sendPeriodicDigest(
     console.error("[alerts] error fetching scores for email digest:", err);
   }
 
-  const coverage = await computeWantedCoverage(entity.id, entity.slug).catch(() => null);
+  const coverage = await computeWantedCoverage(entity.id).catch(() => null);
 
   try {
     const sent = await mailDigest(entity, list, to, {
