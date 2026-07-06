@@ -29,6 +29,8 @@ import {
 } from "./alerts";
 import { pruneOldSnapshotRaw } from "./prune";
 import { detectOpsIssues, sendOpsAlert } from "./ops";
+import { planFor } from "./plans";
+import { recordUsage } from "./usage";
 
 export type FetchSerpsReport = {
   entity: string;
@@ -52,10 +54,24 @@ export async function runFetchSerpsForEntity(
   )[0];
   if (!entity) throw new Error(`Entity ${slug} not found — run \`npm run db:seed\` first.`);
 
-  const [kws, targets] = await Promise.all([
-    db.select().from(keywords).where(eq(keywords.entityId, entity.id)),
+  const plan = planFor(entity.plan);
+  const [allKws, targets] = await Promise.all([
+    db
+      .select()
+      .from(keywords)
+      .where(and(eq(keywords.entityId, entity.id), eq(keywords.active, 1)))
+      .orderBy(keywords.id),
     db.select().from(targetUrls).where(eq(targetUrls.entityId, entity.id)),
   ]);
+
+  // Safety-Net: Plan-Limit auch hier erzwingen (deterministisch erste N),
+  // falls der Admin nach einem Downgrade noch nicht aufgeräumt hat.
+  const kws = allKws.slice(0, plan.maxKeywords);
+  if (allKws.length > kws.length) {
+    console.warn(
+      `[jobs] ${slug}: ${allKws.length} aktive Keywords > Plan-Limit ${plan.maxKeywords} — verarbeite nur die ersten ${kws.length}.`,
+    );
+  }
 
   const failed: FetchSerpsReport["failed"] = [];
   const scores: number[] = [];
@@ -63,13 +79,20 @@ export async function runFetchSerpsForEntity(
 
   for (const kw of kws) {
     try {
-      const serp = await fetchSerp({
-        query: kw.query,
-        gl: kw.locale,
-        hl: kw.locale,
-        location: kw.location,
-        num: 10,
-      });
+      let serp;
+      try {
+        serp = await fetchSerp({
+          query: kw.query,
+          gl: kw.locale,
+          hl: kw.locale,
+          location: kw.location,
+          num: 10,
+        });
+      } catch (err) {
+        await recordUsage(entity.id, "serper", { failures: 1 });
+        throw err;
+      }
+      await recordUsage(entity.id, "serper", { calls: 1 });
       const organic = (serp.organic ?? []).slice(0, 10);
       const classified = organic.map((r) => {
         const c = classifyUrl(r.link, targets);
@@ -113,7 +136,10 @@ export async function runFetchSerpsForEntity(
           })),
         );
 
-        const displacements = await detectDisplacementForSnapshot(entity, kw, snapshot.id);
+        // Verdrängungs-Analyse ist ein Insights+/Suite-Feature (lib/plans.ts).
+        const displacements = plan.displacementAnalysis
+          ? await detectDisplacementForSnapshot(entity, kw, snapshot.id)
+          : [];
         const rankChanges = await detectRankChangesForKeyword(kw, snapshot.id);
         const scoreDrop = await detectScoreDropForKeyword(kw);
         collected.push(...displacements, ...rankChanges, ...scoreDrop);
@@ -218,6 +244,7 @@ export async function runCheckCitationsForEntity(
     for (const engine of engines) {
       try {
         const result = await engine.ask(prompt.query);
+        await recordUsage(entity.id, engine.name, { calls: 1 });
         const cited = result.citations.map((c) => {
           const cls = classifyUrl(c.resolvedUrl, targets);
           return {
@@ -243,6 +270,7 @@ export async function runCheckCitationsForEntity(
         });
         runs++;
       } catch (err) {
+        await recordUsage(entity.id, engine.name, { failures: 1 });
         failed.push({
           query: `[${engine.name}] ${prompt.query}`,
           error: err instanceof Error ? err.message : String(err),
@@ -380,8 +408,12 @@ export async function runSendDigestForEntity(
 // Multi-Entity-Wrapper für die Crons — laufen über ALLE Entities in der DB
 // ─────────────────────────────────────────────────────────────────────────────
 
+/** Nur aktive Tenants — pausierte/gekündigte werden weder getrackt noch gemailt. */
 async function allEntitySlugs(): Promise<string[]> {
-  const rows = await db.select({ slug: entities.slug }).from(entities);
+  const rows = await db
+    .select({ slug: entities.slug })
+    .from(entities)
+    .where(eq(entities.status, "active"));
   return rows.map((r) => r.slug);
 }
 

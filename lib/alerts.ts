@@ -13,6 +13,18 @@ import { and, desc, eq, gte, inArray, lt, sql } from "drizzle-orm";
 import { sendEmail } from "./resend";
 import { extractDomain } from "./classify";
 import { computeWantedCoverage, type WantedCoverage } from "./coverage";
+import { planFor } from "./plans";
+
+/**
+ * Empfänger der Kunden-Reports: per-Tenant reportEmails; Fallback auf die
+ * globale ALERT_EMAIL_TO nur solange ein Tenant noch keine Adresse hat
+ * (Übergangsschutz — Ops-Mails laufen separat über OPS_EMAIL_TO).
+ */
+function recipientsFor(entity: Entity): string | undefined {
+  const list = (entity.reportEmails ?? []).filter(Boolean);
+  if (list.length > 0) return list.join(",");
+  return process.env.ALERT_EMAIL_TO || undefined;
+}
 
 const DEDUP_WINDOW_DAYS = 7;
 const RANK_DEDUP_DAYS = 3;
@@ -488,7 +500,7 @@ export async function dispatchAlertBatch(
     return { persisted: inserted.length, emailed: false, reason: "skip-email", byType, fresh };
   }
 
-  const to = process.env.ALERT_EMAIL_TO;
+  const to = recipientsFor(entity);
   if (!to) {
     return { persisted: inserted.length, emailed: false, reason: "no-recipient", byType, fresh };
   }
@@ -527,7 +539,7 @@ export async function emailCombinedDigest(
   for (const a of alertsList) byType[a.type] = (byType[a.type] ?? 0) + 1;
   if (alertsList.length === 0) return { emailed: false, reason: "no-alerts", byType };
 
-  const to = process.env.ALERT_EMAIL_TO;
+  const to = recipientsFor(entity);
   if (!to) return { emailed: false, reason: "no-recipient", byType };
 
   try {
@@ -614,7 +626,7 @@ export async function sendPeriodicDigest(
     return { emailed: false, count: 0, reason: "no-pending", byType };
   }
 
-  const to = process.env.ALERT_EMAIL_TO;
+  const to = recipientsFor(entity);
   if (!to) {
     return { emailed: false, count: pending.length, reason: "no-recipient", byType };
   }
@@ -777,7 +789,10 @@ export async function sendPeriodicDigest(
     console.error("[alerts] error fetching scores for email digest:", err);
   }
 
-  const coverage = await computeWantedCoverage(entity.id).catch(() => null);
+  // Wunschlink-Abdeckung ist ein Insights+/Suite-Feature (lib/plans.ts).
+  const coverage = planFor(entity.plan).wantedLinkCoverage
+    ? await computeWantedCoverage(entity.id).catch(() => null)
+    : null;
 
   try {
     const sent = await mailDigest(entity, list, to, {
