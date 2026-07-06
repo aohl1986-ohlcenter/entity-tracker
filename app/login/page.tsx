@@ -1,13 +1,34 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { COOKIE_NAME, resolvePassword, signSlug } from "@/lib/auth";
+import { verifyPassword } from "@/lib/password";
+import { db } from "@/lib/db";
+import { entities } from "@/lib/schema";
+import { and, isNotNull, ne } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
+
+/**
+ * Passwort → Tenant-Slug via DB (scrypt). Ein-Feld-Login: wir prüfen gegen
+ * alle Tenants mit gesetztem Hash — bei ≤~30 Tenants unkritisch; ab mehr
+ * Tenants Slug-Feld ins Formular aufnehmen.
+ */
+async function resolvePasswordDb(password: string): Promise<string | null> {
+  const candidates = await db
+    .select({ slug: entities.slug, passwordHash: entities.passwordHash })
+    .from(entities)
+    .where(and(isNotNull(entities.passwordHash), ne(entities.status, "cancelled")));
+  for (const c of candidates) {
+    if (verifyPassword(password, c.passwordHash)) return c.slug;
+  }
+  return null;
+}
 
 async function login(formData: FormData) {
   "use server";
   const password = String(formData.get("password") ?? "");
-  const slug = resolvePassword(password);
+  // DB-first; Legacy-Fallback AUTH_ENTITIES (deprecated, fliegt nächstes Release)
+  const slug = (await resolvePasswordDb(password)) ?? resolvePassword(password);
   if (!slug) redirect("/login?error=1");
 
   const token = await signSlug(slug);
