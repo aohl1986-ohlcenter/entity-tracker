@@ -5,6 +5,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { entities } from "@/lib/schema";
 import { getSessionSlugSafe } from "@/lib/session";
+import { planFor } from "@/lib/plans";
 
 export const metadata: Metadata = {
   title: "Entity Authority Tracker · Pragma-Code",
@@ -19,9 +20,14 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const slug = await getSessionSlugSafe();
   let entityName: string | null = null;
+  let planLabel: string | null = null;
   if (slug) {
-    const all = await db.select({ slug: entities.slug, name: entities.name }).from(entities);
-    entityName = all.find((e) => e.slug === slug)?.name ?? slug;
+    const all = await db
+      .select({ slug: entities.slug, name: entities.name, plan: entities.plan })
+      .from(entities);
+    const current = all.find((e) => e.slug === slug);
+    entityName = current?.name ?? slug;
+    planLabel = current ? planFor(current.plan).label : null;
   }
 
   return (
@@ -53,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <NavLink href="/">Overview</NavLink>
                 <NavLink href="/citations">AI Citations</NavLink>
                 <NavLink href="/alerts">Alerts</NavLink>
-                <EntitySwitcher name={entityName ?? slug} />
+                <EntitySwitcher name={entityName ?? slug} planLabel={planLabel} />
               </nav>
             )}
           </div>
@@ -88,12 +94,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   );
 }
 
-function EntitySwitcher({ name }: { name: string }) {
+function EntitySwitcher({ name, planLabel }: { name: string; planLabel: string | null }) {
   return (
     <div className="ml-3 flex items-center gap-2">
       <span className="pill bg-brand-gold/15 text-brand-gold ring-1 ring-brand-gold/30">
         {name}
       </span>
+      {planLabel && (
+        <span
+          className="hidden md:inline-block rounded-full border border-white/15 px-2.5 py-0.5 text-[10px] uppercase tracking-wider text-slate-300"
+          title="Gebuchtes Paket"
+        >
+          {planLabel}
+        </span>
+      )}
       <Link
         href="/login?switch=1"
         className="rounded-md px-2.5 py-1.5 text-[12px] text-slate-300 hover:bg-white/5 hover:text-brand-gold transition"
