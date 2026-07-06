@@ -14,6 +14,17 @@ export const entities = pgTable("entities", {
   slug: text("slug").notNull().unique(),
   name: text("name").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  // ── SaaS-Tenant-Felder (Pakete: lib/plans.ts) ──
+  plan: text("plan").default("radar").notNull(),
+  status: text("status").default("active").notNull(),
+  /** Empfänger der Kunden-Reports/Digests (Ops-Mails bleiben global). */
+  reportEmails: jsonb("report_emails").$type<string[]>().default([]).notNull(),
+  /** scrypt-Hash (lib/password.ts); null = Kunden-Login deaktiviert. */
+  passwordHash: text("password_hash"),
+  company: text("company"),
+  notes: text("notes"),
+  /** Operator-gepflegte GEO-Empfehlungen (Insights+), Markdown/Plaintext. */
+  geoNotes: text("geo_notes"),
 });
 
 export const keywords = pgTable(
@@ -28,6 +39,8 @@ export const keywords = pgTable(
     locale: text("locale").default("de").notNull(),
     location: text("location").default("Germany").notNull(),
     device: text("device").default("desktop").notNull(),
+    /** 0 = deaktiviert (z. B. Plan-Downgrade) — Historie bleibt erhalten. */
+    active: integer("active").default(1).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (t) => ({
@@ -36,16 +49,78 @@ export const keywords = pgTable(
   }),
 );
 
-export const targetUrls = pgTable("target_urls", {
-  id: serial("id").primaryKey(),
-  entityId: integer("entity_id")
-    .references(() => entities.id, { onDelete: "cascade" })
-    .notNull(),
-  pattern: text("pattern").notNull(),
-  label: text("label").notNull(),
-  category: text("category").notNull(),
-  topics: jsonb("topics").$type<string[]>().default([]).notNull(),
-});
+export const targetUrls = pgTable(
+  "target_urls",
+  {
+    id: serial("id").primaryKey(),
+    entityId: integer("entity_id")
+      .references(() => entities.id, { onDelete: "cascade" })
+      .notNull(),
+    pattern: text("pattern").notNull(),
+    label: text("label").notNull(),
+    category: text("category").notNull(),
+    topics: jsonb("topics").$type<string[]>().default([]).notNull(),
+  },
+  (t) => ({
+    uniq: uniqueIndex("target_urls_uniq").on(t.entityId, t.pattern),
+  }),
+);
+
+/** AI-Citation-Prompts pro Tenant (früher hardcoded in data/*.ts). */
+export const citationPrompts = pgTable(
+  "citation_prompts",
+  {
+    id: serial("id").primaryKey(),
+    entityId: integer("entity_id")
+      .references(() => entities.id, { onDelete: "cascade" })
+      .notNull(),
+    query: text("query").notNull(),
+    topic: text("topic").notNull(),
+    active: integer("active").default(1).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (t) => ({
+    byEntity: index("citation_prompts_entity_idx").on(t.entityId),
+    uniq: uniqueIndex("citation_prompts_uniq").on(t.entityId, t.query),
+  }),
+);
+
+/** Wunschlinks (Insights+): Publikationen, die auf Seite 1 ranken sollen. */
+export const wantedLinks = pgTable(
+  "wanted_links",
+  {
+    id: serial("id").primaryKey(),
+    entityId: integer("entity_id")
+      .references(() => entities.id, { onDelete: "cascade" })
+      .notNull(),
+    label: text("label").notNull(),
+    pattern: text("pattern").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (t) => ({
+    byEntity: index("wanted_links_entity_idx").on(t.entityId),
+    uniq: uniqueIndex("wanted_links_uniq").on(t.entityId, t.pattern),
+  }),
+);
+
+/** API-Nutzung pro Tag/Tenant/Engine — Kapazitätsplanung im Admin. */
+export const apiUsage = pgTable(
+  "api_usage",
+  {
+    id: serial("id").primaryKey(),
+    /** Kalendertag UTC, Format YYYY-MM-DD. */
+    day: text("day").notNull(),
+    entityId: integer("entity_id")
+      .references(() => entities.id, { onDelete: "cascade" })
+      .notNull(),
+    engine: text("engine").notNull(),
+    calls: integer("calls").default(0).notNull(),
+    failures: integer("failures").default(0).notNull(),
+  },
+  (t) => ({
+    uniq: uniqueIndex("api_usage_uniq").on(t.day, t.entityId, t.engine),
+  }),
+);
 
 export const serpSnapshots = pgTable(
   "serp_snapshots",
@@ -122,6 +197,9 @@ export const alerts = pgTable(
 export type Entity = typeof entities.$inferSelect;
 export type Keyword = typeof keywords.$inferSelect;
 export type TargetUrl = typeof targetUrls.$inferSelect;
+export type CitationPromptRow = typeof citationPrompts.$inferSelect;
+export type WantedLinkRow = typeof wantedLinks.$inferSelect;
+export type ApiUsageRow = typeof apiUsage.$inferSelect;
 export type SerpSnapshot = typeof serpSnapshots.$inferSelect;
 export type SerpResult = typeof serpResults.$inferSelect;
 export type AiCitation = typeof aiCitations.$inferSelect;
