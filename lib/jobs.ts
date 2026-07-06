@@ -6,8 +6,9 @@ import {
   serpSnapshots,
   serpResults,
   aiCitations,
+  citationPrompts,
 } from "./schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { fetchSerp } from "./serper";
 import { askGroundedGemini } from "./gemini";
 import { askGroundedTavily } from "./tavily";
@@ -15,7 +16,6 @@ import { askGroundedBrave } from "./brave";
 import { askGroundedBedrock } from "./bedrock";
 import { classifyUrl, extractDomain } from "./classify";
 import { countByClass, dominationScore } from "./score";
-import { citationPromptsForSlug } from "../data/entities";
 import {
   detectDisplacementForSnapshot,
   detectRankChangesForKeyword,
@@ -148,6 +148,8 @@ export async function runFetchSerpsForEntity(
 export type CitationReport = {
   entity: string;
   prompts: number;
+  /** Anzahl konfigurierter (aktiver) Prompts — für die Ops-Fehlerquote. */
+  promptCount: number;
   failed: { query: string; error: string }[];
   totalOwned: number;
   totalAuthority: number;
@@ -202,7 +204,10 @@ export async function runCheckCitationsForEntity(
     },
   ].filter((e) => e.enabled);
 
-  const prompts = citationPromptsForSlug(slug);
+  const prompts = await db
+    .select({ query: citationPrompts.query, topic: citationPrompts.topic })
+    .from(citationPrompts)
+    .where(and(eq(citationPrompts.entityId, entity.id), eq(citationPrompts.active, 1)));
 
   const failed: CitationReport["failed"] = [];
   let totalOwned = 0;
@@ -254,6 +259,7 @@ export async function runCheckCitationsForEntity(
   return {
     entity: entity.slug,
     prompts: runs,
+    promptCount: prompts.length,
     failed,
     totalOwned,
     totalAuthority,
