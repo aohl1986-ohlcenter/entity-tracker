@@ -88,11 +88,14 @@ export async function detectDisplacementForSnapshot(
 
   return top.map((r) => {
     const sev: Severity = r.position === 1 ? "critical" : r.position === 2 ? "high" : "warning";
+    // Label mit in den Betreff — "de.linkedin.com" allein verrät nicht, dass
+    // es das Namensvetter-Profil ist und nicht das eigene.
+    const who = r.matchedLabel ? `${r.domain} (${r.matchedLabel})` : r.domain;
     return {
       type: "displacement_top3",
       severity: sev,
       dedupKey: `disp:${keyword.id}:${r.url}`,
-      subject: `Displacement Top ${TOP_THRESHOLD}: ${r.domain} @ #${r.position} für "${keyword.query}"`,
+      subject: `Displacement Top ${TOP_THRESHOLD}: ${who} @ #${r.position} für "${keyword.query}"`,
       payload: {
         keyword: keyword.query,
         position: r.position,
@@ -108,72 +111,91 @@ export async function detectDisplacementForSnapshot(
 // 2) Rank-Changes (Drops & Gains) für Owned/Authority
 // ─────────────────────────────────────────────────────────────────────────────
 
+/** Verbesserung ggü. Baseline: neu in Top10, neu in Top3 oder >=3 Plätze besser. */
+function improvedVs(baseline: number | null, pos: number | null): boolean {
+  if (pos === null || pos > TOP_N) return false;
+  if (baseline === null || baseline > TOP_N) return true;
+  if (baseline > TOP_THRESHOLD && pos <= TOP_THRESHOLD) return true;
+  return baseline - pos >= 3;
+}
+
+/** Verschlechterung ggü. Baseline: aus Top10 gefallen oder >=3 Plätze schlechter. */
+function worsenedVs(baseline: number | null, pos: number | null): boolean {
+  if (baseline === null || baseline > TOP_N) return false;
+  if (pos === null || pos > TOP_N) return true;
+  return pos - baseline >= 3;
+}
+
 export async function detectRankChangesForKeyword(
   keyword: Keyword,
   currentSnapshotId: number,
 ): Promise<GenericAlert[]> {
-  // Hole die zwei jüngsten Snapshots: [0] = current, [1] = previous
+  // Persistenz-Schwelle gegen SERP-Tagesvolatilität: eine Bewegung wird erst
+  // gemeldet, wenn sie ggü. der Baseline (drittjüngster Snapshot) in BEIDEN
+  // jüngeren Snapshots bestätigt ist. Ein eintägiger Ausreißer, der am
+  // Folgetag zurückspringt, erzeugt so weder Gain- noch Drop-Alert.
   const snaps = await db
     .select({ id: serpSnapshots.id })
     .from(serpSnapshots)
     .where(eq(serpSnapshots.keywordId, keyword.id))
     .orderBy(desc(serpSnapshots.fetchedAt))
-    .limit(2);
-  if (snaps.length < 2) return []; // kein Vorgänger
+    .limit(3);
+  if (snaps.length < 3) return []; // zu wenig History für Bestätigung
 
-  const [curr, prev] = snaps;
-  const [currRows, prevRows] = await Promise.all([
+  const [curr, prev, baseline] = snaps;
+  const [currRows, prevRows, baseRows] = await Promise.all([
     db.select().from(serpResults).where(eq(serpResults.snapshotId, curr.id)),
     db.select().from(serpResults).where(eq(serpResults.snapshotId, prev.id)),
+    db.select().from(serpResults).where(eq(serpResults.snapshotId, baseline.id)),
   ]);
 
   const prevByUrl = new Map(prevRows.map((r) => [r.url, r]));
   const currByUrl = new Map(currRows.map((r) => [r.url, r]));
+  const baseByUrl = new Map(baseRows.map((r) => [r.url, r]));
   const out: GenericAlert[] = [];
 
-  // Drops: owned/authority die im prev <=TOP_N waren und jetzt schlechter sind
-  for (const p of prevRows) {
-    if (p.classification !== "owned" && p.classification !== "authority") continue;
-    if (p.position > TOP_N) continue;
-    const c = currByUrl.get(p.url);
-    const newPos = c?.position ?? null;
+  // Drops: owned/authority die in der Baseline <=TOP_N waren und in beiden
+  // jüngeren Snapshots schlechter sind bzw. fehlen.
+  for (const b of baseRows) {
+    if (b.classification !== "owned" && b.classification !== "authority") continue;
+    if (b.position > TOP_N) continue;
+    const prevPos = prevByUrl.get(b.url)?.position ?? null;
+    const newPos = currByUrl.get(b.url)?.position ?? null;
+    if (!worsenedVs(b.position, prevPos) || !worsenedVs(b.position, newPos)) continue;
     const droppedOut = newPos === null || newPos > TOP_N;
-    const droppedFar = newPos !== null && newPos - p.position >= 3;
-    if (!droppedOut && !droppedFar) continue;
 
     let sev: Severity;
-    if (p.position <= TOP_THRESHOLD && droppedOut) sev = "critical";
-    else if (p.position <= 5 && droppedOut) sev = "high";
+    if (b.position <= TOP_THRESHOLD && droppedOut) sev = "critical";
+    else if (b.position <= 5 && droppedOut) sev = "high";
     else sev = "warning";
 
     out.push({
       type: "rank_drop",
       severity: sev,
-      dedupKey: `rank_drop:${keyword.id}:${p.url}`,
-      subject: `Rank-Drop: ${p.domain} #${p.position} → ${newPos ?? "out"} für "${keyword.query}"`,
+      dedupKey: `rank_drop:${keyword.id}:${b.url}`,
+      subject: `Rank-Drop: ${b.domain} #${b.position} → ${newPos ?? "out"} für "${keyword.query}"`,
       payload: {
         keyword: keyword.query,
-        url: p.url,
-        domain: p.domain,
-        matchedLabel: p.matchedLabel ?? null,
-        classification: p.classification,
-        prevPosition: p.position,
+        url: b.url,
+        domain: b.domain,
+        matchedLabel: b.matchedLabel ?? null,
+        classification: b.classification,
+        prevPosition: b.position,
         newPosition: newPos,
         droppedOut,
       },
     });
   }
 
-  // Gains: owned-URLs die jetzt besser sind (neu in Top10, neu in Top3, oder >=3 besser)
+  // Gains: owned-URLs, deren Verbesserung ggü. Baseline in beiden jüngeren
+  // Snapshots bestätigt ist.
   for (const c of currRows) {
     if (c.classification !== "owned") continue;
     if (c.position > TOP_N) continue;
-    const p = prevByUrl.get(c.url);
-    const prevPos = p?.position ?? null;
-    const newInTop10 = prevPos === null || prevPos > TOP_N;
-    const newInTop3 = (prevPos === null || prevPos > TOP_THRESHOLD) && c.position <= TOP_THRESHOLD;
-    const jumpedUp = prevPos !== null && prevPos - c.position >= 3;
-    if (!newInTop10 && !newInTop3 && !jumpedUp) continue;
+    const basePos = baseByUrl.get(c.url)?.position ?? null;
+    const prevPos = prevByUrl.get(c.url)?.position ?? null;
+    if (!improvedVs(basePos, c.position) || !improvedVs(basePos, prevPos)) continue;
+    const newInTop3 = (basePos === null || basePos > TOP_THRESHOLD) && c.position <= TOP_THRESHOLD;
 
     let sev: Severity;
     if (c.position === 1) sev = "critical";
@@ -184,14 +206,14 @@ export async function detectRankChangesForKeyword(
       type: "rank_gain",
       severity: sev,
       dedupKey: `rank_gain:${keyword.id}:${c.url}`,
-      subject: `Rank-Gain: ${c.domain} ${prevPos ? `#${prevPos} → #${c.position}` : `neu #${c.position}`} für "${keyword.query}"`,
+      subject: `Rank-Gain: ${c.domain} ${basePos ? `#${basePos} → #${c.position}` : `neu #${c.position}`} für "${keyword.query}"`,
       payload: {
         keyword: keyword.query,
         url: c.url,
         domain: c.domain,
         matchedLabel: c.matchedLabel ?? null,
         classification: c.classification,
-        prevPosition: prevPos,
+        prevPosition: basePos,
         newPosition: c.position,
       },
     });
@@ -345,6 +367,8 @@ export async function detectAuthorityCandidatesForEntity(
   entity: Entity,
 ): Promise<GenericAlert[]> {
   const cutoff = new Date(Date.now() - CANDIDATE_LOOKBACK_DAYS * 24 * 60 * 60 * 1000);
+  // Nur SERPs der eigenen Keywords — ohne den keywords-Join liefen hier
+  // Kandidaten aus den Snapshots ALLER Tenants in den Report.
   const rows = await db
     .select({
       domain: serpResults.domain,
@@ -355,7 +379,8 @@ export async function detectAuthorityCandidatesForEntity(
     })
     .from(serpResults)
     .innerJoin(serpSnapshots, eq(serpResults.snapshotId, serpSnapshots.id))
-    .where(gte(serpSnapshots.fetchedAt, cutoff));
+    .innerJoin(keywords, eq(serpSnapshots.keywordId, keywords.id))
+    .where(and(eq(keywords.entityId, entity.id), gte(serpSnapshots.fetchedAt, cutoff)));
 
   if (rows.length === 0) return [];
 
@@ -596,6 +621,101 @@ async function mailDigest(
   return !!sent;
 }
 
+type PendingRow = {
+  type: string;
+  severity: string;
+  dedupKey: string;
+  subject: string;
+  payload: unknown;
+  createdAt: Date;
+};
+
+/**
+ * Verdichtet die angesammelten Alerts einer Digest-Periode:
+ * - rank_gain/rank_drop werden pro Keyword × URL zur NETTO-Bewegung
+ *   (Periodenanfang → Periodenende) zusammengefasst; hebt sich eine Bewegung
+ *   auf oder bleibt sie unter der Alert-Schwelle, fliegt sie raus.
+ * - Alle anderen Typen werden per dedupKey dedupliziert (jüngster gewinnt) —
+ *   das Dedup-Fenster der Erfassung (3 Tage) ist kürzer als die Digest-Periode,
+ *   daher tauchen identische Ereignisse sonst mehrfach auf.
+ */
+function collapseForDigest(pendingDesc: PendingRow[]): GenericAlert[] {
+  const out: GenericAlert[] = [];
+  const seen = new Set<string>();
+  const rank = new Map<string, { latest: PendingRow; earliest: PendingRow }>();
+
+  for (const r of pendingDesc) {
+    if (r.type === "rank_gain" || r.type === "rank_drop") {
+      const p = r.payload as { keyword?: string; url?: string };
+      const key = `${p.keyword}|${p.url}`;
+      const acc = rank.get(key);
+      if (!acc) rank.set(key, { latest: r, earliest: r });
+      else acc.earliest = r; // Rows kommen neueste-zuerst → letzte Zuweisung = älteste
+    } else {
+      const key = `${r.type}:${r.dedupKey}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({
+        type: r.type as AlertType,
+        severity: r.severity as Severity,
+        dedupKey: r.dedupKey,
+        subject: r.subject,
+        payload: r.payload as Record<string, unknown>,
+      });
+    }
+  }
+
+  for (const { latest, earliest } of rank.values()) {
+    const pe = earliest.payload as {
+      keyword?: string;
+      url?: string;
+      domain?: string;
+      prevPosition?: number | null;
+    };
+    const pl = latest.payload as {
+      domain?: string;
+      newPosition?: number | null;
+      classification?: string;
+    };
+    const startPos = pe.prevPosition ?? null;
+    const endPos = pl.newPosition ?? null;
+    if (startPos === endPos) continue; // Netto-Null: reine Volatilität
+    const kw = pe.keyword ?? "?";
+    const domain = pl.domain ?? pe.domain ?? "?";
+
+    if (improvedVs(startPos, endPos)) {
+      const newInTop3 =
+        (startPos === null || startPos > TOP_THRESHOLD) && endPos !== null && endPos <= TOP_THRESHOLD;
+      const sev: Severity = endPos === 1 ? "critical" : newInTop3 ? "high" : "info";
+      out.push({
+        type: "rank_gain",
+        severity: sev,
+        dedupKey: latest.dedupKey,
+        subject: `Rank-Gain: ${domain} ${startPos ? `#${startPos} → #${endPos}` : `neu #${endPos}`} für "${kw}" (netto)`,
+        payload: { keyword: kw, url: pe.url, domain, prevPosition: startPos, newPosition: endPos, netted: true },
+      });
+    } else if (worsenedVs(startPos, endPos)) {
+      const droppedOut = endPos === null || endPos > TOP_N;
+      const sev: Severity =
+        startPos !== null && startPos <= TOP_THRESHOLD && droppedOut
+          ? "critical"
+          : startPos !== null && startPos <= 5 && droppedOut
+            ? "high"
+            : "warning";
+      out.push({
+        type: "rank_drop",
+        severity: sev,
+        dedupKey: latest.dedupKey,
+        subject: `Rank-Drop: ${domain} #${startPos} → ${endPos ?? "out"} für "${kw}" (netto)`,
+        payload: { keyword: kw, url: pe.url, domain, prevPosition: startPos, newPosition: endPos, droppedOut, netted: true },
+      });
+    }
+    // sonst: Netto-Bewegung unterhalb der Alert-Schwelle → Rauschen, verwerfen
+  }
+
+  return out;
+}
+
 /**
  * Periodischer Report: bündelt ALLE noch nicht gemailten Alerts (emailSent=0)
  * eines Entities in eine Mail — unabhängig davon, an welchem Tag sie erfasst
@@ -619,25 +739,29 @@ export async function sendPeriodicDigest(
     )
     .orderBy(desc(alerts.createdAt));
 
-  const byType: Record<string, number> = {};
-  for (const r of pending) byType[r.type] = (byType[r.type] ?? 0) + 1;
-
   if (pending.length === 0) {
-    return { emailed: false, count: 0, reason: "no-pending", byType };
+    return { emailed: false, count: 0, reason: "no-pending", byType: {} };
+  }
+
+  // Netto-Verdichtung: byType/Betreff/TL;DR sollen die verdichtete Sicht
+  // widerspiegeln, nicht den rohen Event-Stream.
+  const list = collapseForDigest(pending);
+  const byType: Record<string, number> = {};
+  for (const a of list) byType[a.type] = (byType[a.type] ?? 0) + 1;
+
+  if (list.length === 0) {
+    // Alles hat sich netto aufgehoben → Alerts konsumieren, keine Mail.
+    await db
+      .update(alerts)
+      .set({ emailSent: 1 })
+      .where(inArray(alerts.id, pending.map((p) => p.id)));
+    return { emailed: false, count: pending.length, reason: "all-netted-out", byType };
   }
 
   const to = recipientsFor(entity);
   if (!to) {
     return { emailed: false, count: pending.length, reason: "no-recipient", byType };
   }
-
-  const list: GenericAlert[] = pending.map((r) => ({
-    type: r.type as AlertType,
-    severity: r.severity as Severity,
-    dedupKey: r.dedupKey,
-    subject: r.subject,
-    payload: r.payload as Record<string, unknown>,
-  }));
 
   const periodLabel = opts.periodLabel ?? "seit dem letzten Report";
 
@@ -842,13 +966,13 @@ const TYPE_EXPLANATION: Record<AlertType, TypeExplanation> = {
   },
   rank_drop: {
     meaning:
-      "Eine eigene oder als Authority gepflegte URL ist im Ranking spürbar gefallen oder ganz aus den Top 10 verschwunden. Klassischer Frühwarn-Indikator für Sichtbarkeits-Verlust.",
+      "Eine eigene oder als Authority gepflegte URL ist im Ranking spürbar gefallen oder ganz aus den Top 10 verschwunden — bestätigt über zwei aufeinanderfolgende Messläufe, Tages-Volatilität ist also bereits herausgefiltert. Im Wochen-Report zusätzlich netto über die Periode verrechnet.",
     action:
-      "Erst 1–2 Tage beobachten (oft Tages-Volatilität). Hält der Verlust an: Content prüfen, neue Backlinks setzen, ggf. mit einem aktuellen Post auf der eigenen Domain refreshen.",
+      "Content prüfen, neue Backlinks setzen, ggf. mit einem aktuellen Post auf der eigenen Domain refreshen.",
   },
   rank_gain: {
     meaning:
-      "Eine eigene URL hat Position gewonnen — neue Top-10-Platzierung, Sprung in die Top 3 oder ≥3 Plätze besser. Das ist die Bestätigung, dass eine SEO-Maßnahme greift.",
+      "Eine eigene URL hat Position gewonnen — neue Top-10-Platzierung, Sprung in die Top 3 oder ≥3 Plätze besser, bestätigt über zwei aufeinanderfolgende Messläufe. Das ist die Bestätigung, dass eine SEO-Maßnahme greift.",
     action:
       "Den Treiber identifizieren (welcher Post / welche Verlinkung war es) und das Muster wiederholen. Bei Position 1 die URL aktiv halten und mit weiteren Signalen absichern.",
   },
@@ -868,7 +992,7 @@ const TYPE_EXPLANATION: Record<AlertType, TypeExplanation> = {
     meaning:
       "Eine bisher nicht klassifizierte Domain taucht regelmäßig in den Top 5 für deine Themen-Keywords auf — sie verdient eine Einordnung (Authority, kooperationsfähig, oder ignorieren).",
     action:
-      "Domain kurz prüfen. Wenn relevant: in data/langkammer.ts als `authority` aufnehmen oder einen Pitch / Gastbeitrag dort platzieren.",
+      "Domain kurz prüfen. Wenn relevant: im Admin (Kunde → Ziel-URLs) als authority aufnehmen oder einen Pitch / Gastbeitrag dort platzieren.",
   },
 };
 
@@ -1114,7 +1238,7 @@ export function renderDigestHtml(
     <div style="margin-top:24px;">
       <a href="${dashboardUrl}/alerts" style="display:inline-block;background:#ffc829;color:#0f1430;padding:10px 16px;border-radius:6px;font-weight:600;text-decoration:none;font-size:13px;">Im Dashboard ansehen</a>
     </div>
-    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Der Tracker sammelt täglich, dieser Wochen-Report fasst alle Signale der letzten Woche zusammen. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat. Pro Typ unterschiedliches Dedup-Fenster (3–14 Tage).</p>
+    <p style="margin-top:24px;color:#64748b;font-size:11px;line-height:1.6;">Der Tracker sammelt täglich, dieser Wochen-Report fasst alle Signale der letzten Woche zusammen. Rank-Bewegungen sind über zwei Messläufe bestätigt und pro Keyword × URL zur Netto-Veränderung über den Berichtszeitraum verrechnet — reine Tages-Volatilität erscheint nicht mehr. Sechs Alert-Typen: Displacement Top 3, Ranking-Verlust/-Gewinn, Score-Drop, Citation-Loss, Authority-Kandidat.</p>
   </div>
   </body></html>`;
 }
