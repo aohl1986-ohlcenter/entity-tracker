@@ -621,7 +621,7 @@ async function mailDigest(
   return !!sent;
 }
 
-type PendingRow = {
+export type PendingRow = {
   type: string;
   severity: string;
   dedupKey: string;
@@ -639,7 +639,7 @@ type PendingRow = {
  *   das Dedup-Fenster der Erfassung (3 Tage) ist kürzer als die Digest-Periode,
  *   daher tauchen identische Ereignisse sonst mehrfach auf.
  */
-function collapseForDigest(pendingDesc: PendingRow[]): GenericAlert[] {
+export function collapseForDigest(pendingDesc: PendingRow[]): GenericAlert[] {
   const out: GenericAlert[] = [];
   const seen = new Set<string>();
   const rank = new Map<string, { latest: PendingRow; earliest: PendingRow }>();
