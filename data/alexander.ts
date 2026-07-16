@@ -11,17 +11,32 @@ export const KEYWORDS: SeedKeyword[] = [
   { query: '"Alexander Ohl"', cluster: "name" },
   { query: "Alexander Ohl LinkedIn", cluster: "name" },
 
-  // 2) Name + Fachgebiet (Alexanders Spezialisierungen)
-  { query: "Alexander Ohl Frontier Engineer", cluster: "name_topic" },
+  // 2) Name + Fachgebiet (konsolidierte Positionierung: Web + KI-Automatisierung).
+  //    "Frontier Engineer" / "Marketing" / "IT Generalist" wurden Juli 2026 in der
+  //    DB deaktiviert (active=0, Historie bleibt) — Vanity-Keywords ohne Suchvolumen,
+  //    die die Entity verwässern.
   { query: "Alexander Ohl Web Developer", cluster: "name_topic" },
-  { query: "Alexander Ohl Marketing", cluster: "name_topic" },
-  { query: "Alexander Ohl IT Generalist", cluster: "name_topic" },
   { query: "Alexander Ohl KI Automatisierung", cluster: "name_topic" },
   { query: "Alexander Ohl Pragma-Code", cluster: "name_topic" },
+
+  // 3) Kundenrelevante Suchen ohne Namen (darüber sollen Kunden ihn finden)
+  { query: "KI Automatisierung Freelancer", cluster: "topic" },
+  { query: "KI Sichtbarkeit Monitoring", cluster: "topic" },
+  { query: "Entity SEO Beratung", cluster: "topic" },
 ];
 
 export const TARGETS: SeedTarget[] = [
   // ─── OWNED (eigene Profile / Seiten) ───────────────────────────────────
+  {
+    pattern: "alexander-ohl.com",
+    label: "Personal-Brand Landingpage",
+    category: "owned",
+  },
+  {
+    pattern: "pragma-code.de",
+    label: "Pragma-Code Website",
+    category: "owned",
+  },
   {
     pattern: "pragma-code.de/alexander-ohl",
     label: "Pragma-Code Personenseite",
