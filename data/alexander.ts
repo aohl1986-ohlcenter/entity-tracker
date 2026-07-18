@@ -75,6 +75,49 @@ export const TARGETS: SeedTarget[] = [
     label: "Pinterest Profil",
     category: "owned",
   },
+  // Weitere sameAs-Profile aus dem Person-Schema von pragma-code.de/alexander-ohl
+  // (18.07.2026). Taplink + WinFuture ranken schon stark für den Namen und wurden
+  // vorher als neutrale Authority-Kandidaten gezählt statt als owned.
+  {
+    pattern: "*xing.com/profile/AlexanderOhl_PragmaCode",
+    label: "Xing Profil",
+    category: "owned",
+  },
+  {
+    pattern: "github.com/aohl1986-ohlcenter",
+    label: "GitHub Profil",
+    category: "owned",
+  },
+  {
+    pattern: "g.dev/alexanderohl",
+    label: "Google Developers Profil",
+    category: "owned",
+  },
+  {
+    pattern: "*gulp.de/gulp2/g/spezialisten/profil/alexander.ohl",
+    label: "Gulp Freelancer-Profil",
+    category: "owned",
+  },
+  {
+    pattern: "*behance.net/alexander-ohl",
+    label: "Behance Portfolio",
+    category: "owned",
+  },
+  {
+    pattern: "vk.com/ohlcenter",
+    label: "VK Profil",
+    category: "owned",
+  },
+  {
+    pattern: "*winfuture.de/mywf/174860",
+    label: "WinFuture Profil",
+    category: "owned",
+  },
+  {
+    pattern: "taplink.cc/alexander.ohl",
+    label: "Taplink Link-in-Bio",
+    category: "owned",
+  },
 
   // ─── DISPLACEMENT (Namensvetter / fremde Profile) ──────────────────────
   {
