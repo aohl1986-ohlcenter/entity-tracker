@@ -5,6 +5,7 @@ export type SendEmailInput = {
   from?: string;
   subject: string;
   html: string;
+  replyTo?: string;
 };
 
 export async function sendEmail(input: SendEmailInput): Promise<{ id: string } | null> {
@@ -14,6 +15,9 @@ export async function sendEmail(input: SendEmailInput): Promise<{ id: string } |
     return null;
   }
   const from = input.from ?? process.env.ALERT_EMAIL_FROM ?? "Pragma-Code Tracker <onboarding@resend.dev>";
+  // Der From-Absender (tracker@pragma-code.de) hat kein Postfach — Antworten
+  // von Kunden auf einen Report sollen im echten Geschäftspostfach landen.
+  const replyTo = input.replyTo ?? process.env.ALERT_REPLY_TO ?? "info@pragma-code.de";
 
   const res = await fetch(ENDPOINT, {
     method: "POST",
@@ -26,6 +30,7 @@ export async function sendEmail(input: SendEmailInput): Promise<{ id: string } |
       to: Array.isArray(input.to) ? input.to : [input.to],
       subject: input.subject,
       html: input.html,
+      ...(replyTo ? { reply_to: replyTo } : {}),
     }),
   });
 
