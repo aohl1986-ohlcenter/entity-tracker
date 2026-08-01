@@ -210,7 +210,7 @@ export async function runCheckCitationsForEntity(
   }[] = [
     {
       name: "gemini",
-      enabled: true, // Uses Vertex AI with gcloud / VERTEX_ACCESS_TOKEN
+      enabled: !!process.env.GEMINI_API_KEY, // AI Studio free tier (no billing needed)
       ask: (q: string) => askGroundedGemini(q, {}),
     },
     {

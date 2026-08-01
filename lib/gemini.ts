@@ -1,5 +1,16 @@
-import { execSync } from "child_process";
-import { createSign } from "crypto";
+/**
+ * Gemini AI Studio API — Grounded Search
+ *
+ * Uses the free-tier generativelanguage.googleapis.com endpoint with a simple
+ * API key (no GCP billing required). Google Search grounding is included.
+ *
+ * Migrated from Vertex AI (aiplatform.googleapis.com) on 2026-08-01 to avoid
+ * the billing requirement on project gen-lang-client-0257507719.
+ *
+ * Env vars:
+ *   GEMINI_API_KEY  — API key from https://aistudio.google.com/apikey
+ *   GEMINI_MODEL    — model name (default: gemini-3.5-flash-lite)
+ */
 
 export type GroundingChunk = { web?: { uri: string; title?: string } };
 
@@ -10,7 +21,12 @@ export type GeminiGroundedResponse = {
 };
 
 async function resolveRedirect(url: string): Promise<string> {
-  if (!url.includes("vertexaisearch.cloud.google.com")) return url;
+  // Grounding citations may come as Google redirect URLs
+  if (
+    !url.includes("vertexaisearch.cloud.google.com") &&
+    !url.includes("google.com/url")
+  )
+    return url;
   try {
     const res = await fetch(url, { method: "HEAD", redirect: "follow" });
     return res.url || url;
@@ -19,111 +35,26 @@ async function resolveRedirect(url: string): Promise<string> {
   }
 }
 
-/* ---------- Service Account JWT → Access Token ---------- */
+/* ------------------------------------------------------------------ */
+/*  Public API                                                         */
+/* ------------------------------------------------------------------ */
 
-interface ServiceAccountKey {
-  project_id?: string;
-  client_email: string;
-  private_key: string;
-  token_uri?: string;
-}
-
-function base64url(input: string | Buffer): string {
-  const buf = typeof input === "string" ? Buffer.from(input) : input;
-  return buf.toString("base64url");
-}
-
-async function getAccessTokenFromSA(key: ServiceAccountKey): Promise<string> {
-  const now = Math.floor(Date.now() / 1000);
-  const header = base64url(JSON.stringify({ alg: "RS256", typ: "JWT" }));
-  const payload = base64url(
-    JSON.stringify({
-      iss: key.client_email,
-      scope: "https://www.googleapis.com/auth/cloud-platform",
-      aud: key.token_uri ?? "https://oauth2.googleapis.com/token",
-      iat: now,
-      exp: now + 3600,
-    }),
-  );
-  const signInput = `${header}.${payload}`;
-  const signer = createSign("RSA-SHA256");
-  signer.update(signInput);
-  const signature = signer.sign(key.private_key, "base64url");
-  const jwt = `${signInput}.${signature}`;
-
-  const res = await fetch(key.token_uri ?? "https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`,
-  });
-  if (!res.ok) {
-    const errText = await res.text().catch(() => "");
-    throw new Error(`SA token exchange failed ${res.status}: ${errText.slice(0, 300)}`);
-  }
-  const data = (await res.json()) as { access_token: string };
-  return data.access_token;
-}
-
-/* ---------- Cached token ---------- */
-let cachedToken: { token: string; expiresAt: number } | null = null;
-
-/**
- * Obtain a fresh access-token for Vertex AI.
- * Priority:
- *  1. VERTEX_ACCESS_TOKEN env var (explicit override)
- *  2. GOOGLE_SA_KEY env var (JSON service account key – used on Vercel)
- *  3. gcloud auth print-access-token (local dev)
- */
-async function getAccessToken(): Promise<string> {
-  if (process.env.VERTEX_ACCESS_TOKEN) return process.env.VERTEX_ACCESS_TOKEN;
-
-  // Service Account Key (for Vercel / CI)
-  if (process.env.GOOGLE_SA_KEY) {
-    if (cachedToken && Date.now() < cachedToken.expiresAt) return cachedToken.token;
-    const key: ServiceAccountKey = JSON.parse(process.env.GOOGLE_SA_KEY);
-    const token = await getAccessTokenFromSA(key);
-    cachedToken = { token, expiresAt: Date.now() + 50 * 60 * 1000 }; // 50 min
-    return token;
-  }
-
-  // Local dev fallback
-  try {
-    return execSync("gcloud auth print-access-token", { encoding: "utf8" }).trim();
-  } catch {
-    throw new Error(
-      "Cannot obtain Vertex AI access token. Set GOOGLE_SA_KEY or install gcloud CLI.",
-    );
-  }
-}
-
-const DEFAULT_PROJECT = "gen-lang-client-0257507719";
-const DEFAULT_REGION = "us-central1";
-
-function getGCPProject(): string {
-  if (process.env.VERTEX_PROJECT) return process.env.VERTEX_PROJECT;
-  if (process.env.GOOGLE_SA_KEY) {
-    try {
-      const key = JSON.parse(process.env.GOOGLE_SA_KEY) as ServiceAccountKey;
-      if (key.project_id) return key.project_id;
-    } catch {}
-  }
-  try {
-    const proj = execSync("gcloud config get-value project 2>/dev/null", { encoding: "utf8" }).trim();
-    if (proj && proj !== "(unset)") return proj;
-  } catch {}
-  return DEFAULT_PROJECT;
-}
+const DEFAULT_MODEL = "gemini-3.5-flash-lite";
+const BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 
 export async function askGroundedGemini(
   query: string,
   opts: { model?: string; systemPrompt?: string } = {},
 ): Promise<GeminiGroundedResponse> {
-  const project = getGCPProject();
-  const region = process.env.VERTEX_REGION ?? DEFAULT_REGION;
-  const model = opts.model ?? process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
-  const accessToken = await getAccessToken();
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error(
+      "GEMINI_API_KEY is not set. Get a free key at https://aistudio.google.com/apikey",
+    );
+  }
 
-  const endpoint = `https://${region}-aiplatform.googleapis.com/v1/projects/${project}/locations/${region}/publishers/google/models/${model}:generateContent`;
+  const model = opts.model ?? process.env.GEMINI_MODEL ?? DEFAULT_MODEL;
+  const endpoint = `${BASE_URL}/models/${model}:generateContent`;
 
   const defaultSystemPrompt =
     "Du bist ein hilfreicher Recherche-Assistent. Beantworte alle Fragen zu öffentlich bekannten " +
@@ -138,28 +69,37 @@ export async function askGroundedGemini(
 
   let lastErr: Error | null = null;
   let json: any = null;
-  for (let attempt = 1; attempt <= 4; attempt++) {
+
+  // Try first with Google Search grounding enabled
+  for (let attempt = 1; attempt <= 3; attempt++) {
     const res = await fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
+        "X-goog-api-key": apiKey,
       },
       body: JSON.stringify(body),
       cache: "no-store",
     });
+
     if (res.ok) {
       json = await res.json();
       lastErr = null;
       break;
     }
+
     const text = await res.text().catch(() => "");
-    lastErr = new Error(`Gemini/Vertex ${res.status}: ${text.slice(0, 400)}`);
-    // Retry on 429 / 5xx; bail on 4xx auth errors
-    if (![429, 500, 502, 503, 504].includes(res.status)) throw lastErr;
+    lastErr = new Error(`Gemini ${res.status}: ${text.slice(0, 400)}`);
+    if (res.status === 429) {
+      // If 429 on grounding, fallback to non-grounded call on last attempt
+      delete body.tools;
+    } else if (![500, 502, 503, 504].includes(res.status)) {
+      throw lastErr;
+    }
     await new Promise((r) => setTimeout(r, 1000 * 2 ** (attempt - 1)));
   }
-  if (lastErr || !json) throw lastErr ?? new Error("Gemini/Vertex: no response");
+
+  if (lastErr || !json) throw lastErr ?? new Error("Gemini: no response");
 
   const candidate = json.candidates?.[0];
   const text: string =
