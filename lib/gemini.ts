@@ -39,7 +39,11 @@ async function resolveRedirect(url: string): Promise<string> {
 /*  Public API                                                         */
 /* ------------------------------------------------------------------ */
 
-const DEFAULT_MODEL = "gemini-3.5-flash-lite";
+// gemini-2.5-flash ist das jüngste Modell, das Google-Search-Grounding im
+// Free Tier verlässlich bedient. Die 3.x-flash-lite-Reihe lief in den Tests
+// (04.08.2026) durchgängig in 429 — ohne Grounding sind die Antworten für
+// einen Citation-Tracker wertlos.
+const DEFAULT_MODEL = "gemini-2.5-flash";
 const BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
 
 export async function askGroundedGemini(
@@ -90,10 +94,12 @@ export async function askGroundedGemini(
 
     const text = await res.text().catch(() => "");
     lastErr = new Error(`Gemini ${res.status}: ${text.slice(0, 400)}`);
-    if (res.status === 429) {
-      // If 429 on grounding, fallback to non-grounded call on last attempt
-      delete body.tools;
-    } else if (![500, 502, 503, 504].includes(res.status)) {
+    // KEIN Fallback auf einen ungegroundeten Call: eine Antwort ohne
+    // Google-Search-Grounding enthält keine Citations und ist frei
+    // halluziniert. Für den Citation-Tracker würde sie als "0 Citations"
+    // persistiert und die AI-Visibility fälschlich nach unten ziehen —
+    // ein sauberer Fehler (→ Ops-Alarm) ist hier das ehrlichere Ergebnis.
+    if (![429, 500, 502, 503, 504].includes(res.status)) {
       throw lastErr;
     }
     await new Promise((r) => setTimeout(r, 1000 * 2 ** (attempt - 1)));
