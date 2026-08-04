@@ -1,0 +1,5 @@
+# Lokale Ops-/Wartungs-Skripte (werden mit tsx direkt ausgeführt und von
+# app/ bzw. lib/ nirgends importiert). Sie im Deployment mitzuschicken bringt
+# keinen Nutzen, zieht sie aber in `next build` --> ein Typfehler in einem
+# reinen Hilfsskript hat am 04.08.2026 den Prod-Deploy blockiert.
+scripts/
