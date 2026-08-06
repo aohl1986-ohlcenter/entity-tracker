@@ -14,15 +14,18 @@
     "fetch:citations": "tsx scripts/run-check-citations.ts",
     "test": "tsx --test \"eval/*.test.ts\"",
     "akquise:eval": "tsx --test \"eval/*.test.ts\"",
-    "akquise:gate": "tsx scripts/akquise-gate.ts"
+    "akquise:gate": "tsx scripts/akquise-gate.ts",
+    "akquise:mcp": "tsx mcp/akquise/server.ts"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@neondatabase/serverless": "^0.10.4",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.45.2",
     "next": "^15.5.18",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

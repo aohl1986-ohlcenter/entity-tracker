@@ -3,3 +3,7 @@
 # keinen Nutzen, zieht sie aber in `next build` --> ein Typfehler in einem
 # reinen Hilfsskript hat am 04.08.2026 den Prod-Deploy blockiert.
 scripts/
+
+# Der MCP-Server ist wie scripts/ ein reines Ops-Werkzeug: er läuft lokal
+# über tsx und wird von app/ nirgends importiert.
+mcp/
