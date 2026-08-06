@@ -1,0 +1,229 @@
+{
+  "_hinweis": "Echter Lauf 31.07.2026. Enthält den Prompt/Markt-Mismatch (Kieferorthopäde) und die Alias-Domain osnabrueck-implantologe.de.",
+  "branche": "Zahnarzt",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Zahnarzt Osnabrück",
+    "Zahnarzt Osnabrück Firma",
+    "Zahnarztpraxis Osnabrück",
+    "Zahnarzt Osnabrück Implantate",
+    "Kieferorthopäde Osnabrück"
+  ],
+  "marktGroesse": 28,
+  "leads": [
+    {
+      "host": "zahnarzt-familie-osnabrueck.de",
+      "titel": "Parodontologie Zahnerhaltung Zahnersatz - Zahnarzt Dr ...",
+      "positionen": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "host": "burockmartin.de",
+      "titel": "Zahnarzt Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "gausfrau.dental",
+      "titel": "Zahnarzt Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "zahnarzt-taubmann.de",
+      "titel": "Zahnarztpraxis Taubmann: Ihr Zahnarzt in Osnabrück: Praxis .",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "modernezahnmedizin.de",
+      "titel": "Zahnarztpraxis in Osnabrück & Wallenhorst",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "gausmann.dental",
+      "titel": "Zahnarzt Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "zahnheilkunde-dodesheide.de",
+      "titel": "Zahnheilkunde Dodesheide",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "2te-zahnarztmeinung.de",
+      "titel": "🦷 Zahnimplantate in Osnabrück sind teuer - hier können Sie",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "osnabrueck-implantologe.de",
+      "titel": "Feste dritte Zähne an einem Tag in Osnabrück!",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kfo-os.de",
+      "titel": "Dr. Beispiel und Dr. Beispiel Kieferorthopädie ...",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kfo-am-neumarkt.de",
+      "titel": "Platzhalter Startseite – Kieferorthopädie in Osnabrück am ..",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kfo-im-hafen.de",
+      "titel": "Marit Jordan . Kieferorthopädie im Hafen: Willkommen",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "klammerhaus.de",
+      "titel": "[Klammerhaus] Wir biegen das hin - Fachzahnärzte für ...",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "zahnzentrum-sonnenhuegel.de",
+      "titel": "Kieferorthopädie in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kfo-abadei.de",
+      "titel": "Praxis Dr. Beispiel",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kieferorthopaeden-osnabrueck.de",
+      "titel": "OERTEL",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "doctolib.de",
+      "titel": "Kieferorthopäden in Osnabrück in Ihrer Nähe finden",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "kim-herzog.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "zacp.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "xn--zahnrzte-os-o8a.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "dein-dental-osnabrueck.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "lamek.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "ddent.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "ocos.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "praxis-doehlemeyer.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "zahnarztpraxis-jordan.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "zahnarztpraxis-karrenbrock.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "implantatzentrum-osnabrueck.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

@@ -4,6 +4,19 @@ export type BedrockGroundedResponse = {
   text: string;
   citations: { uri: string; resolvedUrl: string; title?: string }[];
   raw: unknown;
+  /**
+   * Was das Modell tatsächlich an Quellen bekommen hat.
+   *
+   * Wichtig: `citations` werden per Regex aus dem GENERIERTEN Antworttext
+   * gezogen — eine erfundene URL ist dort nicht von einer echten zu
+   * unterscheiden. Erst der Abgleich `citations ⊆ grounding.links` macht
+   * Halluzinationen sichtbar. Schlägt der SERP-Abruf fehl, antwortet das
+   * Modell ungegroundet; `ok: false` macht auch das nachvollziehbar, statt
+   * es wie bisher nur auf die Konsole zu schreiben.
+   *
+   * Additiv ergänzt — bestehende Aufrufer sind nicht betroffen.
+   */
+  grounding: { ok: boolean; fehler?: string; links: string[] };
 };
 
 export async function askGroundedBedrock(
@@ -21,14 +34,22 @@ export async function askGroundedBedrock(
   // 1) Fetch search results
   let serpResultsText = "";
   let results: SerperOrganicResult[] = [];
+  let groundingOk = true;
+  let groundingFehler: string | undefined;
   try {
     const serp = await fetchSerp({ query: cleanQuery, num: 10 });
     results = serp.organic ?? [];
     serpResultsText = results
       .map((r, idx) => `[Result ${idx + 1}]\nTitle: ${r.title}\nURL: ${r.link}\nSnippet: ${r.snippet}\n`)
       .join("\n");
+    if (results.length === 0) {
+      groundingOk = false;
+      groundingFehler = "SERP lieferte keine organischen Treffer";
+    }
   } catch (err) {
     console.error("Bedrock Search Grounding failed to fetch SERP:", err);
+    groundingOk = false;
+    groundingFehler = err instanceof Error ? err.message : String(err);
   }
 
   // 2) Formulate prompt
@@ -101,5 +122,14 @@ Quellen:
     };
   });
 
-  return { text: textContent, citations, raw: json };
+  return {
+    text: textContent,
+    citations,
+    raw: json,
+    grounding: {
+      ok: groundingOk,
+      fehler: groundingFehler,
+      links: results.map((r) => r.link),
+    },
+  };
 }

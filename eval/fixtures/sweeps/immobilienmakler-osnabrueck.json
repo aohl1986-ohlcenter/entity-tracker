@@ -1,0 +1,337 @@
+{
+  "branche": "Immobilienmakler",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "prompts": [
+    "Wer ist der beste Immobilienmakler in Osnabrück?",
+    "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+    "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+    "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+    "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
+    "Welcher Immobilienmakler in Osnabrück hat die beste Bewertung?",
+    "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+  ],
+  "kandidaten": [
+    {
+      "host": "immobilisimo.de",
+      "nennungen": 6,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobilisimo: Immobilienmakler Osnabrück"
+    },
+    {
+      "host": "engelvoelkers.com",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Immobilienmakler Osnabrück"
+    },
+    {
+      "host": "von-poll.com",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Immobilienmakler Osnabrück"
+    },
+    {
+      "host": "datos-immobilien.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "datos Immobilien GmbH Osnabrück"
+    },
+    {
+      "host": "appelhansimmobilien.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Appelhans Immobilien - Immobilienmakler in Osnabrück"
+    },
+    {
+      "host": "die-immobilienmaklerin.com",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Die Immobilienmaklerin Osnabrück"
+    },
+    {
+      "host": "haseland-immobilien.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?",
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Haseland Immobilien: Immobilienmakler Osnabrück & Bünde"
+    },
+    {
+      "host": "dahlercompany.com",
+      "nennungen": 2,
+      "prompts": [
+        "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Ihr Immobilienmakler für Osnabrück"
+    },
+    {
+      "host": "wohnen-werte-immobilien.de",
+      "nennungen": 2,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Wohnen und Werte Immobilien in und um Osnabrück"
+    },
+    {
+      "host": "wellmann-immobilien-osnabrueck.de",
+      "nennungen": 2,
+      "prompts": [
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Sie als Immobilien Tippgeber"
+    },
+    {
+      "host": "digitale.immobilien",
+      "nennungen": 1,
+      "prompts": [
+        "Wer ist der beste Immobilienmakler in Osnabrück?"
+      ],
+      "titel": "Liste der 3 besten Immobilienmakler in Osnabrück [2025]"
+    },
+    {
+      "host": "janning-immobilien.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?"
+      ],
+      "titel": "Ihr Immobilienmakler Osnabrück - nah und zuverlässig"
+    },
+    {
+      "host": "kaulbach-immobilien-osnabrueck.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Kaulbach Immobilien: Immobilienmakler Osnabrück"
+    },
+    {
+      "host": "domos-immobilien.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Immobilienmakler in Osnabrück | 23 Stadtteile voller ..."
+    },
+    {
+      "host": "waerder-immobilien.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
+      ],
+      "titel": "Waerder Immobilien: Immobilienmakler Osnabrück"
+    },
+    {
+      "host": "trustlocal.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Immobilienmakler in Osnabrück hat die beste Bewertung?"
+      ],
+      "titel": "Top 10 Immobilienmakler in Osnabrück"
+    },
+    {
+      "host": "jacasa.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Immobilienmakler in Osnabrück hat die beste Bewertung?"
+      ],
+      "titel": "Immobilienmakler in Osnabrück: Die 10 besten Makler"
+    },
+    {
+      "host": "lasarz.com",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Lasarz - Die Immobiliengutachter - Sachverständigenbüro für ..."
+    },
+    {
+      "host": "heid-immobilienbewertung.de",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobilienbewertung Osnabrück - Immobiliengutachter"
+    },
+    {
+      "host": "bauexperts-osnabrueck.de",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobilienbewertung Osnabrück"
+    },
+    {
+      "host": "vbank-immobilien.de",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobilie bewerten in Osnabrück"
+    },
+    {
+      "host": "vpb.de",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobilienbewertung Osnabrück"
+    },
+    {
+      "host": "immobilienwert-experten.com",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobiliengutachten für Osnabrück"
+    },
+    {
+      "host": "kuschmierz-immobilien.de",
+      "nennungen": 1,
+      "prompts": [
+        "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
+      ],
+      "titel": "Immobilienbewertung Osnabrück › Marktwert ehrlich vor Ort"
+    }
+  ],
+  "protokoll": [
+    {
+      "prompt": "Wer ist der beste Immobilienmakler in Osnabrück?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
+        "https://datos-immobilien.de/",
+        "https://appelhansimmobilien.de/",
+        "https://www.engelvoelkers.com/de/de/immobilienmakler/niedersachsen/osnabrueck",
+        "https://www.von-poll.com/de/immobilienmakler/osnabrueck",
+        "https://immobilisimo.de/?srsltid=AfmBOoqFYnvJfsM1YQmgMY3FjadBf5WXF6ESAs3sotLpjdKlj3lgsjeK",
+        "https://die-immobilienmaklerin.com/",
+        "https://www.digitale.immobilien/immobilienmakler/liste-der-besten-immobilienmakler-in-osnabruck",
+        "https://haseland-immobilien.de/"
+      ]
+    },
+    {
+      "prompt": "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://datos-immobilien.de/",
+        "https://appelhansimmobilien.de/",
+        "https://www.von-poll.com/de/immobilienmakler/osnabrueck",
+        "https://haseland-immobilien.de/",
+        "https://www.engelvoelkers.com/de/de/immobilienmakler/niedersachsen/osnabrueck",
+        "https://immobilisimo.de/?srsltid=AfmBOopgWGRHgqmGRnsBrxUzc9hxYqSJq2y1z63zfAj5rvQ_89LbeIZm",
+        "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
+        "https://die-immobilienmaklerin.com/",
+        "https://janning-immobilien.de/"
+      ]
+    },
+    {
+      "prompt": "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.von-poll.com/de/immobilienmakler/osnabrueck",
+        "https://appelhansimmobilien.de/",
+        "https://datos-immobilien.de/",
+        "https://www.dahlercompany.com/de/immobilienmakler/wohnimmobilien/niedersachsen/osnabrueck",
+        "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
+        "https://www.engelvoelkers.com/de/de/immobilienmakler/niedersachsen/osnabrueck",
+        "https://immobilisimo.de/?srsltid=AfmBOoqPcWZkXKOTVTlc8u_ilmciCxDL27UNEQ4pDnH4csJeXErPj4Uk",
+        "https://die-immobilienmaklerin.com/",
+        "https://www.dasoertliche.de/Top/Makler/Osnabr%C3%BCck"
+      ]
+    },
+    {
+      "prompt": "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://appelhansimmobilien.de/",
+        "https://die-immobilienmaklerin.com/",
+        "https://datos-immobilien.de/",
+        "https://immobilisimo.de/?srsltid=AfmBOord8kBciXD9DC8RvLLUCNAWSz_b-8R8kLivz-FzR9PiJlTFuDRe",
+        "https://www.engelvoelkers.com/de/de/immobilienmakler/niedersachsen/osnabrueck",
+        "https://www.von-poll.com/de/immobilienmakler/osnabrueck",
+        "https://haseland-immobilien.de/",
+        "https://www.wohnen-werte-immobilien.de/",
+        "https://www.kaulbach-immobilien-osnabrueck.de/"
+      ]
+    },
+    {
+      "prompt": "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://immobilisimo.de/bester-makler-in-osnabrueck/?srsltid=AfmBOooIGVT43rHvvO3JUtmvbVdob2MRhIelS_Qog2BI3eSYNmmsIVCX",
+        "https://www.dahlercompany.com/de/immobilienmakler/wohnimmobilien/niedersachsen/osnabrueck",
+        "https://www.von-poll.com/de/immobilienmakler/osnabrueck",
+        "https://www.domos-immobilien.de/ratgeber-tipps/immobilienmakler-osnabrueck",
+        "https://waerder-immobilien.de/",
+        "https://www.wohnen-werte-immobilien.de/",
+        "https://wellmann-immobilien-osnabrueck.de/immobilien/tippgeber",
+        "https://www.engelvoelkers.com/de/de/immobilienmakler/niedersachsen/osnabrueck",
+        "https://haseland-immobilien.de/"
+      ]
+    },
+    {
+      "prompt": "Welcher Immobilienmakler in Osnabrück hat die beste Bewertung?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
+        "https://trustlocal.de/niedersachsen/osnabr%C3%BCck/immobilienmakler/",
+        "https://www.jacasa.de/immobilienmakler/ni/osnabrueck"
+      ]
+    },
+    {
+      "prompt": "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://lasarz.com/",
+        "https://www.heid-immobilienbewertung.de/Osnabrueck/",
+        "https://www.bauexperts-osnabrueck.de/immobilienbewertung-osnabrueck",
+        "https://vbank-immobilien.de/immobilie-bewerten",
+        "https://wellmann-immobilien-osnabrueck.de/service-leistungen/immobilienbewertung",
+        "https://immobilisimo.de/immobilienbewertung-osnabrueck/?srsltid",
+        "https://www.vpb.de/regionalbueros/osnabrueck/immobilienbewertung-osnabrueck",
+        "https://www.immobilienwert-experten.com/regionen/osnabrueck/immobiliengutachten.html",
+        "https://kuschmierz-immobilien.de/einzugsgebiet/immobilienbewertung-osnabrueck/"
+      ]
+    }
+  ]
+}

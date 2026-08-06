@@ -1,0 +1,261 @@
+{
+  "_hinweis": "Echter Lauf (erweiterte Suche). Enthält Hausverwaltungen in der Lead-Liste (R6) und Portale (R3).",
+  "branche": "Immobilienmakler",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Immobilienmakler Osnabrück",
+    "Immobilienmakler Osnabrück Firma",
+    "Immobilienmakler Osnabrück Bewertung",
+    "Haus verkaufen Osnabrück Makler",
+    "Immobilienbüro Osnabrück",
+    "Makler Osnabrück Wohnung mieten",
+    "Immobilienmakler Osnabrück Innenstadt",
+    "Immobilienverwaltung Osnabrück",
+    "Makler Georgsmarienhütte Belm Wallenhorst",
+    "Immobilienmakler Osnabrück Team",
+    "Grundstück verkaufen Osnabrück Makler",
+    "Immobilienmakler Osnabrück Erfahrungen"
+  ],
+  "marktGroesse": 31,
+  "leads": [
+    {
+      "host": "osnabruecker-immobilien-kontor.de",
+      "titel": "Immobilienmakler Osnabrück",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "sommerimmobilien.com",
+      "titel": "Immobilienbewertung Osnabrück",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "immobilienscout24.de",
+      "titel": "Wohnung mieten in Osnabrück",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "bauen.osnabrueck.de",
+      "titel": "Wohnung finden – Stadt Osnabrück - Bauen & Wohnen",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immowelt.de",
+      "titel": "48 Immobilien kaufen in Osnabrück Innenstadt",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "rhode-hausverwaltungen.de",
+      "titel": "Rhode Hausverwaltungen KG – Hausverwaltung aus Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "sparkasse-immobilienverwaltung.de",
+      "titel": "S-Immobilienverwaltung: Home",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immobilienverwaltung-os.de",
+      "titel": "HVG Müller-Mathar GmbH – Immobilienverwaltung Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "ecd-immo.de",
+      "titel": "ECD Immobilien: Startseite",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "matera.eu",
+      "titel": "Hausverwaltung in Osnabrück gesucht?",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "brinkmann-gmbh-haus-und-grundbesitzverwaltung.de",
+      "titel": "Brinkmann GmbH, Haus-und Grundbesitzverwaltung ...",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "fk-immobilien.net",
+      "titel": "FK Immobilien - Verwaltung und Vermarktung - Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "malos-immobilien.de",
+      "titel": "WEG-Verwaltung in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immoportal.com",
+      "titel": "Die besten Immobilienmakler in Wallenhorst und Umgebung",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "makler-empfehlung.de",
+      "titel": "Die am besten bewerteten Immobilienmakler in Belm",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kleinimmobilien.com",
+      "titel": "Klein Immobilien: Exklusive Immobilien in und um Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "huendorf-immobilien.de",
+      "titel": "Ihr Immobilienmakler in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "mein-makler.com",
+      "titel": "Mein Makler Osnabrück-Nord: Aktuelles",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "immobilisimo.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 6
+    },
+    {
+      "host": "von-poll.com",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "engelvoelkers.com",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "appelhansimmobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "datos-immobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "haseland-immobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "die-immobilienmaklerin.com",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "dahlercompany.com",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "janning-immobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "kaulbach-immobilien-osnabrueck.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "vbank-immobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "kuschmierz-immobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "domos-immobilien.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

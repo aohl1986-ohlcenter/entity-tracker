@@ -1,0 +1,86 @@
+{
+  "_hinweis": "NEGATIV-ZWILLING: sauberer Lauf, muss ohne Blocker durchgehen.",
+  "branche": "Dachdecker",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Dachdecker Osnabrück",
+    "Dachdecker Osnabrück Firma"
+  ],
+  "marktGroesse": 9,
+  "leads": [
+    {
+      "host": "kaschtan-bedachungen.de",
+      "titel": "Dachdecker in Hasbergen bei Osnabrück - Kaschtan GmbH",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "dachdeckerei-struebbe.de",
+      "titel": "Dachdeckerei Strübbe - Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "der-dachdecker.de",
+      "titel": "Salzer & Piepmeyer - Ihr Dachdecker aus Osnabrück",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "bauer-os.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "dachdecker-volmer.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "my-hammer.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "wels-bedachungen.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "kh-os.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "gedatech.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

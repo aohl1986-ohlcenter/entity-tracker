@@ -187,3 +187,69 @@ Engines ausgeführt, deren API-Key gesetzt ist:
 Eine fehlende Engine wird stillschweigend übersprungen. Pro Prompt entsteht
 eine DB-Zeile pro Engine — damit lassen sich Gemini vs. Tavily direkt
 vergleichen (`/citations` zeigt das `engine`-Feld im Kopf jeder Karte).
+
+## Akquise-Pipeline & Gate
+
+Die Skripte unter `scripts/akquise-*` erzeugen Kaltakquise-Befunde („Ihre Kanzlei
+wird bei keiner von sechs typischen Mandantenfragen genannt"). Solche Aussagen
+gehen an fremde Unternehmen — steht eine falsch drin, ist das
+geschäftsschädigend und potenziell abmahnbar.
+
+**Reihenfolge:**
+
+```bash
+npx tsx scripts/akquise-sweep.ts   "<Branche>" "<Region>" "extra|prompts"
+npx tsx scripts/akquise-leads.ts   "<Branche>" "<Region>" "extra|suchen" [datum]
+npm run akquise:gate --            "<Branche>" "<Region>" [datum] --online
+```
+
+**Kein Anschreiben ohne grünen Gate.** Exit-Codes sind die Schnittstelle:
+
+| Code | Bedeutung |
+|------|-----------|
+| `0` | freigegeben |
+| `1` | technischer Fehler (Datei fehlt, Schema kaputt, `DATABASE_URL` gesetzt) |
+| `2` | mindestens ein Blocker — nicht anschreiben |
+| `3` | nur Warnungen; nach manueller Prüfung mit `--warnungen-akzeptiert` |
+
+### Die Regeln
+
+| ID | Prüft | Netz |
+|---|---|---|
+| `R0_SCHEMA` | Artefakte strukturell gültig, Datum/Branche konsistent | – |
+| `R1_MARKT_UNTERFASSUNG` | Deckung Markt/zitierte Domains ≥ 80 % | – |
+| `R2_PROMPT_MARKT_MISMATCH` | Suchbegriffe fragen dieselbe Branche ab wie die Prompts | – |
+| `R3_PORTAL_LECKAGE` | keine Verzeichnisse in Kandidaten oder Leads | – |
+| `R4_ALIAS_DOMAIN` | Lead ist keine Zweitdomain eines zitierten Betriebs | – |
+| `R5_SPERRLISTE` | Lead steht nicht auf der Sperrliste | – |
+| `R6_KATEGORIE` | Lead-Titel passt zum Geschäftsmodell (nur Warnung) | – |
+| `R7_GROUNDING` | Antworten waren gegroundet, Zitate ⊆ gelieferte Quellen | – |
+| `R8_ZAHLEN` | keine NaN/Infinity in Kennzahlen | – |
+| `R9_WERBEWIDERSPRUCH` | Impressum verbietet keine Werbemails (**fail-closed**) | ✅ |
+
+`R7` ist der Kern: `askGroundedBedrock` zieht die `citations` per Regex aus dem
+**generierten** Antworttext — eine erfundene URL ist dort nicht von einer echten
+zu unterscheiden. Seit die Funktion zusätzlich `grounding.links` zurückgibt
+(die tatsächlich gelieferten Quellen), ist `citations ⊆ grounding.links` eine
+offline prüfbare Invariante. Sie hat beim ersten Live-Lauf sofort eine
+halluzinierte URL gefunden.
+
+### Regressionssuite
+
+```bash
+npm run akquise:eval     # läuft auch in CI — offline, ohne Keys, ohne DB
+```
+
+`eval/golden/faelle.json` enthält die realen Fehler aus den Läufen im
+Juli/August 2026 (Prompt/Markt-Mismatch bei den Kieferorthopäden,
+Portal-Leckage, Alias-Domain, Sperrlisten-Treffer) samt **Negativ-Zwillingen** —
+ohne die wäre eine Regel, die immer feuert, grün. `eval/mutation.test.ts`
+mutiert eine synthetische saubere Basis und verlangt, dass **genau** die
+zugehörige Regel anschlägt und keine andere.
+
+Neue Fälle kommen als Eintrag in `faelle.json` dazu, nicht als neuer Testcode.
+
+**Isolation:** `lib/akquise/`, `scripts/akquise-gate.ts` und `eval/` importieren
+weder `lib/db` noch `scripts/_env` (per Test zugesichert), und der Gate bricht
+ab, wenn `DATABASE_URL` gesetzt ist — `_env` würde sonst die Produktions-DB
+laden.

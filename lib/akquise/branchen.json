@@ -1,0 +1,30 @@
+{
+  "_hinweis": "Synonyme für R2 (Prompt/Markt-Mismatch) und Ausschluss-Token für R6 (Kategorie). Alle Werte normalisiert: kleingeschrieben, Umlaute gefaltet (ae/oe/ue/ss).",
+
+  "synonyme": {
+    "steuerberater": ["steuerkanzlei", "steuerberatung", "wirtschaftspruefer"],
+    "rechtsanwalt": ["anwalt", "kanzlei", "rechtsanwaelte", "fachanwalt"],
+    "zahnarzt": ["zahnarztpraxis", "zahnaerzte", "zahnheilkunde", "zahnmedizin"],
+    "kieferorthopaede": ["kieferorthopaedie", "zahnspange", "aligner"],
+    "physiotherapie": ["krankengymnastik", "physio", "physiotherapeut"],
+    "immobilienmakler": ["makler", "immobilien", "immobilienbuero", "immobilienbewertung"],
+    "versicherungsmakler": ["versicherung", "versicherungsbuero", "versicherungsberatung"],
+    "architekturbuero": ["architekt", "architektur", "bauplanung", "planungsbuero"],
+    "musikschule": ["musikunterricht", "klavierunterricht", "gitarrenunterricht", "schlagzeugunterricht", "musikalische"],
+    "elektriker": ["elektro", "elektrotechnik", "elektroinstallation"],
+    "dachdecker": ["bedachungen", "dachdeckerei", "dach"],
+    "tischlerei": ["tischler", "schreiner", "schreinerei", "parkett"],
+    "malerbetrieb": ["maler", "malermeister", "raumausstattung"],
+    "sanitaer und heizungsbauer": ["sanitaer", "heizung", "haustechnik", "shk", "bad"],
+    "fliesenleger": ["fliesen", "fliesenfachbetrieb", "fliesenverlegung", "fliesendesign"]
+  },
+
+  "ausschluss": {
+    "_hinweis": "Token im Lead-Titel, die auf ein ANDERES Geschäftsmodell hindeuten. Erzeugen nur eine WARNUNG — ein Makler, der auch verwaltet, ist ein legitimer Lead.",
+    "immobilienmakler": ["hausverwaltung", "immobilienverwaltung", "weg-verwaltung", "wegverwaltung", "grundbesitzverwaltung"],
+    "versicherungsmakler": ["vertretung", "generalagentur", "hauptvertretung", "allianz", "ergo", "devk", "vgh", "mecklenburgische", "rechtsanwalt", "kanzlei"],
+    "zahnarzt": ["kieferorthopaedie", "kieferorthopaede"],
+    "architekturbuero": ["hausverwaltung"],
+    "tischlerei": ["moebelteile", "zulieferer"]
+  }
+}

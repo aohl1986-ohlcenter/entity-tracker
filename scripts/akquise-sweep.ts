@@ -14,6 +14,9 @@
 import "./_env";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { askGroundedBedrock } from "../lib/bedrock";
+import { akquiseOrdner, heute, hostOf, slugOf } from "../lib/akquise/hosts";
+import { istPortal } from "../lib/akquise/portale";
+import type { Kandidat, ProtokollEintrag, SweepDatei } from "../lib/akquise/typen";
 
 // ---------------------------------------------------------------- Konfiguration
 const BRANCHE = process.argv[2] ?? "Steuerberater";
@@ -31,28 +34,10 @@ const PROMPTS = [
 ];
 
 // ---------------------------------------------------------------- Hilfsfunktionen
-function hostOf(url: string): string {
-  try {
-    return new URL(url).hostname.replace(/^www\./, "").toLowerCase();
-  } catch {
-    return "";
-  }
-}
+// hostOf, istPortal, slugOf, heute und akquiseOrdner leben jetzt in lib/akquise/
+// — vorher lagen sie (teils abweichend!) in jedem Skript einzeln.
 
-/** Verzeichnisse/Portale, die keine Leads sind */
-const PORTALE = [
-  "gelbeseiten", "dasoertliche", "11880", "yelp", "google", "wikipedia",
-  "meinestadt", "cylex", "firmenwissen", "northdata", "wlw", "stellenanzeigen",
-  "steuerberater.net", "steuerberaterverband", "datev.de", "bstbk", "kammer",
-  "facebook", "linkedin", "instagram", "youtube", "indeed", "kununu",
-  "handelsregister", "unternehmensregister", "werkenntdenbesten", "provenexpert",
-];
-
-function istPortal(host: string): boolean {
-  return PORTALE.some((p) => host.includes(p));
-}
-
-type Treffer = { host: string; nennungen: number; prompts: string[]; titel: string };
+type Treffer = Kandidat;
 
 // ---------------------------------------------------------------- Hauptlauf
 async function main() {
@@ -60,7 +45,7 @@ async function main() {
   console.log(`   ${PROMPTS.length} Prompts · Engine: Bedrock (grounded über Serper)\n`);
 
   const kandidaten = new Map<string, Treffer>();
-  const protokoll: { prompt: string; antwort: string; quellen: string[] }[] = [];
+  const protokoll: ProtokollEintrag[] = [];
 
   for (const [i, prompt] of PROMPTS.entries()) {
     process.stdout.write(`   [${i + 1}/${PROMPTS.length}] ${prompt.slice(0, 60)}… `);
@@ -89,11 +74,19 @@ async function main() {
         }
       }
 
-      protokoll.push({ prompt, antwort: res.text, quellen });
-      console.log(`✓ ${res.citations.length} Quellen`);
+      // grounding mitschreiben: erst dadurch ist offline prüfbar, ob die
+      // zitierten URLs überhaupt aus den gelieferten Quellen stammen (R7).
+      protokoll.push({ prompt, antwort: res.text, quellen, grounding: res.grounding });
+      const warnung = res.grounding.ok ? "" : "  ⚠️ UNGEGROUNDET";
+      console.log(`✓ ${res.citations.length} Quellen${warnung}`);
     } catch (err) {
       console.log(`✗ Fehler: ${(err as Error).message}`);
-      protokoll.push({ prompt, antwort: `FEHLER: ${(err as Error).message}`, quellen: [] });
+      protokoll.push({
+        prompt,
+        antwort: `FEHLER: ${(err as Error).message}`,
+        quellen: [],
+        grounding: { ok: false, fehler: (err as Error).message, links: [] },
+      });
     }
     // freundlich zur API
     await new Promise((r) => setTimeout(r, 1500));
@@ -101,15 +94,20 @@ async function main() {
 
   // ------------------------------------------------------------ Auswertung
   const sortiert = [...kandidaten.values()].sort((a, b) => b.nennungen - a.nennungen);
-  const datum = new Date().toISOString().slice(0, 10);
-  const slug = `${BRANCHE}-${REGION}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-  const ordner = `${process.env.HOME}/career-ops/akquise`;
+  const datum = heute();
+  const slug = slugOf(BRANCHE, REGION);
+  const ordner = akquiseOrdner();
   mkdirSync(ordner, { recursive: true });
 
-  writeFileSync(
-    `${ordner}/${slug}-${datum}.json`,
-    JSON.stringify({ branche: BRANCHE, region: REGION, datum, prompts: PROMPTS, kandidaten: sortiert, protokoll }, null, 2),
-  );
+  const sweep: SweepDatei = {
+    branche: BRANCHE,
+    region: REGION,
+    datum,
+    prompts: PROMPTS,
+    kandidaten: sortiert,
+    protokoll,
+  };
+  writeFileSync(`${ordner}/${slug}-${datum}.json`, JSON.stringify(sweep, null, 2));
 
   const md = [
     `# KI-Sichtbarkeit: ${BRANCHE} in ${REGION}`,

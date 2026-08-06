@@ -1,0 +1,87 @@
+{
+  "_hinweis": "Enthält tischler-schreiner.org — ein Verzeichnisportal, das den alten Filter überlebte (R3).",
+  "branche": "Tischlerei",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Tischlerei Osnabrück",
+    "Tischlerei Osnabrück Firma"
+  ],
+  "marktGroesse": 9,
+  "leads": [
+    {
+      "host": "tischler-stolle.de",
+      "titel": "Parkett Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "fly-moebelteile.de",
+      "titel": "FLY Möbelteile",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "tischler-schreiner.org",
+      "titel": "Helmut Hengelbrock Tischlerei - Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "tischlereijohn.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "schreiner-tischler.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "tischler-osnabrueck.com",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "tischlerei-dieckmann.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "tischlerei-gehner.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "holzinform-seibt.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

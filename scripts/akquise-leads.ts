@@ -5,73 +5,65 @@
  * markiert, wer von der KI NICHT genannt wird. Das sind die Leads.
  * Schreibt NICHT in die Datenbank.
  *
- * Aufruf: npx tsx ~/dev/entity-tracker/scripts/akquise-leads.ts
+ * Aufruf:
+ *   npx tsx ~/dev/entity-tracker/scripts/akquise-leads.ts <BRANCHE> <REGION> [extraSuchen|] [datum]
+ *
+ * Die Diff-Logik liegt in lib/akquise/leads-core.ts (rein, offline testbar);
+ * hier bleiben nur I/O und die Serper-Aufrufe.
  */
 import "./_env";
 import { readFileSync, writeFileSync } from "node:fs";
 import { fetchSerp } from "../lib/serper";
+import { akquiseOrdner, heute, hostOf, slugOf } from "../lib/akquise/hosts";
+import { istPortal } from "../lib/akquise/portale";
+import { berechneLeads, sichtbarkeitsQuote } from "../lib/akquise/leads-core";
+import { parseSweep } from "../lib/akquise/schema";
+import type { MarktTreffer } from "../lib/akquise/typen";
 
 const BRANCHE = process.argv[2] ?? "Steuerberater";
 const REGION = process.argv[3] ?? "Osnabrück";
-const DATUM = new Date().toISOString().slice(0, 10);
-const ORDNER = `${process.env.HOME}/career-ops/akquise`;
-const SLUG = `${BRANCHE}-${REGION}`.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-
 /** Optionale Zusatz-Suchen über 4. Argument, mit "|" getrennt. */
 const EXTRA = (process.argv[4] ?? "").split("|").filter(Boolean);
+/** Optionales Datum (5. Argument) — vorher war nur der heutige Sweep erreichbar. */
+const DATUM = process.argv[5] ?? heute();
 
-const SUCHEN = [
-  `${BRANCHE} ${REGION}`,
-  `${BRANCHE} ${REGION} Firma`,
-  ...EXTRA,
-];
+const ORDNER = akquiseOrdner();
+const SLUG = slugOf(BRANCHE, REGION);
 
-const PORTALE = [
-  "gelbeseiten", "dasoertliche", "11880", "yelp", "google", "wikipedia",
-  "meinestadt", "cylex", "firmenwissen", "northdata", "wlw", "stellenanzeigen",
-  "steuerberater.net", "steuerberaterverband", "datev.de", "bstbk", "kammer",
-  "facebook", "linkedin", "instagram", "youtube", "indeed", "kununu", "xing",
-  "handelsregister", "unternehmensregister", "werkenntdenbesten", "provenexpert",
-  "trustlocal", "anwalt.de", "jobs", "wikiwand", "focus.de", "handelsblatt",
-  "juraforum", "fachanwalt.de", "advocado", "rechtsanwalt.com", "stepstone",
-  "dastelefonbuch", "anwaltauskunft", "123recht", "kanzleien.de",
-];
-
-const host = (u: string) => {
-  try { return new URL(u).hostname.replace(/^www\./, "").toLowerCase(); } catch { return ""; }
-};
-const istPortal = (h: string) => PORTALE.some((p) => h.includes(p));
+const SUCHEN = [`${BRANCHE} ${REGION}`, `${BRANCHE} ${REGION} Firma`, ...EXTRA];
 
 async function main() {
   // 1) Wer wurde von der KI zitiert?
-  const sweep = JSON.parse(readFileSync(`${ORDNER}/${SLUG}-${DATUM}.json`, "utf8"));
-  const zitiert = new Map<string, number>(
-    sweep.kandidaten.map((k: { host: string; nennungen: number }) => [k.host, k.nennungen]),
-  );
-  console.log(`\n📖 Sweep geladen: ${zitiert.size} Domains werden von der KI genannt\n`);
+  const pfad = `${ORDNER}/${SLUG}-${DATUM}.json`;
+  const sweep = parseSweep(JSON.parse(readFileSync(pfad, "utf8")), pfad);
+  console.log(`\n📖 Sweep geladen: ${sweep.kandidaten.length} Domains werden von der KI genannt\n`);
 
   // 2) Wer existiert real?
-  const markt = new Map<string, { host: string; titel: string; positionen: number[] }>();
+  const markt = new Map<string, MarktTreffer>();
   for (const q of SUCHEN) {
     process.stdout.write(`   Suche „${q}" … `);
     const serp = await fetchSerp({ query: q, num: 20 });
     let neu = 0;
     for (const r of serp.organic ?? []) {
-      const h = host(r.link);
+      const h = hostOf(r.link);
       if (!h || istPortal(h)) continue;
       const v = markt.get(h);
       if (v) v.positionen.push(r.position ?? 0);
-      else { markt.set(h, { host: h, titel: r.title ?? h, positionen: [r.position ?? 0] }); neu++; }
+      else {
+        markt.set(h, { host: h, titel: r.title ?? "", positionen: [r.position ?? 0] });
+        neu++;
+      }
     }
     console.log(`${neu} neue Domains`);
     await new Promise((r) => setTimeout(r, 800));
   }
 
-  // 3) Abgleich
-  const leads = [...markt.values()]
-    .filter((m) => !zitiert.has(m.host))
-    .sort((a, b) => b.positionen.length - a.positionen.length);
-  const sichtbar = [...markt.values()].filter((m) => zitiert.has(m.host));
+  // 3) Abgleich — reine Logik, siehe lib/akquise/leads-core.ts
+  const ergebnis = berechneLeads(sweep, [...markt.values()], SUCHEN);
+  const quote = sichtbarkeitsQuote(ergebnis);
+
+  // 4) Artefakte schreiben — JSON zuerst, das ist die Schnittstelle zum Gate
+  writeFileSync(`${ORDNER}/${SLUG}-leads-${DATUM}.json`, JSON.stringify(ergebnis, null, 2));
 
   const md = [
     `# Akquise-Leads: ${BRANCHE} in ${REGION}`,
@@ -80,33 +72,42 @@ async function main() {
     ``,
     `## Kurzfassung`,
     ``,
-    `- **${markt.size}** Betriebe im Markt gefunden`,
-    `- **${sichtbar.length}** davon werden von der KI genannt (${Math.round((sichtbar.length / markt.size) * 100)} %)`,
-    `- **${leads.length}** sind bei Google sichtbar, aber in KI-Antworten **unsichtbar** → Leads`,
+    `- **${ergebnis.marktGroesse}** Betriebe im Markt gefunden`,
+    `- **${ergebnis.sichtbar.length}** davon werden von der KI genannt${quote === null ? "" : ` (${quote} %)`}`,
+    `- **${ergebnis.leads.length}** sind bei Google sichtbar, aber in KI-Antworten **unsichtbar** → Leads`,
     ``,
     `## 🎯 Leads — bei Google da, in der KI nicht`,
     ``,
     `| # | Domain | Google-Treffer | Titel |`,
     `|---|--------|----------------|-------|`,
-    ...leads.map((l, i) => `| ${i + 1} | ${l.host} | ${l.positionen.length} | ${l.titel.slice(0, 60)} |`),
+    ...ergebnis.leads.map(
+      (l, i) => `| ${i + 1} | ${l.host} | ${l.positionen.length} | ${l.titel.slice(0, 60)} |`,
+    ),
     ``,
     `## ✅ Bereits KI-sichtbar (Wettbewerbs-Argument)`,
     ``,
     `| Domain | KI-Nennungen |`,
     `|--------|--------------|`,
-    ...sichtbar
-      .sort((a, b) => (zitiert.get(b.host) ?? 0) - (zitiert.get(a.host) ?? 0))
-      .map((s) => `| ${s.host} | ${zitiert.get(s.host)}× |`),
+    ...ergebnis.sichtbar.map((s) => `| ${s.host} | ${s.nennungen}× |`),
+    ``,
+    `---`,
+    ``,
+    `> ⚠️ Vor dem Anschreiben prüfen: \`npm run akquise:gate -- "${BRANCHE}" "${REGION}" ${DATUM} --online\``,
     ``,
   ].join("\n");
 
   writeFileSync(`${ORDNER}/${SLUG}-leads-${DATUM}.md`, md);
 
-  console.log(`\n📊 Markt: ${markt.size} Betriebe · KI-sichtbar: ${sichtbar.length} · LEADS: ${leads.length}\n`);
-  leads.slice(0, 20).forEach((l, i) =>
-    console.log(`   ${String(i + 1).padStart(2)}. ${l.host}`),
+  console.log(
+    `\n📊 Markt: ${ergebnis.marktGroesse} Betriebe · KI-sichtbar: ${ergebnis.sichtbar.length} · LEADS: ${ergebnis.leads.length}\n`,
   );
-  console.log(`\n💾 ${ORDNER}/${SLUG}-leads-${DATUM}.md\n`);
+  ergebnis.leads.slice(0, 20).forEach((l, i) => console.log(`   ${String(i + 1).padStart(2)}. ${l.host}`));
+  console.log(`\n💾 ${ORDNER}/${SLUG}-leads-${DATUM}.md`);
+  console.log(`\n⚠️  NICHT anschreiben, bevor der Gate grün ist:`);
+  console.log(`   npm run akquise:gate -- "${BRANCHE}" "${REGION}" ${DATUM} --online\n`);
 }
 
-main().catch((e) => { console.error(e); process.exit(1); });
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

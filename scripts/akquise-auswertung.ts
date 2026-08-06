@@ -15,6 +15,8 @@
  */
 import "./_env";
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
+import { istPortal } from "../lib/akquise/portale";
+import { parseSweep } from "../lib/akquise/schema";
 
 const DOMAIN = (process.argv[2] ?? "").replace(/^https?:\/\//, "").replace(/\/$/, "");
 const BRANCHE = process.argv[3] ?? "Rechtsanwalt";
@@ -108,11 +110,14 @@ async function pruefeWebsite(domain: string): Promise<{ befunde: Befund[]; html:
 
 async function main() {
   // Sweep-Daten laden
-  const sweep = JSON.parse(readFileSync(`${ORDNER}/${SLUG}-${DATUM}.json`, "utf8"));
-  const genannt: { host: string; nennungen: number }[] = sweep.kandidaten;
+  const sweepPfad = `${ORDNER}/${SLUG}-${DATUM}.json`;
+  const sweep = parseSweep(JSON.parse(readFileSync(sweepPfad, "utf8")), sweepPfad);
+  const genannt = sweep.kandidaten;
   const anzahlPrompts: number = sweep.prompts.length;
   const eigene = genannt.find((k) => k.host === DOMAIN);
-  const top3 = genannt.filter((k) => k.host !== DOMAIN).slice(0, 3);
+  // Portale hier hart ausschließen: In der Wettbewerber-Tabelle des Kunden-PDFs
+  // darf niemals ein Verzeichnis wie doctolib.de als "Wettbewerber" stehen.
+  const top3 = genannt.filter((k) => k.host !== DOMAIN && !istPortal(k.host)).slice(0, 3);
 
   console.log(`\n🔎 Prüfe ${DOMAIN} …`);
   const { befunde } = await pruefeWebsite(DOMAIN);
@@ -179,8 +184,7 @@ ${befunde.map(zeile).join("")}
   <strong>Was daraus folgt.</strong> Die genannten Punkte sind technischer Natur und in der Regel
   innerhalb weniger Tage behebbar — es geht nicht um neue Inhalte, sondern darum, die vorhandenen
   für Maschinen lesbar zu machen. Bei einem Logistikunternehmen habe ich über genau diesen Hebel
-  <strong>+111 % organische Klicks in drei Monaten</strong> erreicht (in der Google Search Console belegt),
-  bei einem Beratungskunden <strong>+30 % KI-Nennungen in 30 Tagen</strong>.
+  <strong>+111 % organische Klicks in drei Monaten</strong> erreicht (in der Google Search Console belegt).
   Wenn Sie wissen möchten, was das konkret für Sie hieße: 20 Minuten Telefon genügen.
 </div>
 

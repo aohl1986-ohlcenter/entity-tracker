@@ -11,7 +11,10 @@
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx scripts/seed.ts",
     "fetch:serps": "tsx scripts/run-fetch-serps.ts",
-    "fetch:citations": "tsx scripts/run-check-citations.ts"
+    "fetch:citations": "tsx scripts/run-check-citations.ts",
+    "test": "tsx --test \"eval/*.test.ts\"",
+    "akquise:eval": "tsx --test \"eval/*.test.ts\"",
+    "akquise:gate": "tsx scripts/akquise-gate.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

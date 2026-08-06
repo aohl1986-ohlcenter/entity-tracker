@@ -1,0 +1,166 @@
+{
+  "branche": "Dachdecker",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "prompts": [
+    "Wer ist der beste Dachdecker in Osnabrück?",
+    "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
+    "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+    "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+  ],
+  "kandidaten": [
+    {
+      "host": "bauer-os.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Dachdecker in Osnabrück?",
+        "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
+        "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Bauer Bedachungen aus Osnabrück – Ihr Dachdecker ..."
+    },
+    {
+      "host": "kaiser-bedachung.de",
+      "nennungen": 3,
+      "prompts": [
+        "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
+        "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Kaiser und Söhne - Dachdecker in Osnabrück"
+    },
+    {
+      "host": "dachdecker-volmer.de",
+      "nennungen": 2,
+      "prompts": [
+        "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Ihr Dachdecker aus Osnabrück - Wilhelm Volmer GmbH & Co ..."
+    },
+    {
+      "host": "meyer-bedachungen-os.de",
+      "nennungen": 2,
+      "prompts": [
+        "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Meyer Bedachungen | Dachdeckerei Osnabrück ..."
+    },
+    {
+      "host": "aroundhome.de",
+      "nennungen": 2,
+      "prompts": [
+        "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Dachdecker in Osnabrück - Jetzt Anbieter finden"
+    },
+    {
+      "host": "my-hammer.de",
+      "nennungen": 2,
+      "prompts": [
+        "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Top-Dachdecker in Osnabrück: Jetzt beauftragen"
+    },
+    {
+      "host": "wels-bedachungen.de",
+      "nennungen": 1,
+      "prompts": [
+        "Wer ist der beste Dachdecker in Osnabrück?"
+      ],
+      "titel": "Martin Wels & Sohn GmbH & Co KG | Dacharbeit ist ..."
+    },
+    {
+      "host": "gedatech.de",
+      "nennungen": 1,
+      "prompts": [
+        "Wer ist der beste Dachdecker in Osnabrück?"
+      ],
+      "titel": "GEDATECH: Dachdecker Osnabrück"
+    },
+    {
+      "host": "db-berg.de",
+      "nennungen": 1,
+      "prompts": [
+        "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Ihr Dachdecker aus Osnabrück"
+    },
+    {
+      "host": "dachdecker-regional.com",
+      "nennungen": 1,
+      "prompts": [
+        "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Dachdecker Osnabrück"
+    },
+    {
+      "host": "kh-os.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Dachdecker-Innung Osnabrück. – KH OS"
+    }
+  ],
+  "protokoll": [
+    {
+      "prompt": "Wer ist der beste Dachdecker in Osnabrück?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/dachdecker/osnabrueck",
+        "https://www.gelbeseiten.de/branchen/dachdecker/osnabr%C3%BCck",
+        "https://www.11880-dachdecker.com/dachdecker/osnabrueck",
+        "https://www.dasoertliche.de/Top/Dachdeckereien/Osnabr%C3%BCck",
+        "https://www.wels-bedachungen.de/",
+        "https://www.bauer-os.de/",
+        "https://gedatech.de/",
+        "https://www.facebook.com/p/Dachmeistereien-100064298763991/"
+      ]
+    },
+    {
+      "prompt": "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/dachdecker/osnabrueck",
+        "https://www.dasoertliche.de/Top/Dachdeckereien/Osnabr%C3%BCck",
+        "https://www.bauer-os.de/",
+        "https://kaiser-bedachung.de/",
+        "https://www.dachdecker-volmer.de/",
+        "https://meyer-bedachungen-os.de/"
+      ]
+    },
+    {
+      "prompt": "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.gelbeseiten.de/branchen/dachdecker/osnabr%C3%BCck",
+        "https://www.bauer-os.de/",
+        "https://db-berg.de/dachdecker-osnabrueck/",
+        "https://www.aroundhome.de/fachfirmen/dachdecker/in/osnabrueck/",
+        "https://www.11880-dachdecker.com/dachdecker/osnabrueck?utm_source=portal_searchresult&source=portal_searchresult",
+        "https://kaiser-bedachung.de/",
+        "https://www.my-hammer.de/dacharbeiten/dachdecker-berufe/osnabrueck",
+        "https://dachdecker-regional.com/dachdecker-osnabrueck",
+        "https://www.facebook.com/p/Dachmeistereien-100064298763991/"
+      ]
+    },
+    {
+      "prompt": "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.my-hammer.de/dacharbeiten/dachdecker-berufe/osnabrueck",
+        "https://meyer-bedachungen-os.de/",
+        "https://kaiser-bedachung.de/",
+        "https://bauer-os.de/DACHDECKEREI/",
+        "https://www.aroundhome.de/fachfirmen/dachdecker/in/osnabrueck/",
+        "https://www.dachdecker-volmer.de/",
+        "https://www.kh-os.de/innungen/dachdecker-innung-osnabruck/"
+      ]
+    }
+  ]
+}
