@@ -1,0 +1,190 @@
+{
+  "branche": "Tischlerei",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "prompts": [
+    "Wer ist der beste Tischlerei in Osnabrück?",
+    "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+    "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+    "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+  ],
+  "kandidaten": [
+    {
+      "host": "gewusst-wo.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?",
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+        "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischler in Osnabrück • 31 beste Firmen"
+    },
+    {
+      "host": "schreiner-tischler.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?",
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischler aus Osnabrück und Umgebung"
+    },
+    {
+      "host": "tischlereijohn.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?",
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischlerei & Holzwerkstatt | Hendrik John - Osnabrück"
+    },
+    {
+      "host": "tischlerei-hammer.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?",
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischlerei Hammer - Osnabrück"
+    },
+    {
+      "host": "tischler-osnabrueck.com",
+      "nennungen": 3,
+      "prompts": [
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+        "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischler Osnabrück"
+    },
+    {
+      "host": "my-hammer.de",
+      "nennungen": 2,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischler & Schreiner in Osnabrück: Jetzt Profis finden!"
+    },
+    {
+      "host": "tischlerei-gehner.de",
+      "nennungen": 2,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?",
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?"
+      ],
+      "titel": "Tischlerei Gehner - Holzfenster nach Maß"
+    },
+    {
+      "host": "tischlerei-dieckmann.de",
+      "nennungen": 2,
+      "prompts": [
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+        "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Dieckmann: Ihr Tischler für Präzision aus Holz"
+    },
+    {
+      "host": "stilpunkte.de",
+      "nennungen": 2,
+      "prompts": [
+        "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Die 4 besten Tischler & Schreiner in Osnabrück 2026"
+    },
+    {
+      "host": "holzinform-seibt.de",
+      "nennungen": 1,
+      "prompts": [
+        "Wer ist der beste Tischlerei in Osnabrück?"
+      ],
+      "titel": "holzinform Seibt: Tischlerei"
+    },
+    {
+      "host": "tischlerei-stolle.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?"
+      ],
+      "titel": ""
+    },
+    {
+      "host": "massmoebel-aus-meisterhand.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Tischlerei in Osnabrück kannst du empfehlen?"
+      ],
+      "titel": "Tischler Jelitto für Region Osnabrück, Georgsmarienhütt"
+    },
+    {
+      "host": "tischlerei-feldkamp.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Tischlerei Feldkamp – Tischlermeister und Innenarchitekt"
+    }
+  ],
+  "protokoll": [
+    {
+      "prompt": "Wer ist der beste Tischlerei in Osnabrück?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/tischler/osnabrueck",
+        "https://www.11880-tischler.com/tischler/osnabrueck",
+        "https://www.schreiner-tischler.de/osnabrueck",
+        "https://www.tischlereijohn.de/",
+        "https://www.my-hammer.de/moebel-einrichtung/tischler-schreiner-berufe/osnabrueck",
+        "https://tischlerei-gehner.de/",
+        "https://gewusst-wo.de/Osnabr%C3%BCck/Tischler/1",
+        "https://www.tischlerei-hammer.de/",
+        "https://www.holzinform-seibt.de/"
+      ]
+    },
+    {
+      "prompt": "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.schreiner-tischler.de/osnabrueck",
+        "https://tischlerei-gehner.de/",
+        "https://www.tischler-osnabrueck.com/",
+        "https://www.tischlerei-hammer.de/",
+        "https://www.11880-tischler.com/tischler/osnabrueck?utm_source=portal_searchresult&source=portal_searchresult",
+        "https://www.tischlereijohn.de/",
+        "https://www.tischlerei-dieckmann.de/",
+        "https://www.tischlerei-stolle.de/",
+        "https://gewusst-wo.de/Osnabr%C3%BCck/Tischler/1",
+        "https://www.massmoebel-aus-meisterhand.de/tischlerei-jelitto/"
+      ]
+    },
+    {
+      "prompt": "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.tischler-osnabrueck.com/",
+        "https://gewusst-wo.de/Osnabr%C3%BCck/Tischler/1",
+        "https://www.stilpunkte.de/osnabrueck/toplists/die-besten-tischler-schreiner-osnabruck/",
+        "https://www.11880-tischler.com/tischler/osnabrueck?utm_source",
+        "https://www.tischlerei-dieckmann.de/"
+      ]
+    },
+    {
+      "prompt": "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.schreiner-tischler.de/osnabrueck",
+        "https://www.my-hammer.de/moebel-einrichtung/tischler-schreiner-berufe/osnabrueck",
+        "https://www.tischler-osnabrueck.com/",
+        "https://www.tischlerei-hammer.de/",
+        "https://www.tischlereijohn.de/",
+        "https://tischlerei-feldkamp.de/",
+        "https://www.stilpunkte.de/osnabrueck/toplists/die-besten-tischler-schreiner-osnabruck/",
+        "https://gewusst-wo.de/Osnabr%C3%BCck/Tischler/1"
+      ]
+    }
+  ]
+}

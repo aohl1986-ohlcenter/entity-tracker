@@ -25,6 +25,11 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      # Regressionssuite der Akquise-Pipeline. Läuft rein offline gegen
+      # eingefrorene Fixtures — keine Keys, kein Netz, keine DB.
+      - name: Akquise-Regeln (Golden Set + Mutationsprobe)
+        run: npm run akquise:eval
+
       - name: Build
         run: npm run build
         env:

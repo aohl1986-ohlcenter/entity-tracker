@@ -1,0 +1,55 @@
+{
+  "_hinweis": "Regressionsfälle aus ECHTEN Läufen (Juli/August 2026). Jeder Fall ist ein Fehler, der real passiert ist und nur durch manuelle Kontrolle vor dem Versand auffiel. Neue Fälle kommen hier dazu, ohne dass Testcode geändert werden muss.",
+  "faelle": [
+    {
+      "id": "F1-zahnarzt-kfo-mismatch",
+      "beschreibung": "Sweep fragte nach 'Zahnarzt', die Marktsuche enthielt 'Kieferorthopäde Osnabrück'. Sieben KFO-Praxen erschienen als Leads. Ein separater KFO-Sweep zeigte danach: alle sieben sind sichtbar.",
+      "sweep": "zahnarzt-osnabrueck",
+      "leads": "zahnarzt-osnabrueck",
+      "erwarteteBlocker": ["R2_PROMPT_MARKT_MISMATCH", "R3_PORTAL_LECKAGE", "R4_ALIAS_DOMAIN"],
+      "mussBetreffen": ["Kieferorthopäde Osnabrück", "osnabrueck-implantologe.de", "doctolib.de"],
+      "exitCode": 2
+    },
+    {
+      "id": "F2-kfo-negativzwilling",
+      "beschreibung": "NEGATIV: dieselben KFO-Praxen, aber mit passenden Prompts abgefragt. R2 darf NICHT anschlagen — sonst wäre die Regel wertlos, weil sie immer feuert.",
+      "sweep": "kieferorthopaede-osnabrueck",
+      "leads": "kieferorthopaede-osnabrueck",
+      "verboteneBlocker": ["R2_PROMPT_MARKT_MISMATCH"]
+    },
+    {
+      "id": "F3-immobilien-hausverwaltungen",
+      "beschreibung": "In der Makler-Leadliste standen fünf Hausverwaltungen. Verwaltung ist ein anderes Geschäft als Vermittlung — die Prompts fragten nach Maklern.",
+      "sweep": "immobilienmakler-osnabrueck",
+      "leads": "immobilienmakler-osnabrueck",
+      "erwarteteWarnungen": ["R6_KATEGORIE"],
+      "mussBetreffen": ["rhode-hausverwaltungen.de", "immobilienverwaltung-os.de"]
+    },
+    {
+      "id": "F4-portal-leckage-tischlerei",
+      "beschreibung": "tischler-schreiner.org ist ein Verzeichnisportal (betrieben von digitaleseiten.de) und überlebte den alten Substring-Filter.",
+      "sweep": "tischlerei-osnabrueck",
+      "leads": "tischlerei-osnabrueck",
+      "erwarteteBlocker": ["R3_PORTAL_LECKAGE"],
+      "mussBetreffen": ["tischler-schreiner.org"],
+      "exitCode": 2
+    },
+    {
+      "id": "F5-sperrliste-dortmund",
+      "beschreibung": "zahnarztpraxis-beispiel.example untersagt im Impressum ausdrücklich unaufgeforderte Werbemails und steht deshalb auf der Sperrliste.",
+      "sweep": "zahnarzt-dortmund",
+      "leads": "zahnarzt-dortmund",
+      "erwarteteBlocker": ["R5_SPERRLISTE"],
+      "mussBetreffen": ["zahnarztpraxis-beispiel.example"],
+      "exitCode": 2
+    },
+    {
+      "id": "F6-dachdecker-sauber",
+      "beschreibung": "NEGATIV: ein sauberer Lauf muss ohne Blocker durchgehen. Ohne diesen Fall wäre der Gate nur ein Verbotsschild.",
+      "sweep": "dachdecker-osnabrueck",
+      "leads": "dachdecker-osnabrueck",
+      "verboteneBlocker": ["R1_MARKT_UNTERFASSUNG", "R2_PROMPT_MARKT_MISMATCH", "R4_ALIAS_DOMAIN", "R5_SPERRLISTE"]
+    }
+  ],
+  "_offen": "R1_MARKT_UNTERFASSUNG hat keinen Golden-Fall: Das Artefakt des fehlerhaften Immobilien-Laufs (13 Betriebe gegen 24 zitierte Domains) wurde vom korrigierten Lauf überschrieben. Die Regel wird stattdessen in mutation.test.ts geprüft. Dasselbe gilt für R7_GROUNDING — alle vorhandenen Sweeps entstanden vor der Grounding-Erweiterung."
+}

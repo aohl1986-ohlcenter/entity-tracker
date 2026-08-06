@@ -1,0 +1,128 @@
+{
+  "_hinweis": "NEGATIV-ZWILLING zu zahnarzt-osnabrueck: gleiche Praxen, aber passende Prompts → R2 darf NICHT anschlagen.",
+  "branche": "Kieferorthopäde",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Kieferorthopäde Osnabrück",
+    "Kieferorthopäde Osnabrück Firma",
+    "Kieferorthopädie Osnabrück",
+    "Zahnspange Osnabrück",
+    "Kieferorthopädische Praxis Osnabrück"
+  ],
+  "marktGroesse": 14,
+  "leads": [
+    {
+      "host": "doctolib.de",
+      "titel": "Kieferorthopäden in Osnabrück in Ihrer Nähe finden",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "schoene-zaehne.online",
+      "titel": "Schöne Zähne – Schöne Zähne in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "arzt-auskunft.de",
+      "titel": "Kieferorthopädie in Osnabrück (11 Treffer) - Seite 1",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "zahnzentrum-sonnenhuegel.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 7
+    },
+    {
+      "host": "kfo-os.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 6
+    },
+    {
+      "host": "kieferorthopaeden-osnabrueck.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "zahnarzt-familie-osnabrueck.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "kfo-am-neumarkt.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "kfo-im-hafen.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "klammerhaus.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "kfo-abadei.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "oesede-smile.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "kfo-in-melle.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "gausfrau.dental",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

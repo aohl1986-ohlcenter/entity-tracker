@@ -1,0 +1,307 @@
+{
+  "branche": "Zahnarzt",
+  "region": "Dortmund",
+  "datum": "2026-08-01",
+  "prompts": [
+    "Wer ist der beste Zahnarzt in Dortmund?",
+    "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+    "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+    "Ich brauche einen zuverlässigen Zahnarzt in Dortmund. Wen empfiehlst du?",
+    "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+    "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+  ],
+  "kandidaten": [
+    {
+      "host": "praxisklinik-dr-stein.de",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Startseite - Dr. Beispiel & Kollegen, Zahnarzt Dortmund"
+    },
+    {
+      "host": "mghz.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnärzte Dortmund im MGHZ, Dr. Beispiel, Anja ..."
+    },
+    {
+      "host": "zahnaerzte-phoenixsee.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnarzt Dortmund - Ihre professionelle Zahnarztpraxis"
+    },
+    {
+      "host": "praxis-naveed.de",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Dr. Beispiel: Zahnarzt Dortmund am Knappenberg 85"
+    },
+    {
+      "host": "zz-do.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Wer ist der beste Zahnarzt in Dortmund?"
+    },
+    {
+      "host": "doc-zahnaerzte.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "DOC Zahnärzte: Ihr Zahnarzt Dortmund"
+    },
+    {
+      "host": "xn--zahnarztpraxis-sthetik-dortmund-4vc.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Dortmund, Ä-DO – Ästhetische Zahnmedizin Thier ..."
+    },
+    {
+      "host": "dortmunder-zahnarzt.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Dr. Beispiel in Dortmund | Kompetenzzentrum ..."
+    },
+    {
+      "host": "zahnarzt-dr-hansen.de",
+      "nennungen": 2,
+      "prompts": [
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnarzt Dr. Beispiel Dortmund: Home"
+    },
+    {
+      "host": "drbartling.de",
+      "nennungen": 1,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?"
+      ],
+      "titel": "Zahnarztpraxis Dr. Beispiel Dortmund-Wambel"
+    },
+    {
+      "host": "dr-haarmann.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?"
+      ],
+      "titel": "Zahnarzt Dr. Beispiel Dortmund Kirchhörde"
+    },
+    {
+      "host": "zaehne-dortmund.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?"
+      ],
+      "titel": "Zahnärzte Dortmund - Dr. Beispiel und Bennemann: Start"
+    },
+    {
+      "host": "unternehmen.focus.de",
+      "nennungen": 1,
+      "prompts": [
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Zahnarzt in Dortmund - Unternehmen - FOCUS.de"
+    },
+    {
+      "host": "stilpunkte.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Zahnarzt in Dortmund. Wen empfiehlst du?"
+      ],
+      "titel": "Die 10 besten Zahnärzte in Dortmund"
+    },
+    {
+      "host": "zahnarztpraxis-bissfest.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund"
+    },
+    {
+      "host": "praxisklinik-hohenbuschei.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund"
+    },
+    {
+      "host": "ad-zahnzentrum-dortmund.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund - Zahnersatz"
+    },
+    {
+      "host": "zahnarzt-dortmund-derne.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund ❘ Zahnarztpraxis Anlauf"
+    },
+    {
+      "host": "dr-grebe.de",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund, Lünen: fester Biss für „neue ..."
+    },
+    {
+      "host": "zahnarzt-kirscht.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztangst"
+    },
+    {
+      "host": "zahnarzt-dortmund-brackel.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Angstpatienten Dortmund | Praxis Golch"
+    },
+    {
+      "host": "dr-freitag.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztangst - Dortmund"
+    },
+    {
+      "host": "zahnarztpraxis-knop.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Sicherheit für Angstpatienten – Ihr Zahnarzt in Dortmund"
+    }
+  ],
+  "protokoll": [
+    {
+      "prompt": "Wer ist der beste Zahnarzt in Dortmund?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/zahnarzt/dortmund",
+        "https://zz-do.de/bester-zahnarzt-in-dortmund/",
+        "https://www.mghz.de/",
+        "https://www.doc-zahnaerzte.de/",
+        "https://zahnaerzte-phoenixsee.de/",
+        "https://www.praxisklinik-dr-stein.de/",
+        "https://www.xn--zahnarztpraxis-sthetik-dortmund-4vc.de/",
+        "https://www.dortmunder-zahnarzt.de/",
+        "https://praxis-naveed.de/",
+        "https://www.drbartling.de/"
+      ]
+    },
+    {
+      "prompt": "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://zz-do.de/zahnarzt-dortmund-kruegerhaus/",
+        "https://www.mghz.de/",
+        "https://www.werkenntdenbesten.de/zahnarzt/dortmund",
+        "https://zahnaerzte-phoenixsee.de/",
+        "https://www.dortmunder-zahnarzt.de/",
+        "https://www.xn--zahnarztpraxis-sthetik-dortmund-4vc.de/",
+        "https://www.praxisklinik-dr-stein.de/",
+        "https://praxis-naveed.de/",
+        "https://www.dr-haarmann.de/",
+        "https://zaehne-dortmund.de/"
+      ]
+    },
+    {
+      "prompt": "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/zahnarzt/dortmund",
+        "https://zz-do.de/bester-zahnarzt-in-dortmund/",
+        "https://www.mghz.de/",
+        "https://www.praxisklinik-dr-stein.de/",
+        "https://unternehmen.focus.de/zahnarzt-dortmund.html",
+        "https://zahnaerzte-phoenixsee.de/",
+        "https://zahnarzt-dr-hansen.de/",
+        "https://www.doc-zahnaerzte.de/"
+      ]
+    },
+    {
+      "prompt": "Ich brauche einen zuverlässigen Zahnarzt in Dortmund. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.stilpunkte.de/dortmund/toplists/besten-zahnaerzte-dortmund/"
+      ]
+    },
+    {
+      "prompt": "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://zahnaerzte-phoenixsee.de/implantate/",
+        "https://zahnarztpraxis-bissfest.de/leistungen/zahnimplantate-dortmund/",
+        "https://www.praxisklinik-dr-stein.de/",
+        "https://praxisklinik-hohenbuschei.de/implantologie/zahnimplantate/",
+        "https://www.ad-zahnzentrum-dortmund.de/leistungen/zahnimplantate/",
+        "https://zahnarzt-dortmund-derne.de/zahnimplantate/",
+        "https://www.dr-grebe.de/zahnimplantate-in-dortmund-und-luenen",
+        "https://praxis-naveed.de/leistungen/implantate-in-dortmund/",
+        "https://zahnarzt-dr-hansen.de/"
+      ]
+    },
+    {
+      "prompt": "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.mghz.de/leistungen/angst-vorm-zahnarzt-dortmund",
+        "https://www.doc-zahnaerzte.de/leistungen/angstpatienten/",
+        "https://www.zahnarzt-kirscht.de/zahnarztangst/",
+        "https://praxis-naveed.de/leistungen/behandlung-von-angstpatienten-dortmund/",
+        "https://www.xn--zahnarztpraxis-sthetik-dortmund-4vc.de/leistungen/angstpatienten",
+        "https://www.praxisklinik-dr-stein.de/spezielle-behandlungen/angstpatienten",
+        "https://www.dortmunder-zahnarzt.de/angstpatienten",
+        "https://www.zahnarzt-dortmund-brackel.de/leistungen/angstpatienten/",
+        "https://www.dr-freitag.de/leistungen/zahnarztangst/",
+        "https://www.zahnarztpraxis-knop.de/zahnarzt-angstpatienten-dortmund.html"
+      ]
+    }
+  ]
+}
