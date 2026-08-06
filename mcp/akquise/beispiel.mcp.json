@@ -1,0 +1,19 @@
+{
+  "_hinweis": [
+    "Vorlage für den MCP-Client. Pfad anpassen.",
+    "Keys können weggelassen werden — dann liest der Server sie aus .env.local des Repos.",
+    "Werden sie hier eingetragen, gehört die Datei NICHT in ein öffentliches Repo.",
+    "DATABASE_URL hier NIE setzen: der Server entfernt sie und startet sonst nicht."
+  ],
+  "mcpServers": {
+    "akquise": {
+      "command": "npx",
+      "args": ["tsx", "mcp/akquise/server.ts"],
+      "cwd": "/PFAD/ZU/entity-tracker",
+      "env": {
+        "BEDROCK_API_KEY": "",
+        "SERPER_API_KEY": ""
+      }
+    }
+  }
+}
