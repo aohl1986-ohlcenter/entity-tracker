@@ -1,0 +1,128 @@
+{
+  "_hinweis": "NEGATIV-ZWILLING zu zahnarzt-osnabrueck: gleiche Praxen, aber passende Prompts → R2 darf NICHT anschlagen.",
+  "branche": "Kieferorthopäde",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Kieferorthopäde Osnabrück",
+    "Kieferorthopäde Osnabrück Firma",
+    "Kieferorthopädie Osnabrück",
+    "Zahnspange Osnabrück",
+    "Kieferorthopädische Praxis Osnabrück"
+  ],
+  "marktGroesse": 14,
+  "leads": [
+    {
+      "host": "doctolib.de",
+      "titel": "Kieferorthopäden in Osnabrück in Ihrer Nähe finden",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "schoene-zaehne.online",
+      "titel": "Schöne Zähne – Schöne Zähne in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "arzt-auskunft.de",
+      "titel": "Kieferorthopädie in Osnabrück (11 Treffer) - Seite 1",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "betrieb-034.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 7
+    },
+    {
+      "host": "betrieb-035.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 6
+    },
+    {
+      "host": "kieferorthopaede-betrieb-036.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-037.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-038.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-039.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-040.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-041.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-042.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-043.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-044.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

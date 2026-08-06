@@ -1,0 +1,261 @@
+{
+  "_hinweis": "Echter Lauf (erweiterte Suche). Enthält Hausverwaltungen in der Lead-Liste (R6) und Portale (R3).",
+  "branche": "Immobilienmakler",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Immobilienmakler Osnabrück",
+    "Immobilienmakler Osnabrück Firma",
+    "Immobilienmakler Osnabrück Bewertung",
+    "Haus verkaufen Osnabrück Makler",
+    "Immobilienbüro Osnabrück",
+    "Makler Osnabrück Wohnung mieten",
+    "Immobilienmakler Osnabrück Innenstadt",
+    "Immobilienverwaltung Osnabrück",
+    "Makler Georgsmarienhütte Belm Wallenhorst",
+    "Immobilienmakler Osnabrück Team",
+    "Grundstück verkaufen Osnabrück Makler",
+    "Immobilienmakler Osnabrück Erfahrungen"
+  ],
+  "marktGroesse": 31,
+  "leads": [
+    {
+      "host": "betrieb-009.example",
+      "titel": "Immobilienmakler Osnabrück",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "betrieb-010.example",
+      "titel": "Immobilienbewertung Osnabrück",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "immobilienscout24.de",
+      "titel": "Wohnung mieten in Osnabrück",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "bauen.osnabrueck.de",
+      "titel": "Wohnung finden – Stadt Osnabrück - Bauen & Wohnen",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immowelt.de",
+      "titel": "48 Immobilien kaufen in Osnabrück Innenstadt",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "hausverwaltung-betrieb-011.example",
+      "titel": "Rhode Hausverwaltungen KG – Hausverwaltung aus Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immobilienverwaltung-betrieb-012.example",
+      "titel": "S-Immobilienverwaltung: Home",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immobilienverwaltung-betrieb-013.example",
+      "titel": "HVG Müller-Mathar GmbH – Immobilienverwaltung Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-014.example",
+      "titel": "ECD Immobilien: Startseite",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "matera.eu",
+      "titel": "Hausverwaltung in Osnabrück gesucht?",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "grundbesitzverwaltung-betrieb-015.example",
+      "titel": "Brinkmann GmbH, Haus-und Grundbesitzverwaltung ...",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-016.example",
+      "titel": "FK Immobilien - Verwaltung und Vermarktung - Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "weg-verwaltung-betrieb-017.example",
+      "titel": "WEG-Verwaltung in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "immoportal.com",
+      "titel": "Die besten Immobilienmakler in Wallenhorst und Umgebung",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "makler-empfehlung.de",
+      "titel": "Die am besten bewerteten Immobilienmakler in Belm",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-018.example",
+      "titel": "Klein Immobilien: Exklusive Immobilien in und um Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-019.example",
+      "titel": "Ihr Immobilienmakler in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-020.example",
+      "titel": "Mein Makler Osnabrück-Nord: Aktuelles",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "betrieb-021.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 6
+    },
+    {
+      "host": "betrieb-022.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-023.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-024.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-025.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-026.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-027.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-028.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "betrieb-029.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-030.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-031.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-032.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-033.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

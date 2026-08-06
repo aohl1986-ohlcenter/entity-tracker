@@ -1,0 +1,86 @@
+{
+  "_hinweis": "NEGATIV-ZWILLING: sauberer Lauf, muss ohne Blocker durchgehen.",
+  "branche": "Dachdecker",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Dachdecker Osnabrück",
+    "Dachdecker Osnabrück Firma"
+  ],
+  "marktGroesse": 9,
+  "leads": [
+    {
+      "host": "betrieb-001.example",
+      "titel": "Dachdecker in Hasbergen bei Osnabrück - Kaschtan GmbH",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "betrieb-002.example",
+      "titel": "Dachdeckerei Strübbe - Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "betrieb-003.example",
+      "titel": "Salzer & Piepmeyer - Ihr Dachdecker aus Osnabrück",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "betrieb-004.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-005.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "my-hammer.de",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "betrieb-006.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-007.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-008.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

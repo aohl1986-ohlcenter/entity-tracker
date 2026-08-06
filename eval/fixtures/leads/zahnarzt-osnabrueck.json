@@ -1,0 +1,229 @@
+{
+  "_hinweis": "Echter Lauf 31.07.2026. Enthält den Prompt/Markt-Mismatch (Kieferorthopäde) und die Alias-Domain betrieb-088.example.",
+  "branche": "Zahnarzt",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Zahnarzt Osnabrück",
+    "Zahnarzt Osnabrück Firma",
+    "Zahnarztpraxis Osnabrück",
+    "Zahnarzt Osnabrück Implantate",
+    "Kieferorthopäde Osnabrück"
+  ],
+  "marktGroesse": 28,
+  "leads": [
+    {
+      "host": "betrieb-037.example",
+      "titel": "Parodontologie Zahnerhaltung Zahnersatz - Zahnarzt Dr ...",
+      "positionen": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "host": "betrieb-083.example",
+      "titel": "Zahnarzt Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "betrieb-044.example",
+      "titel": "Zahnarzt Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-084.example",
+      "titel": "Zahnarztpraxis Taubmann: Ihr Zahnarzt in Osnabrück: Praxis .",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-085.example",
+      "titel": "Zahnarztpraxis in Osnabrück & Wallenhorst",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-086.example",
+      "titel": "Zahnarzt Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-087.example",
+      "titel": "Zahnheilkunde Dodesheide",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "2te-zahnarztmeinung.de",
+      "titel": "🦷 Zahnimplantate in Osnabrück sind teuer - hier können Sie",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-088.example",
+      "titel": "Feste dritte Zähne an einem Tag in Osnabrück!",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-035.example",
+      "titel": "Dr. Beispiel und Dr. Beispiel Kieferorthopädie ...",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-038.example",
+      "titel": "Platzhalter Startseite – Kieferorthopädie in Osnabrück am ..",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-039.example",
+      "titel": "Marit Jordan . Kieferorthopädie im Hafen: Willkommen",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-040.example",
+      "titel": "[Klammerhaus] Wir biegen das hin - Fachzahnärzte für ...",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-034.example",
+      "titel": "Kieferorthopädie in Osnabrück",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-041.example",
+      "titel": "Praxis Dr. Beispiel",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "kieferorthopaede-betrieb-036.example",
+      "titel": "OERTEL",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "doctolib.de",
+      "titel": "Kieferorthopäden in Osnabrück in Ihrer Nähe finden",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "betrieb-089.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-090.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-091.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-092.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-093.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-094.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-095.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "betrieb-096.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-097.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-098.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-099.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

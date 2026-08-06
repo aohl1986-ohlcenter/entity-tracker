@@ -1,0 +1,9 @@
+{
+  "_hinweis": "Kuratierte Zweitdomains: Lead-Domain → Domain desselben Betreibers. Wird die rechte Seite von der KI zitiert, ist die linke KEIN Lead — die Behauptung 'Sie werden nicht genannt' wäre sachlich falsch. Einmal erkannte Fälle dürfen nie wiederkehren. Nur von Hand pflegen; der Gate meldet neue Kandidaten, trägt aber nichts ein.",
+  "aliase": {
+    "betrieb-088.example": "betrieb-093.example",
+    "betrieb-044.example": "betrieb-086.example",
+    "betrieb-002.example": "betrieb-203.example",
+    "betrieb-202.example": "betrieb-201.example"
+  }
+}

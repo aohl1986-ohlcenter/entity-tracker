@@ -1,0 +1,306 @@
+{
+  "branche": "Zahnarzt",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "prompts": [
+    "Wer ist der beste Zahnarzt in Osnabrück?",
+    "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+    "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+    "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?",
+    "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?",
+    "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+  ],
+  "kandidaten": [
+    {
+      "host": "betrieb-090.example",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+        "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnärzte am Calmeyer Platz Osnabrück: Zahnarzt Osnabrück"
+    },
+    {
+      "host": "betrieb-089.example",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+        "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztpraxis Kim Herzog: Zahnarzt Osnabrück Zentrum"
+    },
+    {
+      "host": "betrieb-092.example",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+        "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Osnabrück - DEIN DENTAL Zahnarzt in der ..."
+    },
+    {
+      "host": "betrieb-091.example",
+      "nennungen": 5,
+      "prompts": [
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+        "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?",
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztpraxis Osnabrück: Home - Wehmer & Nabhan"
+    },
+    {
+      "host": "betrieb-093.example",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnarzt Osnabrück - Zahnarzt Dr. Beispiel - Osnabrück"
+    },
+    {
+      "host": "zahnarzt-arztsuche.de",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnärzte in Osnabrück"
+    },
+    {
+      "host": "betrieb-094.example",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztpraxis in Osnabrück | direkt in der Innenstadt"
+    },
+    {
+      "host": "threebestrated.de",
+      "nennungen": 2,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": ""
+    },
+    {
+      "host": "betrieb-126.example",
+      "nennungen": 2,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Osnabrück?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnärzte für Osnabrück und Umgebung"
+    },
+    {
+      "host": "betrieb-095.example",
+      "nennungen": 2,
+      "prompts": [
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "OCOS Oralchirurgie Osnabrück"
+    },
+    {
+      "host": "betrieb-098.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?"
+      ],
+      "titel": "Jonas Karrenbrock: Zahnarzt Osnabrück"
+    },
+    {
+      "host": "betrieb-127.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Zahnarzt in Osnabrück kannst du empfehlen?"
+      ],
+      "titel": "Zahnarztpraxis Dr. Beispiel Osnabrück: Start"
+    },
+    {
+      "host": "betrieb-128.example",
+      "nennungen": 1,
+      "prompts": [
+        "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Zahnmedizinisches Zentrum Osnabrück (ZZOS): Zahnarzt ..."
+    },
+    {
+      "host": "betrieb-129.example",
+      "nennungen": 1,
+      "prompts": [
+        "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Zahnarztpraxis Dr. Beispiel"
+    },
+    {
+      "host": "betrieb-096.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt-Praxis Dr. Beispiel, Stadtteil Wüste ..."
+    },
+    {
+      "host": "betrieb-130.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnärztin Dr. Beispiel in Osnabrück | Termin buchen"
+    },
+    {
+      "host": "betrieb-131.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?"
+      ],
+      "titel": "58 Zahnärzte in Osnabrück - Termin online buchen"
+    },
+    {
+      "host": "betrieb-099.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Implantatzentrum Osnabrück am Callmeyer Platz Osnabrück"
+    },
+    {
+      "host": "betrieb-097.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Osnabrück | Zahnarztpraxis JORDAN²"
+    },
+    {
+      "host": "betrieb-132.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Dr. Beispiel – Fachzahnärztliche Praxis - Implantologie 1"
+    },
+    {
+      "host": "betrieb-133.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Behandlung bei Angst"
+    },
+    {
+      "host": "jameda.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Angstpatient/Zahnarztangst in Osnabrück. Termin buchen"
+    }
+  ],
+  "protokoll": [
+    {
+      "prompt": "Wer ist der beste Zahnarzt in Osnabrück?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/zahnarzt/osnabrueck",
+        "https://betrieb-090.example/",
+        "https://www.betrieb-089.example/",
+        "https://threebestrated.de/de-zahnaerzten-in-osnabruck",
+        "https://www.betrieb-136.example/zahnarzt/osnabrueck",
+        "https://betrieb-093.example/",
+        "https://betrieb-092.example/",
+        "https://www.zahnarzt-arztsuche.de/zahnaerzte/osnabrueck/",
+        "https://www.betrieb-126.example/",
+        "https://betrieb-094.example/osnabrueck-hasehaus/"
+      ]
+    },
+    {
+      "prompt": "Welchen Zahnarzt in Osnabrück kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://betrieb-090.example/",
+        "https://www.betrieb-089.example/",
+        "https://betrieb-092.example/",
+        "https://betrieb-093.example/",
+        "https://betrieb-094.example/osnabrueck-hasehaus/",
+        "https://www.betrieb-098.example/",
+        "https://www.betrieb-091.example/",
+        "https://www.betrieb-127.example/",
+        "https://www.werkenntdenbesten.de/zahnarzt/osnabrueck"
+      ]
+    },
+    {
+      "prompt": "Zahnarzt Osnabrück — welche Betriebe sind besonders zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/zahnarzt/osnabrueck",
+        "https://betrieb-090.example/",
+        "https://betrieb-092.example/",
+        "https://www.betrieb-089.example/",
+        "https://betrieb-128.example/",
+        "https://betrieb-129.example/",
+        "https://www.betrieb-091.example/"
+      ]
+    },
+    {
+      "prompt": "Ich brauche einen zuverlässigen Zahnarzt in Osnabrück. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.betrieb-089.example/",
+        "https://www.betrieb-091.example/",
+        "https://www.betrieb-096.example/",
+        "https://www.betrieb-130.example/zahnarztsuche/osnabrueck/dr-ozra-dousti",
+        "https://threebestrated.de/de-zahnarzten-in-osnabruck",
+        "https://www.zahnarzt-arztsuche.de/zahnaerzte/osnabrueck/",
+        "https://betrieb-131.example/Zahnmedizin/Osnabr%C3%BCck"
+      ]
+    },
+    {
+      "prompt": "Welcher Zahnarzt in Osnabrück ist für Implantate zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://betrieb-093.example/leistungsspektrum/konventionelle-implantologie/",
+        "https://www.betrieb-091.example/implantologie.html",
+        "https://betrieb-095.example/",
+        "https://betrieb-099.example/",
+        "https://betrieb-092.example/leistungen/zahnimplantate-implantologie/",
+        "https://www.betrieb-097.example/leistungsspektrum/zahnimplantate-osnabrueck/",
+        "https://betrieb-090.example/",
+        "https://www.betrieb-132.example/leistungen/implantologie/",
+        "https://betrieb-093.example/"
+      ]
+    },
+    {
+      "prompt": "Ich suche einen Zahnarzt in Osnabrück für Angstpatienten. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.betrieb-089.example/angstpatienten.html",
+        "https://betrieb-092.example/leistungen/angstpatienten-zahnarztangst/",
+        "https://www.betrieb-091.example/angstpatienten.html",
+        "https://www.betrieb-126.example/zahnaerztliche-leistungen/angstpatienten",
+        "https://betrieb-095.example/angstpatienten/wir-nehmen-dir-die-angst/",
+        "https://betrieb-094.example/osnabrueck-hasehaus/zahnarzt-angst/",
+        "https://www.zahnarzt-arztsuche.de/rubrik/zahnarztangst/osnabrueck/",
+        "https://betrieb-090.example/narkosebehandlung/",
+        "https://www.betrieb-133.example/verschiedenes/fuer-unsere-jungen-erwachsenen/behandlung-bei-angst",
+        "https://www.jameda.de/leistungen/angstpatient-zahnarztangst/osnabrueck"
+      ]
+    }
+  ]
+}

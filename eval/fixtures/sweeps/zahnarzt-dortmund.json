@@ -1,0 +1,307 @@
+{
+  "branche": "Zahnarzt",
+  "region": "Dortmund",
+  "datum": "2026-08-01",
+  "prompts": [
+    "Wer ist der beste Zahnarzt in Dortmund?",
+    "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+    "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+    "Ich brauche einen zuverlässigen Zahnarzt in Dortmund. Wen empfiehlst du?",
+    "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+    "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+  ],
+  "kandidaten": [
+    {
+      "host": "betrieb-067.example",
+      "nennungen": 5,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Startseite - Dr. Beispiel & Kollegen, Zahnarzt Dortmund"
+    },
+    {
+      "host": "betrieb-069.example",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnärzte Dortmund im MGHZ, Dr. Beispiel, Anja ..."
+    },
+    {
+      "host": "betrieb-068.example",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnarzt Dortmund - Ihre professionelle Zahnarztpraxis"
+    },
+    {
+      "host": "betrieb-070.example",
+      "nennungen": 4,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Dr. Beispiel: Zahnarzt Dortmund am Knappenberg 85"
+    },
+    {
+      "host": "betrieb-072.example",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Wer ist der beste Zahnarzt in Dortmund?"
+    },
+    {
+      "host": "betrieb-071.example",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "DOC Zahnärzte: Ihr Zahnarzt Dortmund"
+    },
+    {
+      "host": "betrieb-073.example",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Dortmund, Ä-DO – Ästhetische Zahnmedizin Thier ..."
+    },
+    {
+      "host": "betrieb-074.example",
+      "nennungen": 3,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?",
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Dr. Beispiel in Dortmund | Kompetenzzentrum ..."
+    },
+    {
+      "host": "betrieb-075.example",
+      "nennungen": 2,
+      "prompts": [
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnarzt Dr. Beispiel Dortmund: Home"
+    },
+    {
+      "host": "betrieb-082.example",
+      "nennungen": 1,
+      "prompts": [
+        "Wer ist der beste Zahnarzt in Dortmund?"
+      ],
+      "titel": "Zahnarztpraxis Dr. Beispiel Dortmund-Wambel"
+    },
+    {
+      "host": "betrieb-081.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?"
+      ],
+      "titel": "Zahnarzt Dr. Beispiel Dortmund Kirchhörde"
+    },
+    {
+      "host": "betrieb-121.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welchen Zahnarzt in Dortmund kannst du empfehlen?"
+      ],
+      "titel": "Zahnärzte Dortmund - Dr. Beispiel und Bennemann: Start"
+    },
+    {
+      "host": "unternehmen.focus.de",
+      "nennungen": 1,
+      "prompts": [
+        "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?"
+      ],
+      "titel": "Zahnarzt in Dortmund - Unternehmen - FOCUS.de"
+    },
+    {
+      "host": "stilpunkte.de",
+      "nennungen": 1,
+      "prompts": [
+        "Ich brauche einen zuverlässigen Zahnarzt in Dortmund. Wen empfiehlst du?"
+      ],
+      "titel": "Die 10 besten Zahnärzte in Dortmund"
+    },
+    {
+      "host": "betrieb-078.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund"
+    },
+    {
+      "host": "betrieb-076.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund"
+    },
+    {
+      "host": "betrieb-077.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund - Zahnersatz"
+    },
+    {
+      "host": "betrieb-079.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund ❘ Zahnarztpraxis Anlauf"
+    },
+    {
+      "host": "betrieb-080.example",
+      "nennungen": 1,
+      "prompts": [
+        "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?"
+      ],
+      "titel": "Zahnimplantate Dortmund, Lünen: fester Biss für „neue ..."
+    },
+    {
+      "host": "betrieb-122.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztangst"
+    },
+    {
+      "host": "betrieb-123.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarzt Angstpatienten Dortmund | Praxis Golch"
+    },
+    {
+      "host": "betrieb-124.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Zahnarztangst - Dortmund"
+    },
+    {
+      "host": "betrieb-125.example",
+      "nennungen": 1,
+      "prompts": [
+        "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?"
+      ],
+      "titel": "Sicherheit für Angstpatienten – Ihr Zahnarzt in Dortmund"
+    }
+  ],
+  "protokoll": [
+    {
+      "prompt": "Wer ist der beste Zahnarzt in Dortmund?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/zahnarzt/dortmund",
+        "https://betrieb-072.example/bester-zahnarzt-in-dortmund/",
+        "https://www.betrieb-069.example/",
+        "https://www.betrieb-071.example/",
+        "https://betrieb-068.example/",
+        "https://www.betrieb-067.example/",
+        "https://www.betrieb-073.example/",
+        "https://www.betrieb-074.example/",
+        "https://betrieb-070.example/",
+        "https://www.betrieb-082.example/"
+      ]
+    },
+    {
+      "prompt": "Welchen Zahnarzt in Dortmund kannst du empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://betrieb-072.example/zahnarzt-dortmund-kruegerhaus/",
+        "https://www.betrieb-069.example/",
+        "https://www.werkenntdenbesten.de/zahnarzt/dortmund",
+        "https://betrieb-068.example/",
+        "https://www.betrieb-074.example/",
+        "https://www.betrieb-073.example/",
+        "https://www.betrieb-067.example/",
+        "https://betrieb-070.example/",
+        "https://www.betrieb-081.example/",
+        "https://betrieb-121.example/"
+      ]
+    },
+    {
+      "prompt": "Zahnarzt Dortmund — welche Betriebe sind besonders zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.werkenntdenbesten.de/zahnarzt/dortmund",
+        "https://betrieb-072.example/bester-zahnarzt-in-dortmund/",
+        "https://www.betrieb-069.example/",
+        "https://www.betrieb-067.example/",
+        "https://unternehmen.focus.de/zahnarzt-dortmund.html",
+        "https://betrieb-068.example/",
+        "https://betrieb-075.example/",
+        "https://www.betrieb-071.example/"
+      ]
+    },
+    {
+      "prompt": "Ich brauche einen zuverlässigen Zahnarzt in Dortmund. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.stilpunkte.de/dortmund/toplists/besten-zahnaerzte-dortmund/"
+      ]
+    },
+    {
+      "prompt": "Welcher Zahnarzt in Dortmund ist für Implantate zu empfehlen?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://betrieb-068.example/implantate/",
+        "https://betrieb-078.example/leistungen/zahnimplantate-dortmund/",
+        "https://www.betrieb-067.example/",
+        "https://betrieb-076.example/implantologie/zahnimplantate/",
+        "https://www.betrieb-077.example/leistungen/zahnimplantate/",
+        "https://betrieb-079.example/zahnimplantate/",
+        "https://www.betrieb-080.example/zahnimplantate-in-dortmund-und-luenen",
+        "https://betrieb-070.example/leistungen/implantate-in-dortmund/",
+        "https://betrieb-075.example/"
+      ]
+    },
+    {
+      "prompt": "Ich suche einen Zahnarzt in Dortmund für Angstpatienten. Wen empfiehlst du?",
+      "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
+      "quellen": [
+        "https://www.betrieb-069.example/leistungen/angst-vorm-zahnarzt-dortmund",
+        "https://www.betrieb-071.example/leistungen/angstpatienten/",
+        "https://www.betrieb-122.example/zahnarztangst/",
+        "https://betrieb-070.example/leistungen/behandlung-von-angstpatienten-dortmund/",
+        "https://www.betrieb-073.example/leistungen/angstpatienten",
+        "https://www.betrieb-067.example/spezielle-behandlungen/angstpatienten",
+        "https://www.betrieb-074.example/angstpatienten",
+        "https://www.betrieb-123.example/leistungen/angstpatienten/",
+        "https://www.betrieb-124.example/leistungen/zahnarztangst/",
+        "https://www.betrieb-125.example/zahnarzt-angstpatienten-dortmund.html"
+      ]
+    }
+  ]
+}

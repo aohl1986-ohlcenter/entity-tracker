@@ -1,0 +1,87 @@
+{
+  "_hinweis": "Enthält tischler-schreiner.org — ein Verzeichnisportal, das den alten Filter überlebte (R3).",
+  "branche": "Tischlerei",
+  "region": "Osnabrück",
+  "datum": "2026-07-31",
+  "suchen": [
+    "Tischlerei Osnabrück",
+    "Tischlerei Osnabrück Firma"
+  ],
+  "marktGroesse": 9,
+  "leads": [
+    {
+      "host": "betrieb-045.example",
+      "titel": "Parkett Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "moebelteile-betrieb-046.example",
+      "titel": "FLY Möbelteile",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "tischler-schreiner.org",
+      "titel": "Helmut Hengelbrock Tischlerei - Osnabrück",
+      "positionen": [
+        1,
+        2
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "betrieb-047.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-048.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-049.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-050.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "betrieb-051.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "betrieb-052.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "_hinweis": "Enthält zahnarztpraxis-beispiel.example — Werbewiderspruch im Impressum, steht auf der Sperrliste (R5/R9).",
+  "branche": "Zahnarzt",
+  "region": "Dortmund",
+  "datum": "2026-08-01",
+  "suchen": [
+    "Zahnarzt Dortmund",
+    "Zahnarzt Dortmund Firma",
+    "Zahnarztpraxis Dortmund",
+    "Zahnarzt Dortmund Implantate",
+    "Zahnarzt Dortmund Innenstadt",
+    "Zahnarzt Dortmund Hörde",
+    "Zahnarztpraxis Dortmund Team",
+    "Zahnarzt Dortmund Prophylaxe",
+    "Zahnarzt Dortmund Zahnersatz",
+    "Zahnarzt Dortmund Bewertungen"
+  ],
+  "marktGroesse": 35,
+  "leads": [
+    {
+      "host": "betrieb-053.example",
+      "titel": "dr. FABRI - Zahnarzt Fabri Dortmund",
+      "positionen": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "host": "betrieb-054.example",
+      "titel": "EDELWEISS ZAHNÄRZTE - Modernste Dentaltechnik und ...",
+      "positionen": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "host": "betrieb-055.example",
+      "titel": "Dental21 Dortmund Innenstadt: Zahnarztpraxis Dortmund ...",
+      "positionen": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "host": "betrieb-056.example",
+      "titel": "Zahnarzt Dortmund – jetzt Online-Termin machen",
+      "positionen": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "host": "betrieb-057.example",
+      "titel": "Dr. Beispiel & Kollegen: Zahnarzt Dortmund Innenstadt",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "betrieb-058.example",
+      "titel": "Zahnarztpraxis",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "betrieb-059.example",
+      "titel": "Zahnhaus Dortmund: Entdecken",
+      "positionen": [
+        1,
+        2
+      ]
+    },
+    {
+      "host": "betrieb-060.example",
+      "titel": "Gemeinschaftspraxis Dr. Beispiel - Ihr Zahnarzt in Dortmund",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "zahnarztpraxis-beispiel.example",
+      "titel": "Zahnarzt Hörde - Zahnarztpraxis Dr. Beispiel",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-205.example",
+      "titel": "betrieb-204.example",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-062.example",
+      "titel": "Zahnarzt-dortmund.de",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-063.example",
+      "titel": "Zahnarztpraxis Dortmund Hörde",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-064.example",
+      "titel": "Zahnarzt Markus Ludolph: Home",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "doctolib.de",
+      "titel": "Zahnarzt in Hörde online finden und Termin buchen",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-065.example",
+      "titel": "Zahnreinigung / Vorsorge / Prophylaxe in Dortmund",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "betrieb-066.example",
+      "titel": "Zahnarzt Dortmund: Zahnersatz mit schonender Prothetik",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "jameda.de",
+      "titel": "Zahnarzt in Dortmund: Termin buchen mit jameda",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "medikompass.de",
+      "titel": "Günstige Ärzte oder Zahnärzte in Dortmund",
+      "positionen": [
+        1
+      ]
+    },
+    {
+      "host": "threebestrated.de",
+      "titel": "Die 3 besten Zahnärzte in Dortmund",
+      "positionen": [
+        1
+      ]
+    }
+  ],
+  "sichtbar": [
+    {
+      "host": "betrieb-067.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 5
+    },
+    {
+      "host": "betrieb-068.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-069.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-070.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 4
+    },
+    {
+      "host": "betrieb-071.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-072.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-073.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-074.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 3
+    },
+    {
+      "host": "betrieb-075.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 2
+    },
+    {
+      "host": "betrieb-076.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-077.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-078.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-079.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-080.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-081.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    },
+    {
+      "host": "betrieb-082.example",
+      "titel": "",
+      "positionen": [
+        1
+      ],
+      "nennungen": 1
+    }
+  ]
+}
