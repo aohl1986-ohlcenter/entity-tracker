@@ -14,6 +14,7 @@
     "fetch:citations": "tsx scripts/run-check-citations.ts",
     "test": "tsx --test eval/*.test.ts",
     "akquise:eval": "tsx --test eval/*.test.ts",
+    "kosten:rollup": "tsx scripts/rebuild-cost-rollup.ts",
     "akquise:gate": "tsx scripts/akquise-gate.ts",
     "akquise:mcp": "tsx mcp/akquise/server.ts"
   },

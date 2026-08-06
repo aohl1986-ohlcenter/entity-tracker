@@ -1,3 +1,5 @@
+import { OHNE_TOKENS, type Messung } from "./engine-messung";
+
 export type TavilyResult = {
   url: string;
   title?: string;
@@ -9,6 +11,8 @@ export type TavilyGroundedResponse = {
   text: string;
   citations: { uri: string; resolvedUrl: string; title?: string }[];
   raw: unknown;
+  /** Additiv für das Kosten-Tracing. Tavily liefert keine Tokens — Abrechnung per Credit. */
+  messung: Messung;
 };
 
 const ENDPOINT = "https://api.tavily.com/search";
@@ -28,6 +32,7 @@ export async function askGroundedTavily(
     max_results: opts.maxResults ?? 8,
   };
 
+  const beginn = Date.now();
   let lastErr: Error | null = null;
   let json: any = null;
   for (let attempt = 1; attempt <= 4; attempt++) {
@@ -55,5 +60,10 @@ export async function askGroundedTavily(
     .map((r) => ({ uri: r.url, resolvedUrl: r.url, title: r.title }));
 
   const text: string = typeof json.answer === "string" ? json.answer : "";
-  return { text, citations, raw: json };
+  return {
+    text,
+    citations,
+    raw: json,
+    messung: { modell: null, verbrauch: OHNE_TOKENS, dauerMs: Date.now() - beginn },
+  };
 }

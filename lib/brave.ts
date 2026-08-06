@@ -1,3 +1,5 @@
+import { OHNE_TOKENS, type Messung } from "./engine-messung";
+
 export type BraveWebResult = {
   url: string;
   title?: string;
@@ -8,6 +10,8 @@ export type BraveGroundedResponse = {
   text: string;
   citations: { uri: string; resolvedUrl: string; title?: string }[];
   raw: unknown;
+  /** Additiv für das Kosten-Tracing. Brave liefert keine Tokens — Abrechnung pro Request. */
+  messung: Messung;
 };
 
 const ENDPOINT = "https://api.search.brave.com/res/v1/web/search";
@@ -27,6 +31,7 @@ export async function askGroundedBrave(
     safesearch: "moderate",
   });
 
+  const beginn = Date.now();
   let lastErr: Error | null = null;
   let json: any = null;
   for (let attempt = 1; attempt <= 4; attempt++) {
@@ -61,5 +66,10 @@ export async function askGroundedBrave(
       ? json.summarizer.summary
       : "";
 
-  return { text, citations, raw: json };
+  return {
+    text,
+    citations,
+    raw: json,
+    messung: { modell: null, verbrauch: OHNE_TOKENS, dauerMs: Date.now() - beginn },
+  };
 }
