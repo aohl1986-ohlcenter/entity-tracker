@@ -1,10 +1,13 @@
 /**
- * Isolationsprobe: Der Gate und seine Bibliothek dürfen die Produktions-DB
- * niemals berühren.
+ * Isolationsprobe: Der Gate, seine Bibliothek und der MCP-Server dürfen die
+ * Produktions-DB niemals berühren.
  *
  * Hintergrund: `scripts/_env.ts` lädt `.env.local`, dessen DATABASE_URL auf die
  * LIVE-Neon-Datenbank zeigt. Ein versehentlicher Import würde reichen. Statt
  * sich darauf zu verlassen, dass niemand ihn hinzufügt, ist es hier zugesichert.
+ *
+ * Der Scan ist ein Regex über einzelne Dateien, NICHT transitiv: neue Ordner
+ * werden nicht automatisch erfasst, sondern müssen unten eingetragen werden.
  */
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
@@ -47,7 +50,16 @@ function tsDateien(ordner: string): string[] {
 }
 
 describe("Isolation gegen die Produktions-DB", () => {
-  const dateien = [...tsDateien(join(WURZEL, "lib", "akquise")), ...tsDateien(EVAL_DIR), join(WURZEL, "scripts", "akquise-gate.ts")];
+  const dateien = [
+    ...tsDateien(join(WURZEL, "lib", "akquise")),
+    ...tsDateien(join(WURZEL, "lib", "akquise-lauf")),
+    ...tsDateien(join(WURZEL, "mcp", "akquise")),
+    ...tsDateien(EVAL_DIR),
+    join(WURZEL, "scripts", "akquise-gate.ts"),
+    // Von lib/akquise-lauf/ importiert — damit die Kette lückenlos bleibt.
+    join(WURZEL, "lib", "serper.ts"),
+    join(WURZEL, "lib", "bedrock.ts"),
+  ];
 
   for (const datei of dateien) {
     it(`${datei.replace(WURZEL + "/", "")} importiert weder DB noch _env`, () => {
@@ -65,5 +77,23 @@ describe("Isolation gegen die Produktions-DB", () => {
     const gate = readFileSync(join(WURZEL, "scripts", "akquise-gate.ts"), "utf8");
     assert.match(gate, /process\.env\.DATABASE_URL/);
     assert.match(gate, /process\.exit\(1\)/);
+  });
+
+  it("der MCP-Server entfernt verbotene Variablen und bricht sonst ab", () => {
+    const umgebung = readFileSync(join(WURZEL, "mcp", "akquise", "umgebung.ts"), "utf8");
+    // Entfernen allein genügt nicht — es muss auch geprüft werden, dass sie weg sind.
+    assert.match(umgebung, /delete process\.env\[key\]/);
+    assert.match(umgebung, /"DATABASE_URL"/);
+    assert.match(umgebung, /throw new Error/);
+  });
+
+  it("der MCP-Server bereinigt die Umgebung vor allen anderen Imports", () => {
+    const quelle = readFileSync(join(WURZEL, "mcp", "akquise", "server.ts"), "utf8");
+    const ersterImport = ohneKommentare(quelle).match(/\bfrom\s+["']([^"']+)["']/)?.[1];
+    assert.equal(
+      ersterImport,
+      "./umgebung",
+      "Der Umgebungs-Import muss zuerst stehen: ESM wertet Module in Importreihenfolge aus.",
+    );
   });
 });
