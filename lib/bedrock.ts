@@ -1,4 +1,5 @@
 import { fetchSerp, type SerperOrganicResult } from "./serper";
+import { zahlOderNull, type Messung } from "./engine-messung";
 
 export type BedrockGroundedResponse = {
   text: string;
@@ -16,7 +17,20 @@ export type BedrockGroundedResponse = {
    *
    * Additiv ergänzt — bestehende Aufrufer sind nicht betroffen.
    */
-  grounding: { ok: boolean; fehler?: string; links: string[] };
+  grounding: {
+    ok: boolean;
+    fehler?: string;
+    links: string[];
+    /**
+     * Dauer des internen Serper-Abrufs. Bedrock ist nicht nativ gegroundet und
+     * löst pro Aufruf einen eigenen, kostenpflichtigen SERP-Abruf aus. Ohne
+     * diesen Wert wäre der als Kostenposten unsichtbar; lib/jobs.ts schreibt
+     * daraus einen Kind-Vorgang unter dem Bedrock-Vorgang.
+     */
+    dauerMs: number;
+  };
+  /** Additiv für das Kosten-Tracing (lib/tracing.ts). */
+  messung: Messung;
 };
 
 export async function askGroundedBedrock(
@@ -36,6 +50,7 @@ export async function askGroundedBedrock(
   let results: SerperOrganicResult[] = [];
   let groundingOk = true;
   let groundingFehler: string | undefined;
+  const serpBeginn = Date.now();
   try {
     const serp = await fetchSerp({ query: cleanQuery, num: 10 });
     results = serp.organic ?? [];
@@ -51,6 +66,7 @@ export async function askGroundedBedrock(
     groundingOk = false;
     groundingFehler = err instanceof Error ? err.message : String(err);
   }
+  const serpDauerMs = Date.now() - serpBeginn;
 
   // 2) Formulate prompt
   const systemPrompt = `Du bist ein präziser Recherche-Assistent. Dir werden Suchergebnisse für die folgende Anfrage bereitgestellt:
@@ -71,6 +87,7 @@ Quellen:
 
   let lastErr: Error | null = null;
   let json: any = null;
+  const modellBeginn = Date.now();
 
   for (let attempt = 1; attempt <= 4; attempt++) {
     const res = await fetch(endpoint, {
@@ -130,6 +147,16 @@ Quellen:
       ok: groundingOk,
       fehler: groundingFehler,
       links: results.map((r) => r.link),
+      dauerMs: serpDauerMs,
+    },
+    messung: {
+      modell: model,
+      verbrauch: {
+        tokensIn: zahlOderNull(json.usage?.inputTokens),
+        tokensOut: zahlOderNull(json.usage?.outputTokens),
+        quelle: "api",
+      },
+      dauerMs: Date.now() - modellBeginn,
     },
   };
 }

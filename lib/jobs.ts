@@ -14,6 +14,7 @@ import { askGroundedGemini } from "./gemini";
 import { askGroundedTavily } from "./tavily";
 import { askGroundedBrave } from "./brave";
 import { askGroundedBedrock } from "./bedrock";
+import type { Messung } from "./engine-messung";
 import { classifyUrl, extractDomain } from "./classify";
 import { countByClass, dominationScore } from "./score";
 import {
@@ -27,10 +28,17 @@ import {
   sendPeriodicDigest,
   type GenericAlert,
 } from "./alerts";
-import { pruneOldSnapshotRaw } from "./prune";
+import { pruneOldLlmCalls, pruneOldSnapshotRaw } from "./prune";
 import { detectOpsIssues, sendOpsAlert } from "./ops";
 import { planFor } from "./plans";
 import { recordUsage } from "./usage";
+import {
+  beendeLauf,
+  starteLauf,
+  verfolge,
+  verfolgeGroundingSerp,
+  verknuepfeErgebnis,
+} from "./tracing";
 
 export type FetchSerpsReport = {
   entity: string;
@@ -76,18 +84,24 @@ export async function runFetchSerpsForEntity(
   const failed: FetchSerpsReport["failed"] = [];
   const scores: number[] = [];
   const collected: GenericAlert[] = [];
+  const lauf = await starteLauf(entity.id, "fetch_serps");
 
   for (const kw of kws) {
     try {
       let serp;
       try {
-        serp = await fetchSerp({
-          query: kw.query,
-          gl: kw.locale,
-          hl: kw.locale,
-          location: kw.location,
-          num: 10,
-        });
+        serp = await verfolge(
+          lauf,
+          { engine: "serper", operation: "serp_keyword", anlass: kw.query },
+          () =>
+            fetchSerp({
+              query: kw.query,
+              gl: kw.locale,
+              hl: kw.locale,
+              location: kw.location,
+              num: 10,
+            }),
+        );
       } catch (err) {
         await recordUsage(entity.id, "serper", { failures: 1 });
         throw err;
@@ -122,6 +136,9 @@ export async function runFetchSerpsForEntity(
         })
         .returning();
 
+      // Ergebnis → Lauf: über welchen Vorgang ist dieser Snapshot entstanden.
+      verknuepfeErgebnis(lauf, { serpSnapshotId: snapshot.id });
+
       if (classified.length > 0) {
         await db.insert(serpResults).values(
           classified.map((r) => ({
@@ -151,6 +168,8 @@ export async function runFetchSerpsForEntity(
       });
     }
   }
+
+  await beendeLauf(lauf, failed.length === 0);
 
   const avg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
 
@@ -200,13 +219,22 @@ export async function runCheckCitationsForEntity(
     .from(targetUrls)
     .where(eq(targetUrls.entityId, entity.id));
 
+  type EngineAntwort = {
+    text: string;
+    citations: { uri: string; resolvedUrl: string; title?: string }[];
+    /** Modell/Tokens/Dauer für das Kosten-Tracing (lib/engine-messung.ts). */
+    messung: Messung;
+    /**
+     * Nur Bedrock: es holt sein Grounding selbst über Serper. Dieser Abruf wird
+     * unten als eigener, an den Bedrock-Vorgang gehängter Kostenposten erfasst.
+     */
+    grounding?: { ok: boolean; fehler?: string; dauerMs: number };
+  };
+
   const engines: {
     name: string;
     enabled: boolean;
-    ask: (q: string) => Promise<{
-      text: string;
-      citations: { uri: string; resolvedUrl: string; title?: string }[];
-    }>;
+    ask: (q: string) => Promise<EngineAntwort>;
   }[] = [
     {
       name: "gemini",
@@ -239,11 +267,17 @@ export async function runCheckCitationsForEntity(
   let totalOwned = 0;
   let totalAuthority = 0;
   let runs = 0;
+  const lauf = await starteLauf(entity.id, "check_citations");
 
   for (const prompt of prompts) {
     for (const engine of engines) {
       try {
-        const result = await engine.ask(prompt.query);
+        const result = await verfolge(
+          lauf,
+          { engine: engine.name, operation: "citation_prompt", anlass: prompt.query },
+          () => engine.ask(prompt.query),
+          (r) => r.messung,
+        );
         await recordUsage(entity.id, engine.name, { calls: 1 });
         const cited = result.citations.map((c) => {
           const cls = classifyUrl(c.resolvedUrl, targets);
@@ -258,16 +292,25 @@ export async function runCheckCitationsForEntity(
         totalOwned += ownedHits;
         totalAuthority += authorityHits;
 
-        await db.insert(aiCitations).values({
-          entityId: entity.id,
-          engine: engine.name,
-          query: prompt.query,
-          responseText: result.text,
-          citedUrls: cited,
-          ownedHits,
-          authorityHits,
-          totalCitations: cited.length,
-        });
+        const [citation] = await db
+          .insert(aiCitations)
+          .values({
+            entityId: entity.id,
+            engine: engine.name,
+            query: prompt.query,
+            responseText: result.text,
+            citedUrls: cited,
+            ownedHits,
+            authorityHits,
+            totalCitations: cited.length,
+          })
+          .returning({ id: aiCitations.id });
+
+        // Ergebnis → Lauf, dann erst der Grounding-SERP: verknuepfeErgebnis
+        // hängt am zuletzt VERFOLGTEN Vorgang, und das soll der Engine-Aufruf
+        // sein, nicht der nachgetragene SERP.
+        if (citation) verknuepfeErgebnis(lauf, { aiCitationId: citation.id });
+        if (result.grounding) verfolgeGroundingSerp(lauf, prompt.query, result.grounding);
         runs++;
       } catch (err) {
         await recordUsage(entity.id, engine.name, { failures: 1 });
@@ -278,6 +321,8 @@ export async function runCheckCitationsForEntity(
       }
     }
   }
+
+  await beendeLauf(lauf, failed.length === 0);
 
   const citationLoss = await detectCitationLossForEntity(entity);
   const alertResult = await dispatchAlertBatch(entity, citationLoss, {
@@ -349,6 +394,8 @@ export type CollectionReport = {
   citations: CitationReport;
   persistedAlerts: number;
   prunedRawRows: number;
+  /** Gelöschte Trace-Einzelvorgänge (Monatszahlen bleiben im Rollup erhalten). */
+  prunedLlmCalls: number;
 };
 
 export async function runDailyCollectionForEntity(slug: string): Promise<CollectionReport> {
@@ -361,6 +408,7 @@ export async function runDailyCollectionForEntity(slug: string): Promise<Collect
   // Housekeeping: alte Roh-SERP-JSONs leeren (Storage-Schutz). Läuft im
   // täglichen Collect mit, daher kein zusätzlicher Cron nötig.
   const prune = await pruneOldSnapshotRaw();
+  const prunedTraces = await pruneOldLlmCalls();
 
   const { freshAlerts: _s, ...serpReport } = serps;
   const { freshAlerts: _c, ...citationReport } = citations;
@@ -373,6 +421,7 @@ export async function runDailyCollectionForEntity(slug: string): Promise<Collect
     citations: citationReport,
     persistedAlerts: persisted,
     prunedRawRows: prune.pruned,
+    prunedLlmCalls: prunedTraces.calls,
   };
 }
 

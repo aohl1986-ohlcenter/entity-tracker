@@ -12,12 +12,16 @@
  *   GEMINI_MODEL    — model name (default: gemini-3.5-flash-lite)
  */
 
+import { zahlOderNull, type Messung } from "./engine-messung";
+
 export type GroundingChunk = { web?: { uri: string; title?: string } };
 
 export type GeminiGroundedResponse = {
   text: string;
   citations: { uri: string; resolvedUrl: string; title?: string }[];
   raw: unknown;
+  /** Additiv für das Kosten-Tracing (lib/tracing.ts) — bestehende Aufrufer sind nicht betroffen. */
+  messung: Messung;
 };
 
 async function resolveRedirect(url: string): Promise<string> {
@@ -59,6 +63,7 @@ export async function askGroundedGemini(
 
   const model = opts.model ?? process.env.GEMINI_MODEL ?? DEFAULT_MODEL;
   const endpoint = `${BASE_URL}/models/${model}:generateContent`;
+  const beginn = Date.now();
 
   const defaultSystemPrompt =
     "Du bist ein hilfreicher Recherche-Assistent. Beantworte alle Fragen zu öffentlich bekannten " +
@@ -122,5 +127,25 @@ export async function askGroundedGemini(
     })),
   );
 
-  return { text, citations, raw: json };
+  // usageMetadata liefert die Token-Zahlen; thoughtsTokenCount (Denk-Tokens)
+  // wird von Google zum Output gerechnet und deshalb hier addiert.
+  const usage = json.usageMetadata ?? {};
+  const tokensOut =
+    (zahlOderNull(usage.candidatesTokenCount) ?? 0) +
+    (zahlOderNull(usage.thoughtsTokenCount) ?? 0);
+
+  return {
+    text,
+    citations,
+    raw: json,
+    messung: {
+      modell: model,
+      verbrauch: {
+        tokensIn: zahlOderNull(usage.promptTokenCount),
+        tokensOut: zahlOderNull(usage.candidatesTokenCount) === null ? null : tokensOut,
+        quelle: "api",
+      },
+      dauerMs: Date.now() - beginn,
+    },
+  };
 }
