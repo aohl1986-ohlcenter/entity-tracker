@@ -1,6 +1,6 @@
 import { db } from "./db";
-import { serpSnapshots } from "./schema";
-import { and, lt, sql } from "drizzle-orm";
+import { llmCalls, llmRuns, serpSnapshots } from "./schema";
+import { and, isNotNull, lt, sql } from "drizzle-orm";
 
 export const DEFAULT_RETENTION_DAYS = 90;
 
@@ -30,4 +30,39 @@ export async function pruneOldSnapshotRaw(
     .returning({ id: serpSnapshots.id });
 
   return { pruned: updated.length, retentionDays, cutoff: cutoff.toISOString() };
+}
+
+/**
+ * Löscht alte Einzelvorgänge des LLM-Tracings (`llm_calls`) und die zugehörigen
+ * abgeschlossenen Läufe (`llm_runs`).
+ *
+ * Die Monatszahlen gehen dabei NICHT verloren: sie stehen in
+ * `llm_cost_monthly`, das hier bewusst unangetastet bleibt. Verloren geht nur
+ * die Detailtiefe (welcher Prompt, welche Latenz) jenseits der Frist — genau
+ * der Teil, der über Monate unbegrenzt wachsen würde.
+ *
+ * Noch laufende Läufe (`finishedAt IS NULL`) werden verschont, damit ein
+ * hängengebliebener Lauf nicht mitten im Betrieb unter sich weggeräumt wird.
+ */
+export async function pruneOldLlmCalls(
+  retentionDays = DEFAULT_RETENTION_DAYS,
+): Promise<{ calls: number; runs: number; retentionDays: number; cutoff: string }> {
+  const cutoff = new Date(Date.now() - retentionDays * 24 * 60 * 60 * 1000);
+
+  const geloeschteCalls = await db
+    .delete(llmCalls)
+    .where(lt(llmCalls.startedAt, cutoff))
+    .returning({ id: llmCalls.id });
+
+  const geloeschteRuns = await db
+    .delete(llmRuns)
+    .where(and(lt(llmRuns.startedAt, cutoff), isNotNull(llmRuns.finishedAt)))
+    .returning({ id: llmRuns.id });
+
+  return {
+    calls: geloeschteCalls.length,
+    runs: geloeschteRuns.length,
+    retentionDays,
+    cutoff: cutoff.toISOString(),
+  };
 }
