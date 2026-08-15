@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
-    "@neondatabase/serverless": "^0.10.4",
+    "@neondatabase/serverless": "^1.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.45.2",
     "next": "^15.5.18",
