@@ -19,7 +19,9 @@ Feature-Gates und Limits stehen zentral in `lib/plans.ts`.
 - Der tägliche Collect läuft sequentiell über alle aktiven Tenants in einem
   Cron mit `maxDuration 300 s`. Ab etwa fünf Kunden mit vollen
   Keyword-Kontingenten muss der Collect gechunkt werden.
-- Vor dem dritten Kunden auf bezahlte API-Tarife wechseln (Serper ≈ 0,30 $/1k).
+- Vor dem dritten Kunden auf bezahlte API-Tarife wechseln. Achtung bei der
+  Kalkulation: Serpers 0,30 $/1k gelten erst ab dem 3.750-$-Paket; der kleinste
+  Pack kostet 50 $ für 50k Credits (= 1,00 $/1k) und **verfällt nach 6 Monaten**.
 
 ## Cronjobs
 
