@@ -1,4 +1,5 @@
 {
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln.",
   "branche": "Kieferorthopäde",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -24,7 +25,7 @@
         "Zahnspange für Kinder in Osnabrück — welche Praxis ist zu empfehlen?",
         "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?"
       ],
-      "titel": "Kieferorthopädie in Osnabrück"
+      "titel": "kieferorthopaedie — Beispielbetrieb 034"
     },
     {
       "host": "betrieb-035.example",
@@ -37,7 +38,7 @@
         "Welchen Kieferorthopäden in Osnabrück kannst du für mein Kind empfehlen?",
         "Zahnspange für Kinder in Osnabrück — welche Praxis ist zu empfehlen?"
       ],
-      "titel": "Dr. Beispiel und Dr. Beispiel Kieferorthopädie Osnabrück"
+      "titel": "kieferorthopaedie — Beispielbetrieb 035"
     },
     {
       "host": "betrieb-037.example",
@@ -49,7 +50,7 @@
         "Welchen Kieferorthopäden in Osnabrück kannst du für mein Kind empfehlen?",
         "Zahnspange für Kinder in Osnabrück — welche Praxis ist zu empfehlen?"
       ],
-      "titel": "Kieferorthopädie (KFO)"
+      "titel": "kieferorthopaedie — Beispielbetrieb 037"
     },
     {
       "host": "kieferorthopaede-betrieb-036.example",
@@ -61,7 +62,7 @@
         "Ich brauche einen zuverlässigen Kieferorthopäde in Osnabrück. Wen empfiehlst du?",
         "Welchen Kieferorthopäden in Osnabrück kannst du für mein Kind empfehlen?"
       ],
-      "titel": "OERTEL | Kieferorthopädie Osnabrück"
+      "titel": "kieferorthopaedie / kieferorthopaede — Beispielbetrieb 036"
     },
     {
       "host": "betrieb-038.example",
@@ -72,7 +73,7 @@
         "Kieferorthopäde Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Welchen Kieferorthopäden in Osnabrück kannst du für mein Kind empfehlen?"
       ],
-      "titel": "Platzhalter Startseite – Kieferorthopädie in Osnabrück am ..."
+      "titel": "kieferorthopaedie — Beispielbetrieb 038"
     },
     {
       "host": "betrieb-040.example",
@@ -83,7 +84,7 @@
         "Ich brauche einen zuverlässigen Kieferorthopäde in Osnabrück. Wen empfiehlst du?",
         "Welchen Kieferorthopäden in Osnabrück kannst du für mein Kind empfehlen?"
       ],
-      "titel": "[Klammerhaus] Wir biegen das hin - Fachzahnärzte für ..."
+      "titel": "Beispielbetrieb 040"
     },
     {
       "host": "betrieb-039.example",
@@ -94,7 +95,7 @@
         "Zahnspange für Kinder in Osnabrück — welche Praxis ist zu empfehlen?",
         "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?"
       ],
-      "titel": "Marit Jordan . Kieferorthopädie im Hafen: Willkommen"
+      "titel": "kieferorthopaedie — Beispielbetrieb 039"
     },
     {
       "host": "betrieb-041.example",
@@ -104,7 +105,7 @@
         "Welchen Kieferorthopäde in Osnabrück kannst du empfehlen?",
         "Ich brauche einen zuverlässigen Kieferorthopäde in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Praxis Dr. Beispiel | Ihr Kieferorthopäde in Osnabrück"
+      "titel": "kieferorthopaede — Beispielbetrieb 041"
     },
     {
       "host": "unternehmen.focus.de",
@@ -124,7 +125,7 @@
         "Ich brauche einen zuverlässigen Kieferorthopäde in Osnabrück. Wen empfiehlst du?",
         "Zahnspange für Kinder in Osnabrück — welche Praxis ist zu empfehlen?"
       ],
-      "titel": "Oesede Smile Kieferorthopädie in Georgsmarienhütte"
+      "titel": "kieferorthopaedie — Beispielbetrieb 042"
     },
     {
       "host": "betrieb-044.example",
@@ -132,7 +133,7 @@
       "prompts": [
         "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?"
       ],
-      "titel": "Aligner Schienen Osnabrück"
+      "titel": "Beispielbetrieb 044"
     },
     {
       "host": "betrieb-093.example",
@@ -140,7 +141,7 @@
       "prompts": [
         "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?"
       ],
-      "titel": "Aligner Therapie - Osnabrück"
+      "titel": "Beispielbetrieb 093"
     },
     {
       "host": "dentanet.de",
@@ -156,7 +157,7 @@
       "prompts": [
         "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?"
       ],
-      "titel": "Durchsichtige Zahnschienen ⁠⁠Osnabrück"
+      "titel": "Beispielbetrieb 115"
     },
     {
       "host": "betrieb-043.example",
@@ -164,7 +165,7 @@
       "prompts": [
         "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?"
       ],
-      "titel": "Invisalign®-Zahnschienen Melle, nahe Osnabrück. Aligner"
+      "titel": "Beispielbetrieb 043"
     }
   ],
   "protokoll": [
@@ -177,9 +178,9 @@
         "https://www.betrieb-038.example/",
         "https://www.betrieb-041.example/",
         "https://www.betrieb-040.example/",
-        "https://www.betrieb-037.example/kieferorthop%C3%A4die/",
+        "https://www.betrieb-037.example/",
         "https://kieferorthopaede-betrieb-036.example/",
-        "https://www.betrieb-034.example/kieferorthopaedie/"
+        "https://www.betrieb-034.example/"
       ]
     },
     {
@@ -190,12 +191,12 @@
         "https://betrieb-035.example/",
         "https://www.betrieb-038.example/",
         "https://www.betrieb-040.example/",
-        "https://www.betrieb-034.example/kieferorthopaedie/",
+        "https://www.betrieb-034.example/",
         "https://kieferorthopaede-betrieb-036.example/",
         "https://www.betrieb-041.example/",
-        "https://www.betrieb-037.example/kieferorthopaedie/kfo-bei-kindern-und-jugendlichen/",
+        "https://www.betrieb-037.example/",
         "https://www.betrieb-039.example/",
-        "https://www.facebook.com/kfoseidler/?locale=de_DE"
+        "https://www.facebook.com/"
       ]
     },
     {
@@ -204,8 +205,8 @@
       "quellen": [
         "https://betrieb-035.example/",
         "https://unternehmen.focus.de/kieferorthopaede-osnabrueck.html",
-        "https://www.betrieb-037.example/kieferorthop%C3%A4die/",
-        "https://www.betrieb-034.example/kieferorthopaedie/",
+        "https://www.betrieb-037.example/",
+        "https://www.betrieb-034.example/",
         "https://kieferorthopaede-betrieb-036.example/",
         "https://www.betrieb-038.example/",
         "https://www.betrieb-042.example/"
@@ -219,18 +220,18 @@
         "https://kieferorthopaede-betrieb-036.example/",
         "https://www.betrieb-041.example/",
         "https://www.betrieb-040.example/",
-        "https://www.betrieb-034.example/kieferorthopaedie/",
-        "https://www.betrieb-042.example/kieferorthopaede-osnabrueck"
+        "https://www.betrieb-034.example/",
+        "https://www.betrieb-042.example/"
       ]
     },
     {
       "prompt": "Welchen Kieferorthopäden in Osnabrück kannst du für mein Kind empfehlen?",
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
-        "https://www.betrieb-037.example/kieferorthopaedie/kfo-bei-kindern-und-jugendlichen/",
-        "https://www.betrieb-038.example/behandlung/kinder",
-        "https://www.betrieb-034.example/kieferorthopaedie/",
-        "https://www.betrieb-039.example/kinder-und-jugendliche.html",
+        "https://www.betrieb-037.example/",
+        "https://www.betrieb-038.example/",
+        "https://www.betrieb-034.example/",
+        "https://www.betrieb-039.example/",
         "https://betrieb-035.example/",
         "https://unternehmen.focus.de/kieferorthopaede-osnabrueck.html",
         "https://www.betrieb-040.example/",
@@ -242,25 +243,25 @@
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
         "https://betrieb-035.example/",
-        "https://www.betrieb-037.example/kieferorthopadie/kfo-bei-kindern-und-jugendlichen/",
-        "https://www.betrieb-039.example/kinder-und-jugendliche.html",
-        "https://www.betrieb-034.example/kieferorthopaedie/",
-        "https://www.betrieb-042.example/zahnspange-osnabrueck/"
+        "https://www.betrieb-037.example/",
+        "https://www.betrieb-039.example/",
+        "https://www.betrieb-034.example/",
+        "https://www.betrieb-042.example/"
       ]
     },
     {
       "prompt": "Unsichtbare Zahnschiene (Aligner) in Osnabrück — welcher Kieferorthopäde ist gut?",
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
-        "https://betrieb-044.example/aligner",
-        "https://www.betrieb-039.example/invisalign.html",
-        "https://www.betrieb-034.example/kieferorthopaedie/",
-        "https://www.facebook.com/kfoseidler/?locale=de_DE",
-        "https://betrieb-093.example/leistungsspektrum/aligner-therapie/",
+        "https://betrieb-044.example/",
+        "https://www.betrieb-039.example/",
+        "https://www.betrieb-034.example/",
+        "https://www.facebook.com/",
+        "https://betrieb-093.example/",
         "https://www.dentanet.de/aligner-zahnschienen/",
-        "https://www.betrieb-115.example/zahnspange/durchsichtige-zahnschienen-osnabrueck",
-        "https://www.betrieb-043.example/kieferorthopaedie/invisalign-melle",
-        "https://www.instagram.com/rosenberger.kieferorthopaedie/"
+        "https://www.betrieb-115.example/",
+        "https://www.betrieb-043.example/",
+        "https://www.instagram.com/"
       ]
     }
   ]

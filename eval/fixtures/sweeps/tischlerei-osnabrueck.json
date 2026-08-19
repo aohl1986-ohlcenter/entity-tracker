@@ -1,4 +1,5 @@
 {
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln.",
   "branche": "Tischlerei",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -18,7 +19,7 @@
         "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Tischler in Osnabrück • 31 beste Firmen"
+      "titel": "Beispielbetrieb 116"
     },
     {
       "host": "betrieb-048.example",
@@ -28,7 +29,7 @@
         "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
         "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Tischler aus Osnabrück und Umgebung"
+      "titel": "Beispielbetrieb 048"
     },
     {
       "host": "betrieb-047.example",
@@ -38,7 +39,7 @@
         "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
         "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Tischlerei & Holzwerkstatt | Hendrik John - Osnabrück"
+      "titel": "Beispielbetrieb 047"
     },
     {
       "host": "betrieb-117.example",
@@ -48,7 +49,7 @@
         "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
         "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Tischlerei Hammer - Osnabrück"
+      "titel": "Beispielbetrieb 117"
     },
     {
       "host": "betrieb-049.example",
@@ -58,7 +59,7 @@
         "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Tischler Osnabrück"
+      "titel": "Beispielbetrieb 049"
     },
     {
       "host": "my-hammer.de",
@@ -76,7 +77,7 @@
         "Wer ist der beste Tischlerei in Osnabrück?",
         "Welchen Tischlerei in Osnabrück kannst du empfehlen?"
       ],
-      "titel": "Tischlerei Gehner - Holzfenster nach Maß"
+      "titel": "Beispielbetrieb 051"
     },
     {
       "host": "betrieb-050.example",
@@ -85,7 +86,7 @@
         "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
         "Tischlerei Osnabrück — welche Betriebe sind besonders zu empfehlen?"
       ],
-      "titel": "Dieckmann: Ihr Tischler für Präzision aus Holz"
+      "titel": "Beispielbetrieb 050"
     },
     {
       "host": "stilpunkte.de",
@@ -102,7 +103,7 @@
       "prompts": [
         "Wer ist der beste Tischlerei in Osnabrück?"
       ],
-      "titel": "holzinform Seibt: Tischlerei"
+      "titel": "Beispielbetrieb 052"
     },
     {
       "host": "betrieb-118.example",
@@ -118,7 +119,7 @@
       "prompts": [
         "Welchen Tischlerei in Osnabrück kannst du empfehlen?"
       ],
-      "titel": "Tischler Jelitto für Region Osnabrück, Georgsmarienhütt"
+      "titel": "Beispielbetrieb 119"
     },
     {
       "host": "betrieb-120.example",
@@ -126,7 +127,7 @@
       "prompts": [
         "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Tischlerei Feldkamp – Tischlermeister und Innenarchitekt"
+      "titel": "Beispielbetrieb 120"
     }
   ],
   "protokoll": [
@@ -135,12 +136,12 @@
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
         "https://www.werkenntdenbesten.de/tischler/osnabrueck",
-        "https://www.betrieb-135.example/tischler/osnabrueck",
-        "https://www.betrieb-048.example/osnabrueck",
+        "https://www.betrieb-135.example/",
+        "https://www.betrieb-048.example/",
         "https://www.betrieb-047.example/",
         "https://www.my-hammer.de/moebel-einrichtung/tischler-schreiner-berufe/osnabrueck",
         "https://betrieb-051.example/",
-        "https://betrieb-116.example/Osnabr%C3%BCck/Tischler/1",
+        "https://betrieb-116.example/",
         "https://www.betrieb-117.example/",
         "https://www.betrieb-052.example/"
       ]
@@ -149,16 +150,16 @@
       "prompt": "Welchen Tischlerei in Osnabrück kannst du empfehlen?",
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
-        "https://www.betrieb-048.example/osnabrueck",
+        "https://www.betrieb-048.example/",
         "https://betrieb-051.example/",
         "https://www.betrieb-049.example/",
         "https://www.betrieb-117.example/",
-        "https://www.betrieb-135.example/tischler/osnabrueck?utm_source=portal_searchresult&source=portal_searchresult",
+        "https://www.betrieb-135.example/",
         "https://www.betrieb-047.example/",
         "https://www.betrieb-050.example/",
         "https://www.betrieb-118.example/",
-        "https://betrieb-116.example/Osnabr%C3%BCck/Tischler/1",
-        "https://www.betrieb-119.example/tischlerei-jelitto/"
+        "https://betrieb-116.example/",
+        "https://www.betrieb-119.example/"
       ]
     },
     {
@@ -166,9 +167,9 @@
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
         "https://www.betrieb-049.example/",
-        "https://betrieb-116.example/Osnabr%C3%BCck/Tischler/1",
+        "https://betrieb-116.example/",
         "https://www.stilpunkte.de/osnabrueck/toplists/die-besten-tischler-schreiner-osnabruck/",
-        "https://www.betrieb-135.example/tischler/osnabrueck?utm_source",
+        "https://www.betrieb-135.example/",
         "https://www.betrieb-050.example/"
       ]
     },
@@ -176,14 +177,14 @@
       "prompt": "Ich brauche einen zuverlässigen Tischlerei in Osnabrück. Wen empfiehlst du?",
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
-        "https://www.betrieb-048.example/osnabrueck",
+        "https://www.betrieb-048.example/",
         "https://www.my-hammer.de/moebel-einrichtung/tischler-schreiner-berufe/osnabrueck",
         "https://www.betrieb-049.example/",
         "https://www.betrieb-117.example/",
         "https://www.betrieb-047.example/",
         "https://betrieb-120.example/",
         "https://www.stilpunkte.de/osnabrueck/toplists/die-besten-tischler-schreiner-osnabruck/",
-        "https://betrieb-116.example/Osnabr%C3%BCck/Tischler/1"
+        "https://betrieb-116.example/"
       ]
     }
   ]

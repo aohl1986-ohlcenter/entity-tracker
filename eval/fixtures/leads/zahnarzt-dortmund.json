@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Enthält zahnarztpraxis-beispiel.example — Werbewiderspruch im Impressum, steht auf der Sperrliste (R5/R9).",
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln. Enthält zahnarztpraxis-beispiel.example — Werbewiderspruch im Impressum, steht auf der Sperrliste (R5/R9).",
   "branche": "Zahnarzt",
   "region": "Dortmund",
   "datum": "2026-08-01",
@@ -19,7 +19,7 @@
   "leads": [
     {
       "host": "betrieb-053.example",
-      "titel": "dr. FABRI - Zahnarzt Fabri Dortmund",
+      "titel": "Beispielbetrieb 053",
       "positionen": [
         1,
         2,
@@ -30,7 +30,7 @@
     },
     {
       "host": "betrieb-054.example",
-      "titel": "EDELWEISS ZAHNÄRZTE - Modernste Dentaltechnik und ...",
+      "titel": "Beispielbetrieb 054",
       "positionen": [
         1,
         2,
@@ -40,7 +40,7 @@
     },
     {
       "host": "betrieb-055.example",
-      "titel": "Dental21 Dortmund Innenstadt: Zahnarztpraxis Dortmund ...",
+      "titel": "Beispielbetrieb 055",
       "positionen": [
         1,
         2,
@@ -50,7 +50,7 @@
     },
     {
       "host": "betrieb-056.example",
-      "titel": "Zahnarzt Dortmund – jetzt Online-Termin machen",
+      "titel": "Beispielbetrieb 056",
       "positionen": [
         1,
         2,
@@ -59,7 +59,7 @@
     },
     {
       "host": "betrieb-057.example",
-      "titel": "Dr. Beispiel & Kollegen: Zahnarzt Dortmund Innenstadt",
+      "titel": "Beispielbetrieb 057",
       "positionen": [
         1,
         2
@@ -67,7 +67,7 @@
     },
     {
       "host": "betrieb-058.example",
-      "titel": "Zahnarztpraxis",
+      "titel": "Beispielbetrieb 058",
       "positionen": [
         1,
         2
@@ -75,7 +75,7 @@
     },
     {
       "host": "betrieb-059.example",
-      "titel": "Zahnhaus Dortmund: Entdecken",
+      "titel": "Beispielbetrieb 059",
       "positionen": [
         1,
         2
@@ -83,42 +83,42 @@
     },
     {
       "host": "betrieb-060.example",
-      "titel": "Gemeinschaftspraxis Dr. Beispiel - Ihr Zahnarzt in Dortmund",
+      "titel": "Beispielbetrieb 060",
       "positionen": [
         1
       ]
     },
     {
       "host": "zahnarztpraxis-beispiel.example",
-      "titel": "Zahnarzt Hörde - Zahnarztpraxis Dr. Beispiel",
+      "titel": "Beispielbetrieb 000",
       "positionen": [
         1
       ]
     },
     {
-      "host": "betrieb-205.example",
-      "titel": "betrieb-204.example",
+      "host": "betrieb-061.example",
+      "titel": "Beispielbetrieb 061",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-062.example",
-      "titel": "Zahnarzt-dortmund.de",
+      "titel": "Beispielbetrieb 062",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-063.example",
-      "titel": "Zahnarztpraxis Dortmund Hörde",
+      "titel": "Beispielbetrieb 063",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-064.example",
-      "titel": "Zahnarzt Markus Ludolph: Home",
+      "titel": "Beispielbetrieb 064",
       "positionen": [
         1
       ]
@@ -132,14 +132,14 @@
     },
     {
       "host": "betrieb-065.example",
-      "titel": "Zahnreinigung / Vorsorge / Prophylaxe in Dortmund",
+      "titel": "Beispielbetrieb 065",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-066.example",
-      "titel": "Zahnarzt Dortmund: Zahnersatz mit schonender Prothetik",
+      "titel": "Beispielbetrieb 066",
       "positionen": [
         1
       ]

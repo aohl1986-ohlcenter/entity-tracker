@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Echter Lauf 31.07.2026. Enthält den Prompt/Markt-Mismatch (Kieferorthopäde) und die Alias-Domain betrieb-088.example.",
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln. Echter Lauf 31.07.2026. Enthält den Prompt/Markt-Mismatch (Kieferorthopäde) und die Alias-Domain betrieb-088.example.",
   "branche": "Zahnarzt",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -14,7 +14,7 @@
   "leads": [
     {
       "host": "betrieb-037.example",
-      "titel": "Parodontologie Zahnerhaltung Zahnersatz - Zahnarzt Dr ...",
+      "titel": "Beispielbetrieb 037",
       "positionen": [
         1,
         2,
@@ -24,7 +24,7 @@
     },
     {
       "host": "betrieb-083.example",
-      "titel": "Zahnarzt Osnabrück",
+      "titel": "Beispielbetrieb 083",
       "positionen": [
         1,
         2
@@ -32,35 +32,35 @@
     },
     {
       "host": "betrieb-044.example",
-      "titel": "Zahnarzt Osnabrück",
+      "titel": "Beispielbetrieb 044",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-084.example",
-      "titel": "Zahnarztpraxis Taubmann: Ihr Zahnarzt in Osnabrück: Praxis .",
+      "titel": "Beispielbetrieb 084",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-085.example",
-      "titel": "Zahnarztpraxis in Osnabrück & Wallenhorst",
+      "titel": "Beispielbetrieb 085",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-086.example",
-      "titel": "Zahnarzt Osnabrück",
+      "titel": "Beispielbetrieb 086",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-087.example",
-      "titel": "Zahnheilkunde Dodesheide",
+      "titel": "Beispielbetrieb 087",
       "positionen": [
         1
       ]
@@ -74,56 +74,56 @@
     },
     {
       "host": "betrieb-088.example",
-      "titel": "Feste dritte Zähne an einem Tag in Osnabrück!",
+      "titel": "Beispielbetrieb 088",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-035.example",
-      "titel": "Dr. Beispiel und Dr. Beispiel Kieferorthopädie ...",
+      "titel": "kieferorthopaedie — Beispielbetrieb 035",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-038.example",
-      "titel": "Platzhalter Startseite – Kieferorthopädie in Osnabrück am ..",
+      "titel": "kieferorthopaedie — Beispielbetrieb 038",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-039.example",
-      "titel": "Marit Jordan . Kieferorthopädie im Hafen: Willkommen",
+      "titel": "kieferorthopaedie — Beispielbetrieb 039",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-040.example",
-      "titel": "[Klammerhaus] Wir biegen das hin - Fachzahnärzte für ...",
+      "titel": "Beispielbetrieb 040",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-034.example",
-      "titel": "Kieferorthopädie in Osnabrück",
+      "titel": "kieferorthopaedie — Beispielbetrieb 034",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-041.example",
-      "titel": "Praxis Dr. Beispiel",
+      "titel": "Beispielbetrieb 041",
       "positionen": [
         1
       ]
     },
     {
       "host": "kieferorthopaede-betrieb-036.example",
-      "titel": "OERTEL",
+      "titel": "kieferorthopaede — Beispielbetrieb 036",
       "positionen": [
         1
       ]

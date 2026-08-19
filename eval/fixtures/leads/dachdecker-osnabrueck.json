@@ -1,5 +1,5 @@
 {
-  "_hinweis": "NEGATIV-ZWILLING: sauberer Lauf, muss ohne Blocker durchgehen.",
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln. NEGATIV-ZWILLING: sauberer Lauf, muss ohne Blocker durchgehen.",
   "branche": "Dachdecker",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -11,7 +11,7 @@
   "leads": [
     {
       "host": "betrieb-001.example",
-      "titel": "Dachdecker in Hasbergen bei Osnabrück - Kaschtan GmbH",
+      "titel": "Beispielbetrieb 001",
       "positionen": [
         1,
         2
@@ -19,7 +19,7 @@
     },
     {
       "host": "betrieb-002.example",
-      "titel": "Dachdeckerei Strübbe - Osnabrück",
+      "titel": "Beispielbetrieb 002",
       "positionen": [
         1,
         2
@@ -27,7 +27,7 @@
     },
     {
       "host": "betrieb-003.example",
-      "titel": "Salzer & Piepmeyer - Ihr Dachdecker aus Osnabrück",
+      "titel": "Beispielbetrieb 003",
       "positionen": [
         1
       ]

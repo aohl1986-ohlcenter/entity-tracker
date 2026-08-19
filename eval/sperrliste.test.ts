@@ -18,7 +18,10 @@ describe("parseSperrliste", () => {
   it("übernimmt auch die bewusst ausgelassenen Domains", () => {
     const liste = ladeSperrliste();
     assert.ok(liste.has("betrieb-093.example") || liste.has("betrieb-088.example"));
-    assert.ok(liste.has("betrieb-014.example"), "ECD wurde bewusst nicht angeschrieben (Verwaltung statt Vermittlung)");
+    assert.ok(
+      liste.has("betrieb-014.example"),
+      "Bewusst nicht angeschrieben (Verwaltung statt Vermittlung) — zählt ebenfalls als Sperre.",
+    );
   });
 
   it("liefert einen Grund mit", () => {

@@ -1,4 +1,5 @@
 {
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln.",
   "branche": "Dachdecker",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -18,7 +19,7 @@
         "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Bauer Bedachungen aus Osnabrück – Ihr Dachdecker ..."
+      "titel": "Beispielbetrieb 004"
     },
     {
       "host": "betrieb-100.example",
@@ -28,7 +29,7 @@
         "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Kaiser und Söhne - Dachdecker in Osnabrück"
+      "titel": "Beispielbetrieb 100"
     },
     {
       "host": "betrieb-005.example",
@@ -37,7 +38,7 @@
         "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
         "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Ihr Dachdecker aus Osnabrück - Wilhelm Volmer GmbH & Co ..."
+      "titel": "Beispielbetrieb 005"
     },
     {
       "host": "betrieb-101.example",
@@ -46,7 +47,7 @@
         "Welchen Dachdecker in Osnabrück kannst du empfehlen?",
         "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Meyer Bedachungen | Dachdeckerei Osnabrück ..."
+      "titel": "Beispielbetrieb 101"
     },
     {
       "host": "betrieb-102.example",
@@ -55,7 +56,7 @@
         "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Dachdecker in Osnabrück - Jetzt Anbieter finden"
+      "titel": "Beispielbetrieb 102"
     },
     {
       "host": "my-hammer.de",
@@ -72,7 +73,7 @@
       "prompts": [
         "Wer ist der beste Dachdecker in Osnabrück?"
       ],
-      "titel": "Martin Wels & Sohn GmbH & Co KG | Dacharbeit ist ..."
+      "titel": "Beispielbetrieb 006"
     },
     {
       "host": "betrieb-008.example",
@@ -80,7 +81,7 @@
       "prompts": [
         "Wer ist der beste Dachdecker in Osnabrück?"
       ],
-      "titel": "GEDATECH: Dachdecker Osnabrück"
+      "titel": "Beispielbetrieb 008"
     },
     {
       "host": "betrieb-103.example",
@@ -88,7 +89,7 @@
       "prompts": [
         "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?"
       ],
-      "titel": "Ihr Dachdecker aus Osnabrück"
+      "titel": "Beispielbetrieb 103"
     },
     {
       "host": "betrieb-104.example",
@@ -96,7 +97,7 @@
       "prompts": [
         "Dachdecker Osnabrück — welche Betriebe sind besonders zu empfehlen?"
       ],
-      "titel": "Dachdecker Osnabrück"
+      "titel": "Beispielbetrieb 104"
     },
     {
       "host": "betrieb-007.example",
@@ -104,7 +105,7 @@
       "prompts": [
         "Ich brauche einen zuverlässigen Dachdecker in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Dachdecker-Innung Osnabrück. – KH OS"
+      "titel": "Beispielbetrieb 007"
     }
   ],
   "protokoll": [
@@ -114,12 +115,12 @@
       "quellen": [
         "https://www.werkenntdenbesten.de/dachdecker/osnabrueck",
         "https://www.gelbeseiten.de/branchen/dachdecker/osnabr%C3%BCck",
-        "https://www.betrieb-134.example/dachdecker/osnabrueck",
+        "https://www.betrieb-134.example/",
         "https://www.dasoertliche.de/Top/Dachdeckereien/Osnabr%C3%BCck",
         "https://www.betrieb-006.example/",
         "https://www.betrieb-004.example/",
         "https://betrieb-008.example/",
-        "https://www.facebook.com/p/Dachmeistereien-100064298763991/"
+        "https://www.facebook.com/"
       ]
     },
     {
@@ -140,13 +141,13 @@
       "quellen": [
         "https://www.gelbeseiten.de/branchen/dachdecker/osnabr%C3%BCck",
         "https://www.betrieb-004.example/",
-        "https://betrieb-103.example/dachdecker-osnabrueck/",
-        "https://www.betrieb-102.example/fachfirmen/dachdecker/in/osnabrueck/",
-        "https://www.betrieb-134.example/dachdecker/osnabrueck?utm_source=portal_searchresult&source=portal_searchresult",
+        "https://betrieb-103.example/",
+        "https://www.betrieb-102.example/",
+        "https://www.betrieb-134.example/",
         "https://betrieb-100.example/",
         "https://www.my-hammer.de/dacharbeiten/dachdecker-berufe/osnabrueck",
-        "https://betrieb-104.example/dachdecker-osnabrueck",
-        "https://www.facebook.com/p/Dachmeistereien-100064298763991/"
+        "https://betrieb-104.example/",
+        "https://www.facebook.com/"
       ]
     },
     {
@@ -156,10 +157,10 @@
         "https://www.my-hammer.de/dacharbeiten/dachdecker-berufe/osnabrueck",
         "https://betrieb-101.example/",
         "https://betrieb-100.example/",
-        "https://betrieb-004.example/DACHDECKEREI/",
-        "https://www.betrieb-102.example/fachfirmen/dachdecker/in/osnabrueck/",
+        "https://betrieb-004.example/",
+        "https://www.betrieb-102.example/",
         "https://www.betrieb-005.example/",
-        "https://www.betrieb-007.example/innungen/dachdecker-innung-osnabruck/"
+        "https://www.betrieb-007.example/"
       ]
     }
   ]

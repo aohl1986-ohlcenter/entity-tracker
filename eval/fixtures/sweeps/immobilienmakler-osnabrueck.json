@@ -1,4 +1,5 @@
 {
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln.",
   "branche": "Immobilienmakler",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -23,7 +24,7 @@
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobilisimo: Immobilienmakler Osnabrück"
+      "titel": "Beispielbetrieb 021"
     },
     {
       "host": "betrieb-023.example",
@@ -35,7 +36,7 @@
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Immobilienmakler Osnabrück"
+      "titel": "Beispielbetrieb 023"
     },
     {
       "host": "betrieb-022.example",
@@ -47,7 +48,7 @@
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Immobilienmakler Osnabrück"
+      "titel": "Beispielbetrieb 022"
     },
     {
       "host": "betrieb-025.example",
@@ -58,7 +59,7 @@
         "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "datos Immobilien GmbH Osnabrück"
+      "titel": "Beispielbetrieb 025"
     },
     {
       "host": "betrieb-024.example",
@@ -69,7 +70,7 @@
         "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Appelhans Immobilien - Immobilienmakler in Osnabrück"
+      "titel": "Beispielbetrieb 024"
     },
     {
       "host": "betrieb-027.example",
@@ -80,7 +81,7 @@
         "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Die Immobilienmaklerin Osnabrück"
+      "titel": "Beispielbetrieb 027"
     },
     {
       "host": "betrieb-026.example",
@@ -91,7 +92,7 @@
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Haseland Immobilien: Immobilienmakler Osnabrück & Bünde"
+      "titel": "Beispielbetrieb 026"
     },
     {
       "host": "betrieb-028.example",
@@ -100,7 +101,7 @@
         "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Ihr Immobilienmakler für Osnabrück"
+      "titel": "Beispielbetrieb 028"
     },
     {
       "host": "betrieb-105.example",
@@ -109,7 +110,7 @@
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?",
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Wohnen und Werte Immobilien in und um Osnabrück"
+      "titel": "Beispielbetrieb 105"
     },
     {
       "host": "betrieb-106.example",
@@ -118,7 +119,7 @@
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Sie als Immobilien Tippgeber"
+      "titel": "Beispielbetrieb 106"
     },
     {
       "host": "betrieb-107.example",
@@ -126,7 +127,7 @@
       "prompts": [
         "Wer ist der beste Immobilienmakler in Osnabrück?"
       ],
-      "titel": "Liste der 3 besten Immobilienmakler in Osnabrück [2025]"
+      "titel": "Beispielbetrieb 107"
     },
     {
       "host": "betrieb-029.example",
@@ -134,7 +135,7 @@
       "prompts": [
         "Welchen Immobilienmakler in Osnabrück kannst du empfehlen?"
       ],
-      "titel": "Ihr Immobilienmakler Osnabrück - nah und zuverlässig"
+      "titel": "Beispielbetrieb 029"
     },
     {
       "host": "betrieb-030.example",
@@ -142,7 +143,7 @@
       "prompts": [
         "Ich brauche einen zuverlässigen Immobilienmakler in Osnabrück. Wen empfiehlst du?"
       ],
-      "titel": "Kaulbach Immobilien: Immobilienmakler Osnabrück"
+      "titel": "Beispielbetrieb 030"
     },
     {
       "host": "betrieb-033.example",
@@ -150,7 +151,7 @@
       "prompts": [
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Immobilienmakler in Osnabrück | 23 Stadtteile voller ..."
+      "titel": "Beispielbetrieb 033"
     },
     {
       "host": "betrieb-108.example",
@@ -158,7 +159,7 @@
       "prompts": [
         "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?"
       ],
-      "titel": "Waerder Immobilien: Immobilienmakler Osnabrück"
+      "titel": "Beispielbetrieb 108"
     },
     {
       "host": "trustlocal.de",
@@ -174,7 +175,7 @@
       "prompts": [
         "Welcher Immobilienmakler in Osnabrück hat die beste Bewertung?"
       ],
-      "titel": "Immobilienmakler in Osnabrück: Die 10 besten Makler"
+      "titel": "Beispielbetrieb 109"
     },
     {
       "host": "betrieb-110.example",
@@ -182,7 +183,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Lasarz - Die Immobiliengutachter - Sachverständigenbüro für ..."
+      "titel": "Beispielbetrieb 110"
     },
     {
       "host": "betrieb-111.example",
@@ -190,7 +191,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobilienbewertung Osnabrück - Immobiliengutachter"
+      "titel": "Beispielbetrieb 111"
     },
     {
       "host": "betrieb-112.example",
@@ -198,7 +199,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobilienbewertung Osnabrück"
+      "titel": "Beispielbetrieb 112"
     },
     {
       "host": "betrieb-031.example",
@@ -206,7 +207,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobilie bewerten in Osnabrück"
+      "titel": "Beispielbetrieb 031"
     },
     {
       "host": "betrieb-113.example",
@@ -214,7 +215,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobilienbewertung Osnabrück"
+      "titel": "Beispielbetrieb 113"
     },
     {
       "host": "betrieb-114.example",
@@ -222,7 +223,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobiliengutachten für Osnabrück"
+      "titel": "Beispielbetrieb 114"
     },
     {
       "host": "betrieb-032.example",
@@ -230,7 +231,7 @@
       "prompts": [
         "Immobilienbewertung Osnabrück — welchen Anbieter kannst du empfehlen?"
       ],
-      "titel": "Immobilienbewertung Osnabrück › Marktwert ehrlich vor Ort"
+      "titel": "Beispielbetrieb 032"
     }
   ],
   "protokoll": [
@@ -241,11 +242,11 @@
         "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
         "https://betrieb-025.example/",
         "https://betrieb-024.example/",
-        "https://www.betrieb-023.example/de/de/immobilienmakler/niedersachsen/osnabrueck",
-        "https://www.betrieb-022.example/de/immobilienmakler/osnabrueck",
-        "https://betrieb-021.example/?srsltid=AfmBOoqFYnvJfsM1YQmgMY3FjadBf5WXF6ESAs3sotLpjdKlj3lgsjeK",
+        "https://www.betrieb-023.example/",
+        "https://www.betrieb-022.example/",
+        "https://betrieb-021.example/",
         "https://betrieb-027.example/",
-        "https://www.betrieb-107.example/immobilienmakler/liste-der-besten-immobilienmakler-in-osnabruck",
+        "https://www.betrieb-107.example/",
         "https://betrieb-026.example/"
       ]
     },
@@ -255,10 +256,10 @@
       "quellen": [
         "https://betrieb-025.example/",
         "https://betrieb-024.example/",
-        "https://www.betrieb-022.example/de/immobilienmakler/osnabrueck",
+        "https://www.betrieb-022.example/",
         "https://betrieb-026.example/",
-        "https://www.betrieb-023.example/de/de/immobilienmakler/niedersachsen/osnabrueck",
-        "https://betrieb-021.example/?srsltid=AfmBOopgWGRHgqmGRnsBrxUzc9hxYqSJq2y1z63zfAj5rvQ_89LbeIZm",
+        "https://www.betrieb-023.example/",
+        "https://betrieb-021.example/",
         "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
         "https://betrieb-027.example/",
         "https://betrieb-029.example/"
@@ -268,13 +269,13 @@
       "prompt": "Immobilienmakler Osnabrück — welche Betriebe sind besonders zu empfehlen?",
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
-        "https://www.betrieb-022.example/de/immobilienmakler/osnabrueck",
+        "https://www.betrieb-022.example/",
         "https://betrieb-024.example/",
         "https://betrieb-025.example/",
-        "https://www.betrieb-028.example/de/immobilienmakler/wohnimmobilien/niedersachsen/osnabrueck",
+        "https://www.betrieb-028.example/",
         "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
-        "https://www.betrieb-023.example/de/de/immobilienmakler/niedersachsen/osnabrueck",
-        "https://betrieb-021.example/?srsltid=AfmBOoqPcWZkXKOTVTlc8u_ilmciCxDL27UNEQ4pDnH4csJeXErPj4Uk",
+        "https://www.betrieb-023.example/",
+        "https://betrieb-021.example/",
         "https://betrieb-027.example/",
         "https://www.dasoertliche.de/Top/Makler/Osnabr%C3%BCck"
       ]
@@ -286,9 +287,9 @@
         "https://betrieb-024.example/",
         "https://betrieb-027.example/",
         "https://betrieb-025.example/",
-        "https://betrieb-021.example/?srsltid=AfmBOord8kBciXD9DC8RvLLUCNAWSz_b-8R8kLivz-FzR9PiJlTFuDRe",
-        "https://www.betrieb-023.example/de/de/immobilienmakler/niedersachsen/osnabrueck",
-        "https://www.betrieb-022.example/de/immobilienmakler/osnabrueck",
+        "https://betrieb-021.example/",
+        "https://www.betrieb-023.example/",
+        "https://www.betrieb-022.example/",
         "https://betrieb-026.example/",
         "https://www.betrieb-105.example/",
         "https://www.betrieb-030.example/"
@@ -298,14 +299,14 @@
       "prompt": "Ich möchte mein Haus in Osnabrück verkaufen. Welchen Makler empfiehlst du?",
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
-        "https://betrieb-021.example/bester-makler-in-osnabrueck/?srsltid=AfmBOooIGVT43rHvvO3JUtmvbVdob2MRhIelS_Qog2BI3eSYNmmsIVCX",
-        "https://www.betrieb-028.example/de/immobilienmakler/wohnimmobilien/niedersachsen/osnabrueck",
-        "https://www.betrieb-022.example/de/immobilienmakler/osnabrueck",
-        "https://www.betrieb-033.example/ratgeber-tipps/immobilienmakler-osnabrueck",
+        "https://betrieb-021.example/",
+        "https://www.betrieb-028.example/",
+        "https://www.betrieb-022.example/",
+        "https://www.betrieb-033.example/",
         "https://betrieb-108.example/",
         "https://www.betrieb-105.example/",
-        "https://betrieb-106.example/immobilien/tippgeber",
-        "https://www.betrieb-023.example/de/de/immobilienmakler/niedersachsen/osnabrueck",
+        "https://betrieb-106.example/",
+        "https://www.betrieb-023.example/",
         "https://betrieb-026.example/"
       ]
     },
@@ -315,7 +316,7 @@
       "quellen": [
         "https://www.werkenntdenbesten.de/immobilienmakler/osnabrueck",
         "https://trustlocal.de/niedersachsen/osnabr%C3%BCck/immobilienmakler/",
-        "https://www.betrieb-109.example/immobilienmakler/ni/osnabrueck"
+        "https://www.betrieb-109.example/"
       ]
     },
     {
@@ -323,14 +324,14 @@
       "antwort": "[Antworttext entfernt — enthielt namentlich genannte Personen. Fuer die Regeln irrelevant: geprueft werden quellen und grounding.links, nicht der Fliesstext.]",
       "quellen": [
         "https://betrieb-110.example/",
-        "https://www.betrieb-111.example/Osnabrueck/",
-        "https://www.betrieb-112.example/immobilienbewertung-osnabrueck",
-        "https://betrieb-031.example/immobilie-bewerten",
-        "https://betrieb-106.example/service-leistungen/immobilienbewertung",
-        "https://betrieb-021.example/immobilienbewertung-osnabrueck/?srsltid",
-        "https://www.betrieb-113.example/regionalbueros/osnabrueck/immobilienbewertung-osnabrueck",
-        "https://www.betrieb-114.example/regionen/osnabrueck/immobiliengutachten.html",
-        "https://betrieb-032.example/einzugsgebiet/immobilienbewertung-osnabrueck/"
+        "https://www.betrieb-111.example/",
+        "https://www.betrieb-112.example/",
+        "https://betrieb-031.example/",
+        "https://betrieb-106.example/",
+        "https://betrieb-021.example/",
+        "https://www.betrieb-113.example/",
+        "https://www.betrieb-114.example/",
+        "https://betrieb-032.example/"
       ]
     }
   ]

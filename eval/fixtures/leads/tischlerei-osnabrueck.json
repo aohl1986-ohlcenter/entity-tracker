@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Enthält tischler-schreiner.org — ein Verzeichnisportal, das den alten Filter überlebte (R3).",
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln. Enthält tischler-schreiner.org — ein Verzeichnisportal, das den alten Filter überlebte (R3).",
   "branche": "Tischlerei",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -11,7 +11,7 @@
   "leads": [
     {
       "host": "betrieb-045.example",
-      "titel": "Parkett Osnabrück",
+      "titel": "Beispielbetrieb 045",
       "positionen": [
         1,
         2
@@ -19,7 +19,7 @@
     },
     {
       "host": "moebelteile-betrieb-046.example",
-      "titel": "FLY Möbelteile",
+      "titel": "moebelteile — Beispielbetrieb 046",
       "positionen": [
         1,
         2

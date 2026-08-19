@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Echter Lauf (erweiterte Suche). Enthält Hausverwaltungen in der Lead-Liste (R6) und Portale (R3).",
+  "_hinweis": "Betriebsdomains und -titel sind pseudonymisiert (betrieb-NNN.example); Verzeichnisportale, Zahlen, Positionen und Mengenverhaeltnisse sind unveraendert — nur auf die pruefen die Regeln. Echter Lauf (erweiterte Suche). Enthält Hausverwaltungen in der Lead-Liste (R6) und Portale (R3).",
   "branche": "Immobilienmakler",
   "region": "Osnabrück",
   "datum": "2026-07-31",
@@ -21,7 +21,7 @@
   "leads": [
     {
       "host": "betrieb-009.example",
-      "titel": "Immobilienmakler Osnabrück",
+      "titel": "Beispielbetrieb 009",
       "positionen": [
         1,
         2,
@@ -30,7 +30,7 @@
     },
     {
       "host": "betrieb-010.example",
-      "titel": "Immobilienbewertung Osnabrück",
+      "titel": "Beispielbetrieb 010",
       "positionen": [
         1,
         2,
@@ -62,28 +62,28 @@
     },
     {
       "host": "hausverwaltung-betrieb-011.example",
-      "titel": "Rhode Hausverwaltungen KG – Hausverwaltung aus Osnabrück",
+      "titel": "hausverwaltung — Beispielbetrieb 011",
       "positionen": [
         1
       ]
     },
     {
       "host": "immobilienverwaltung-betrieb-012.example",
-      "titel": "S-Immobilienverwaltung: Home",
+      "titel": "immobilienverwaltung — Beispielbetrieb 012",
       "positionen": [
         1
       ]
     },
     {
       "host": "immobilienverwaltung-betrieb-013.example",
-      "titel": "HVG Müller-Mathar GmbH – Immobilienverwaltung Osnabrück",
+      "titel": "immobilienverwaltung — Beispielbetrieb 013",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-014.example",
-      "titel": "ECD Immobilien: Startseite",
+      "titel": "Beispielbetrieb 014",
       "positionen": [
         1
       ]
@@ -97,21 +97,21 @@
     },
     {
       "host": "grundbesitzverwaltung-betrieb-015.example",
-      "titel": "Brinkmann GmbH, Haus-und Grundbesitzverwaltung ...",
+      "titel": "grundbesitzverwaltung — Beispielbetrieb 015",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-016.example",
-      "titel": "FK Immobilien - Verwaltung und Vermarktung - Osnabrück",
+      "titel": "Beispielbetrieb 016",
       "positionen": [
         1
       ]
     },
     {
       "host": "weg-verwaltung-betrieb-017.example",
-      "titel": "WEG-Verwaltung in Osnabrück",
+      "titel": "weg-verwaltung — Beispielbetrieb 017",
       "positionen": [
         1
       ]
@@ -132,21 +132,21 @@
     },
     {
       "host": "betrieb-018.example",
-      "titel": "Klein Immobilien: Exklusive Immobilien in und um Osnabrück",
+      "titel": "Beispielbetrieb 018",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-019.example",
-      "titel": "Ihr Immobilienmakler in Osnabrück",
+      "titel": "Beispielbetrieb 019",
       "positionen": [
         1
       ]
     },
     {
       "host": "betrieb-020.example",
-      "titel": "Mein Makler Osnabrück-Nord: Aktuelles",
+      "titel": "Beispielbetrieb 020",
       "positionen": [
         1
       ]

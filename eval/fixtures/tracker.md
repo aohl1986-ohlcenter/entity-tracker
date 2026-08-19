@@ -6,8 +6,10 @@
 > `~/career-ops/akquise/leads-tracker.md`.
 >
 > Die Abschnitte `## Nicht angeschrieben — …` und `## Sperrliste …` sind das,
-> was `parseSperrliste` liest. Ihre Domains sind bewusst unverändert, weil
-> Golden Set und Mutationsprobe darauf aufbauen. Die Formateigenheiten
+> was `parseSperrliste` liest. Ihre Domains sind pseudonymisiert
+> (`betrieb-NNN.example`) — aber konsistent mit den Fixtures unter
+> `fixtures/leads/` und `fixtures/sweeps/`, weil Golden Set und
+> Mutationsprobe auf dieser Kopplung aufbauen. Die Formateigenheiten
 > (Klartext neben der Domain, `~~durchgestrichen~~`, mehrere Domains je Zelle,
 > Fettung) sind der eigentliche Testgegenstand — beim Bearbeiten erhalten.
 
