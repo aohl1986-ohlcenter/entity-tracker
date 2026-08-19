@@ -15,7 +15,7 @@ async function main() {
 
   const kws = await db.select().from(keywords).where(eq(keywords.entityId, entity.id));
 
-  console.log("BASELINE REPORT — Dana Beispiel\n" + "=".repeat(60));
+  console.log("BASELINE REPORT\n" + "=".repeat(60));
 
   const allResults: { keyword: string; cluster: string; score: number; rows: any[] }[] = [];
   for (const kw of kws) {

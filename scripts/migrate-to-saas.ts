@@ -39,8 +39,8 @@ const TENANT_BACKFILL: Record<
   string,
   { plan: string; status: string; reportEmails: string[]; notes?: string }
 > = {
-  // Jens nutzt heute Verdrängungs-Analyse + Wunschlink-KPI → insights,
-  // sonst würden Features wegfallen.
+  // Beispiel: ein Tenant, der Verdrängungs-Analyse und Wunschlink-KPI nutzt,
+  // muss auf `insights` — auf `radar` wuerden ihm Features wegfallen.
   "demo-entity": {
     plan: "insights",
     status: "active",

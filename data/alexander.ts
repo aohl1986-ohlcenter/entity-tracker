@@ -1,4 +1,4 @@
-import type { SeedKeyword, SeedTarget } from "./beispiel";
+import type { SeedKeyword, SeedTarget } from "./types";
 
 export const ENTITY = {
   slug: "alexander-ohl",

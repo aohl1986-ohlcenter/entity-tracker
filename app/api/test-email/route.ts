@@ -21,7 +21,7 @@ export async function GET(req: Request) {
   try {
     const result = await sendEmail({
       to,
-      subject: "[Tracker] Resend-Smoke-Test (Pragma-Code × Beispiel)",
+      subject: "[Tracker] Resend-Smoke-Test",
       html: `<!doctype html><html><body style="margin:0;padding:0;background:#0f1430;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#e2e8f0;">
         <div style="max-width:560px;margin:0 auto;padding:32px 24px;">
           <div style="font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#ffc829;font-weight:600;">Pragma-Code · Entity Tracker</div>

@@ -113,11 +113,11 @@ Kunden-Reports rausgehen — `tracker@` hat kein Postfach.
 
 ## robots.txt bei Kunden-Assets
 
-Für `dana-beispiel.example` (Quelle `~/AntiGravity/demo-entity-hub/`, hinter
-Cloudflare) wird die robots.txt / AI-Crawler-Steuerung **im Cloudflare-Dashboard**
-verwaltet („KI-Crawler kontrollieren"), nicht über die Repo-Datei — solange das aktiv
-ist, überschreibt Cloudflare die Repo-`robots.txt` am Edge. Beides steht auf „nicht
-blockieren", damit Gemini/Google-Extended die Seite zitieren dürfen; `ai-train=no`
-und Gemini-Zitate schließen sich bei Google gegenseitig aus. Weicht eine live
-ausgelieferte robots.txt von der Repo-Datei ab, ist immer zuerst Cloudflare die
-Ursache.
+Liegt ein Kunden-Asset hinter Cloudflare und ist dort „KI-Crawler kontrollieren“
+aktiv, wird die robots.txt / AI-Crawler-Steuerung **im Cloudflare-Dashboard**
+verwaltet, nicht über die Repo-Datei — solange das aktiv ist, überschreibt
+Cloudflare die Repo-`robots.txt` am Edge. Für zitierfähige Seiten steht beides auf
+„nicht blockieren“, damit Gemini und Google-Extended die Seite zitieren dürfen;
+`ai-train=no` und Gemini-Zitate schließen sich bei Google gegenseitig aus. Weicht
+eine live ausgelieferte robots.txt von der Repo-Datei ab, ist immer zuerst
+Cloudflare die Ursache.

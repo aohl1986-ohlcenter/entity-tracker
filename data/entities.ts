@@ -1,5 +1,5 @@
-import type { SeedKeyword, SeedTarget } from "./beispiel";
-import * as beispiel from "./beispiel";
+import type { SeedKeyword, SeedTarget } from "./types";
+import * as demo from "./demo";
 import * as alexander from "./alexander";
 
 export type CitationPrompt = { engine: "gemini"; query: string; topic: string };
@@ -20,11 +20,11 @@ export type SeedEntityBundle = {
  */
 export const SEED_ENTITIES: SeedEntityBundle[] = [
   {
-    entity: beispiel.ENTITY,
-    keywords: beispiel.KEYWORDS,
-    targets: beispiel.TARGETS,
-    citationPrompts: beispiel.AI_CITATION_PROMPTS,
-    wantedLinks: beispiel.WANTED_LINKS,
+    entity: demo.ENTITY,
+    keywords: demo.KEYWORDS,
+    targets: demo.TARGETS,
+    citationPrompts: demo.AI_CITATION_PROMPTS,
+    wantedLinks: demo.WANTED_LINKS,
   },
   {
     entity: alexander.ENTITY,
