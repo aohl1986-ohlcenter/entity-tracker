@@ -51,7 +51,7 @@ auf „nennt das Modell Firma X?" wäre in zwei Wochen rot — ohne Regressionsg
 | Datenbank | Postgres (Neon) via Drizzle ORM |
 | SERPs | Serper.dev (echtes Google DE) |
 | Citations | Gemini mit `google_search`-Grounding · Tavily · Brave |
-| Zeitsteuerung | Vercel Cron (täglich sammeln, alle 5 Tage berichten) |
+| Zeitsteuerung | Vercel Cron (täglich sammeln, wöchentlich berichten) |
 | Mail | Resend |
 
 ## Datenmodell

@@ -28,12 +28,10 @@ Feature-Gates und Limits stehen zentral in `lib/plans.ts`.
 - **täglich 06:00 UTC** — `/api/cron/collect`: SERP-Fetch, AI-Citation-Check über
   alle Engines, Alert-Erkennung. Persistiert Alerts mit `emailSent=0` und
   versendet **keine** Mail.
-- **alle 5 Tage 07:00 UTC** — `/api/cron/send-digest`: bündelt alle noch nicht
+- **montags 07:00 UTC** — `/api/cron/send-digest`: bündelt alle noch nicht
   gemailten Alerts in **einen** Report und verschickt ihn.
 
-So entsteht täglich eine saubere Zeitreihe, aber nur alle fünf Tage eine Mail.
-`*/5` im Day-of-Month-Feld trifft Tag 1, 6, 11, 16, 21, 26, 31 — am Monatsende
-ergibt sich einmalig ein kürzerer Abstand.
+So entsteht täglich eine saubere Zeitreihe, aber nur einmal pro Woche eine Mail.
 
 Manueller Sofort-Report (sammeln **und** mailen): `/api/cron/daily-digest` bzw.
 `npx tsx scripts/run-daily-digest.ts`. Einzeln: `scripts/run-collect.ts`
