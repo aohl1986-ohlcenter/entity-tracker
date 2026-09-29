@@ -11,13 +11,32 @@ Antworten der KI-Suchsysteme, die zunehmend davor stehen?
 
 Der Tracker beantwortet das messbar: Er beobachtet täglich die Google-Top-10 zu
 einem Keyword-Set **und** prüft, ob dieselbe Entity in den Antworten von Gemini
-(mit Search-Grounding), Tavily und Brave zitiert wird. Daraus entstehen ein
-Domination-Score, eine Zeitreihe und Alerts bei Veränderungen.
+(mit Search-Grounding), AWS Bedrock, Tavily und Brave zitiert wird. Daraus
+entstehen ein Domination-Score, eine Zeitreihe und Alerts bei Veränderungen.
 
-Läuft als Multi-Tenant-Anwendung in Produktion.
-
-**Live:** [tracker.pragma-code.de](https://tracker.pragma-code.de) — Kundenprojekt mit Login, Demo auf Anfrage.
+**Status:** Lief von Juli bis September 2026 als Multi-Tenant-Anwendung in
+Produktion. **Seit 20.09.2026 pausiert** — es gab keinen zahlenden Mandanten, also
+ruht die tägliche Sammlung. Die Anwendung unter
+[tracker.pragma-code.de](https://tracker.pragma-code.de) ist weiter erreichbar
+(Login), der Code wird gepflegt.
 Ein Werkzeug von [Pragma Code](https://www.pragma-code.de).
+
+> **In English.** Tracks how visible a person or brand is — in Google's top 10
+> *and* in the answers of AI search engines (Gemini with search grounding, AWS
+> Bedrock, Tavily, Brave). It ran as a multi-tenant app in production from July to
+> September 2026 and has been **paused since 20 Sep 2026** because no tenant was
+> paying. Worth a look:
+> - [`lib/alerts.ts`](lib/alerts.ts) — alert damping: rank changes fire only after
+>   two consecutive confirming runs, and the weekly digest collapses them to the
+>   net movement per keyword × URL.
+> - [Verification gate](#verifikations-gate) — LLM output is not trusted but
+>   checked against offline-verifiable invariants (e.g. every citation must be a
+>   subset of the sources the grounding call actually returned). It caught a
+>   hallucinated URL on its first live run.
+> - Tests assert set invariants, not concrete model answers, so they don't turn
+>   red when a model changes its mind.
+>
+> Code comments and docs are in German; identifiers are in English.
 
 ---
 
@@ -28,7 +47,7 @@ deshalb nicht ein Rang, sondern ein positionsgewichteter Score über die Zeit �
 Position 1 zählt 10×, Position 10 zählt 1×, Verdrängungs-Treffer werden
 halbgewichtet abgezogen.
 
-**Drei Citation-Engines parallel.** Jeder Prompt läuft gegen jede Engine, deren
+**Vier Citation-Engines parallel.** Jeder Prompt läuft gegen jede Engine, deren
 API-Key gesetzt ist; eine fehlende Engine wird stillschweigend übersprungen. Pro
 Prompt entsteht eine DB-Zeile je Engine — Gemini und Tavily sind damit direkt
 vergleichbar, statt sich auf eine Quelle zu verlassen.
@@ -50,7 +69,7 @@ auf „nennt das Modell Firma X?" wäre in zwei Wochen rot — ohne Regressionsg
 | Framework | Next.js 15 (App Router) auf Vercel |
 | Datenbank | Postgres (Neon) via Drizzle ORM |
 | SERPs | Serper.dev (echtes Google DE) |
-| Citations | Gemini mit `google_search`-Grounding · Tavily · Brave |
+| Citations | Gemini mit `google_search`-Grounding · AWS Bedrock · Tavily · Brave |
 | Zeitsteuerung | Vercel Cron (täglich sammeln, wöchentlich berichten) |
 | Mail | Resend |
 
