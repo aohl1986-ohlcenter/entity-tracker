@@ -18,10 +18,10 @@ auf Produktivdaten. Vor jedem schreibenden Script bewusst prüfen, was es anfass
 ## Build & Deploy
 
 ```sh
-# nvm-Hook bricht Shell-Befehle mit `cd` ab (exit 3) → Node-Pfad explizit setzen:
-export PATH="/Users/ohlcenter/.nvm/versions/node/v24.13.0/bin:$PATH"
-# Scripts ohne `cd` starten:
-npx tsx <absoluter-pfad>
+# Node 24 ist Shell-Standard (nvm default, seit 10.10.2026 auch in der Claude-Code-Shell)
+# — kein `export PATH=…` voranstellen. Nur wenn `node -v` v25 zeigt (Homebrew-node
+# vorn), steht in ~/.zshrc etwas Falsches: dort beheben, nicht pro Befehl umgehen.
+npx tsx <pfad>
 # Deploy:
 vercel --cwd ~/dev/entity-tracker deploy --prod --yes
 ```
