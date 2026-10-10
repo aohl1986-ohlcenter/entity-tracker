@@ -25,13 +25,13 @@
     "drizzle-orm": "^0.45.3",
     "next": "^15.5.27",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "^19.3.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
     "@types/react": "^18.3.29",
-    "@types/react-dom": "^18.3.7",
+    "@types/react-dom": "^19.3.0",
     "autoprefixer": "^10.6.1",
     "drizzle-kit": "^0.31.11",
     "postcss": "^8.5.29",
